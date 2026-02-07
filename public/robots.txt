@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /private
+Disallow: /temp
+Disallow: /.git/
+
+Crawl-delay: 1
+Request-rate: 30/1m
+
+Sitemap: https://ztartech.webcindario.com/sitemap.xml

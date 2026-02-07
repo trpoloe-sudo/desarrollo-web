@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hero Section - Ztar Tech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: #333;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #ffffff;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .highlight {
+            color: #4db8ff;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 32px;
+            max-width: 550px;
+            font-weight: 300;
+        }
+
+        .key-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            color: #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateX(8px);
+        }
+
+        .feature-icon {
+            color: #4db8ff;
+            font-size: 22px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary,
+        .cta-secondary {
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #4db8ff 0%, #357abf 100%);
+            color: white;
+            box-shadow: 0 8px 24px rgba(77, 184, 255, 0.3);
+            transform: translateY(0);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(77, 184, 255, 0.4);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid #4db8ff;
+            box-shadow: 0 4px 12px rgba(77, 184, 255, 0.2);
+        }
+
+        .cta-secondary:hover {
+            background: rgba(77, 184, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(77, 184, 255, 0.3);
+        }
+
+        .trust-badges {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .badge {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .badge strong {
+            font-size: 16px;
+            color: #4db8ff;
+            font-weight: 700;
+        }
+
+        .badge span {
+            font-size: 13px;
+            color: #b8b8b8;
+            font-weight: 400;
+        }
+
+        .hero-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .visual-placeholder {
+            width: 100%;
+            max-width: 400px;
+            aspect-ratio: 1;
+            background: rgba(77, 184, 255, 0.1);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(77, 184, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .visual-placeholder svg {
+            width: 70%;
+            height: 70%;
+            color: #4db8ff;
+        }
+
+        .wave-decoration {
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,30 Q300,60 600,30 T1200,30 L1200,120 L0,120 Z" fill="white" opacity="0.1"></path></svg>') repeat-x;
+            background-size: 600px 100%;
+            animation: wave 15s linear infinite;
+        }
+
+        @keyframes wave {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 600px 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 40px 20px;
+                min-height: auto;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+                margin-bottom: 24px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .trust-badges {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                padding-top: 24px;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 30px 16px;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 14px;
+            }
+
+            .feature {
+                font-size: 14px;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                padding: 14px 24px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-section">
+        <div class="hero-container">
+            <!-- Contenido principal -->
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Soluciones Informáticas <span class="highlight">Integrales</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Venta de computadoras de última generación y servicio técnico especializado en reparación y mantenimiento. 
+                    Brindamos soluciones confiables respaldadas por profesionales certificados.
+                </p>
+
+                <div class="key-features">
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Venta de equipos nuevos y de calidad</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Reparación técnica especializada</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">✓</span>
+                        <span>Garantía en todos nuestros servicios</span>
+                    </div>
+                </div>
+
+                <div class="cta-buttons">
+                    <button class="cta-primary">
+                        <span>📋</span>
+                        Solicitar Cotización
+                    </button>
+                    <button class="cta-secondary">
+                        <span>💬</span>
+                        Contactar por WhatsApp
+                    </button>
+                </div>
+
+                <div class="trust-badges">
+                    <div class="badge">
+                        <strong>+15 años</strong>
+                        <span>de experiencia</span>
+                    </div>
+                    <div class="badge">
+                        <strong>Servicio técnico</strong>
+                        <span>profesional certificado</span>
+                    </div>
+                    <div class="badge">
+                        <strong>Entrega rápida</strong>
+                        <span>a todo Perú</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Elemento visual derecho -->
+            <div class="hero-visual">
+                <div class="visual-placeholder">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="20" y="40" width="160" height="110" rx="8" fill="none" stroke="currentColor" stroke-width="3"/>
+                        <rect x="30" y="50" width="140" height="80" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <rect x="85" y="140" width="30" height="15" rx="2" fill="currentColor"/>
+                        <circle cx="100" cy="90" r="3" fill="currentColor"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="wave-decoration"></div>
+    </section>
+
+    <script>
+        // Botones
+        document.querySelector('.cta-primary').addEventListener('click', function() {
+            alert('Redirigiendo a formulario de cotización...');
+            // window.location.href = '#contact-section';
+        });
+
+        document.querySelector('.cta-secondary').addEventListener('click', function() {
+            const phoneNumber = '51987654321'; // Cambiar por número real
+            const message = encodeURIComponent('Hola, me interesa solicitar información sobre sus servicios de venta y reparación de computadoras.');
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        });
+    </script>
+</body>
+</html>
