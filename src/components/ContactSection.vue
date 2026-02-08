@@ -1,65 +1,7 @@
 ﻿<template>
-  <section class="contact-section">
+  <section class="contact-section" id="contact">
     <div class="contact-container">
       <div class="contact-wrapper">
-        <div class="contact-info">
-          <div class="credentials-box">
-            <h4>Experiencia Comprobada</h4>
-            <ul class="credentials-list">
-              <li><Star class="credential-icon" size="18" /> +15 años reparando equipos</li>
-              <li><CheckCircle class="credential-icon" size="18" /> Técnicos certificados</li>
-              <li><Users class="credential-icon" size="18" /> 500+ clientes satisfechos</li>
-              <li><ShieldCheck class="credential-icon" size="18" /> Garantía en todas las reparaciones</li>
-            </ul>
-          </div>
-
-          <div class="availability-box">
-            <div class="availability-icon">
-              <Clock size="28" />
-            </div>
-            <div class="availability-content">
-              <h4>Disponibilidad</h4>
-              <p><strong>Lunes a Viernes:</strong> 9:00 AM - 6:00 PM</p>
-              <p><strong>Sábados:</strong> 10:00 AM - 3:00 PM</p>
-              <p class="availability-note"><MessageCircle size="16" /> WhatsApp 24/7</p>
-            </div>
-          </div>
-
-          <div class="advantages">
-            <div class="advantage-item">
-              <Zap class="advantage-icon" size="22" />
-              <div class="advantage-text">
-                <h4>Respuesta Rápida</h4>
-                <p>Menos de 2 horas laborales</p>
-              </div>
-            </div>
-
-            <div class="advantage-item">
-              <UserCheck class="advantage-icon" size="22" />
-              <div class="advantage-text">
-                <h4>Expertos Certificados</h4>
-                <p>+15 años de experiencia</p>
-              </div>
-            </div>
-
-            <div class="advantage-item">
-              <Phone class="advantage-icon" size="22" />
-              <div class="advantage-text">
-                <h4>Múltiples Canales</h4>
-                <p>WhatsApp, teléfono, email</p>
-              </div>
-            </div>
-
-            <div class="advantage-item">
-              <Shield class="advantage-icon" size="22" />
-              <div class="advantage-text">
-                <h4>Garantía Asegurada</h4>
-                <p>6 meses en reparaciones</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
         <div class="form-wrapper">
           <form @submit.prevent="handleSubmit" class="contact-form" novalidate>
             <div class="form-group">
@@ -203,8 +145,64 @@
           </form>
 
           <div class="response-badge">
-            <span class="badge-icon">⏱️</span>
+            <Clock class="badge-icon" size="14" />
             <span class="badge-text">Respuesta en menos de 2 horas</span>
+          </div>
+        </div>
+
+        <div class="contact-info">
+          <div class="credentials-box">
+            <h4>Experiencia Comprobada</h4>
+            <ul class="credentials-list">
+              <li><Star class="credential-icon" size="18" /> +15 años reparando equipos</li>
+              <li><CheckCircle class="credential-icon" size="18" /> Técnicos certificados</li>
+              <li><Users class="credential-icon" size="18" /> 500+ clientes satisfechos</li>
+              <li><ShieldCheck class="credential-icon" size="18" /> Garantía en todas las reparaciones</li>
+            </ul>
+          </div>
+
+          <div class="availability-box">
+
+            <div class="availability-content">
+              <h4>Disponibilidad</h4>
+              <p><strong>Lunes a Viernes:</strong> 9:00 AM - 6:00 PM</p>
+              <p><strong>Sábados:</strong> 10:00 AM - 3:00 PM</p>
+              <p class="availability-note"><MessageCircle size="16" /> WhatsApp 24/7</p>
+            </div>
+          </div>
+
+          <div class="advantages">
+            <div class="advantage-item">
+              <Zap class="advantage-icon" size="22" />
+              <div class="advantage-text">
+                <h4>Respuesta Rápida</h4>
+                <p>Menos de 2 horas laborales</p>
+              </div>
+            </div>
+
+            <div class="advantage-item">
+              <UserCheck class="advantage-icon" size="22" />
+              <div class="advantage-text">
+                <h4>Expertos Certificados</h4>
+                <p>+15 años de experiencia</p>
+              </div>
+            </div>
+
+            <div class="advantage-item">
+              <Phone class="advantage-icon" size="22" />
+              <div class="advantage-text">
+                <h4>Múltiples Canales</h4>
+                <p>WhatsApp, teléfono, email</p>
+              </div>
+            </div>
+
+            <div class="advantage-item">
+              <Shield class="advantage-icon" size="22" />
+              <div class="advantage-text">
+                <h4>Garantía Asegurada</h4>
+                <p>6 meses en reparaciones</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -323,18 +321,43 @@ const handleSubmit = async () => {
   isSubmitting.value = true
 
   try {
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    const subjectLabels = {
+      reparacion: 'Reparación de computadora/laptop',
+      diagnostico: 'Diagnóstico técnico',
+      venta: 'Compra de equipo nuevo',
+      actualizacion: 'Actualización/Upgrade',
+      mantenimiento: 'Limpieza y mantenimiento',
+      recovery: 'Recuperación de datos',
+      otro: 'Otra consulta'
+    }
 
-    successMessage.value = '¡Gracias! En breve nos pondremos en contacto.'
+    const messageLines = [
+      'Hola Ztar Tech, quiero enviar una consulta:',
+      '',
+      `Nombre: ${form.name}`,
+      `Teléfono: ${form.phone}`,
+      form.company ? `Empresa: ${form.company}` : null,
+      `Motivo: ${subjectLabels[form.subject] || form.subject}`,
+      '',
+      'Mensaje:',
+      form.message
+    ].filter(Boolean)
+
+    const message = encodeURIComponent(messageLines.join('\n'))
+    const phoneNumber = '51978418809'
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank')
+
+    successMessage.value = 'Mensaje preparado en WhatsApp.'
 
     setTimeout(() => {
       form.name = ''
       form.phone = ''
+      form.company = ''
       form.subject = ''
       form.message = ''
       form.privacy = false
       successMessage.value = ''
-    }, 3000)
+    }, 2000)
   } catch (error) {
     console.error('Error al enviar:', error)
   } finally {
@@ -358,7 +381,9 @@ const callDirect = () => {
 <style scoped>
 .contact-section {
   padding: 80px 20px;
-  background: linear-gradient(135deg, var(--color-bg-light) 0%, var(--surface-color) 100%);
+  background:
+    linear-gradient(135deg, rgba(10, 24, 40, 0.82) 0%, rgba(14, 34, 58, 0.9) 100%),
+    url('/img/contact-bg.avif') center/cover no-repeat;
   position: relative;
   overflow: hidden;
 }
@@ -384,8 +409,8 @@ const callDirect = () => {
 
 .contact-wrapper {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 50px;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 28px;
   align-items: start;
 }
 
@@ -393,6 +418,10 @@ const callDirect = () => {
   display: flex;
   flex-direction: column;
   gap: 30px;
+}
+
+.form-wrapper {
+  order: -1;
 }
 
 .advantages {
@@ -408,7 +437,7 @@ const callDirect = () => {
   text-align: center;
   gap: 12px;
   padding: 20px 15px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #f9fafc 100%);
+  background: rgba(255, 255, 255, 0.92);
   border-radius: var(--radius);
   border-top: 3px solid var(--color-accent);
   transition: all 0.3s ease;
@@ -439,11 +468,12 @@ const callDirect = () => {
 }
 
 .credentials-box {
-  background: linear-gradient(135deg, #f0f4ff 0%, #f5f9ff 100%);
+  background: rgba(255, 255, 255, 0.9);
   padding: 24px;
   border-radius: 12px;
   border-left: 5px solid var(--color-primary);
   box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(77, 184, 255, 0.2);
 }
 
 .credentials-box h4 {
@@ -524,14 +554,16 @@ const callDirect = () => {
 }
 
 .contact-form {
-  background: var(--surface-color);
-  padding: 40px;
+  background: rgba(255, 255, 255, 0.96);
+  padding: 30px;
   border-radius: var(--radius);
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 18px;
   border-top: 4px solid var(--color-primary);
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  backdrop-filter: blur(6px);
 }
 
 .form-group {
@@ -591,7 +623,7 @@ const callDirect = () => {
 
 .form-textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 90px;
 }
 
 .form-hint {
@@ -799,7 +831,7 @@ const callDirect = () => {
 .response-badge {
   position: absolute;
   bottom: -18px;
-  right: 30px;
+  left: 30px;
   background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-secondary) 100%);
   color: white;
   padding: 12px 20px;
@@ -832,20 +864,25 @@ const callDirect = () => {
 
 @media (max-width: 768px) {
   .contact-section {
-    padding: 60px 15px;
+    padding: 36px 12px;
   }
 
   .contact-wrapper {
     grid-template-columns: 1fr;
-    gap: 30px;
+    gap: 18px;
+  }
+
+  .form-wrapper {
+    order: 0;
   }
 
   .contact-info {
-    order: -1;
+    order: 1;
   }
 
   .contact-form {
-    padding: 25px;
+    padding: 16px;
+    gap: 12px;
   }
 
   .response-badge {
@@ -854,10 +891,11 @@ const callDirect = () => {
     right: auto;
     margin-top: 10px;
     align-self: center;
+    left: auto;
   }
 
   .credentials-box {
-    padding: 20px;
+    padding: 14px;
   }
 
   .credentials-list li {
@@ -866,11 +904,11 @@ const callDirect = () => {
   }
 
   .advantage-item {
-    padding: 15px;
+    padding: 10px;
   }
 
   .availability-box {
-    padding: 20px;
+    padding: 12px;
     text-align: center;
   }
 
@@ -881,8 +919,8 @@ const callDirect = () => {
   }
 
   .submit-button {
-    padding: 16px 30px;
-    min-height: 48px;
+    padding: 12px 20px;
+    min-height: 40px;
     font-size: 0.95rem;
     letter-spacing: 0.4px;
   }
@@ -890,6 +928,10 @@ const callDirect = () => {
   .alternative-buttons {
     flex-direction: column;
     gap: 10px;
+  }
+
+  .form-textarea {
+    min-height: 76px;
   }
 }
 
@@ -899,13 +941,26 @@ const callDirect = () => {
   }
 
   .contact-form {
-    padding: 20px;
-  }
+  background: rgba(255, 255, 255, 0.96);
+  padding: 40px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  border-top: 4px solid var(--color-primary);
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  backdrop-filter: blur(6px);
+}
 
   .alternative-buttons {
     flex-direction: column;
   }
 }
 </style>
+
+
+
+
 
 

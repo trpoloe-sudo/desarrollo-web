@@ -12,7 +12,9 @@
       <div class="services-grid">
         <div class="service-card">
           <div class="service-header">
-            <div class="service-icon">ðŸ?§</div>
+            <div class="service-icon">
+              <Wrench size="36" />
+            </div>
             <h2>Servicio Técnico y Reparación</h2>
           </div>
 
@@ -38,11 +40,11 @@
           <div class="service-benefits">
             <h3>Beneficios para ti:</h3>
             <ul class="benefits-list">
-              <li>âš¡ <strong>Diagnóstico rápido</strong> - Identificamos el problema en máximo 2 horas.</li>
-              <li>ðŸ?T° <strong>Presupuesto transparente</strong> - Cotización antes de reparar.</li>
-              <li>â"? <strong>Garantía en reparaciones</strong> - 6 meses de cobertura.</li>
-              <li>ðŸš, <strong>Rendimiento mejorado</strong> - Tu equipo funcionará como nuevo.</li>
-              <li>ðŸ?¡ï¸ <strong>Datos protegidos</strong> - Tratamiento confidencial de tu información.</li>
+              <li><Zap class="benefit-icon" size="16" /> <strong>Diagnóstico rápido</strong> - Identificamos el problema en máximo 2 horas.</li>
+              <li><ClipboardCheck class="benefit-icon" size="16" /> <strong>Presupuesto transparente</strong> - Cotización antes de reparar.</li>
+              <li><ShieldCheck class="benefit-icon" size="16" /> <strong>Garantía en reparaciones</strong> - 6 meses de cobertura.</li>
+              <li><Gauge class="benefit-icon" size="16" /> <strong>Rendimiento mejorado</strong> - Tu equipo funcionará como nuevo.</li>
+              <li><Lock class="benefit-icon" size="16" /> <strong>Datos protegidos</strong> - Tratamiento confidencial de tu información.</li>
             </ul>
           </div>
 
@@ -55,7 +57,9 @@
 
         <div class="service-card">
           <div class="service-header">
-            <div class="service-icon">ðŸ?T¡</div>
+            <div class="service-icon">
+              <Headset size="36" />
+            </div>
             <h2>Asesoría Técnica Profesional</h2>
           </div>
 
@@ -81,11 +85,11 @@
           <div class="service-benefits">
             <h3>Beneficios para ti:</h3>
             <ul class="benefits-list">
-              <li>ðŸ?oŠ <strong>Análisis especializado</strong> - Evaluamos tu situación actual.</li>
-              <li>ðŸ?T¼ <strong>Soluciones a medida</strong> - Recomendaciones personalizadas.</li>
-              <li>ðŸ?Tµ <strong>Optimización de presupuesto</strong> - Máximo valor por inversión.</li>
-              <li>ðŸŽ¯ <strong>Decisiones informadas</strong> - Explicamos cada opción.</li>
-              <li>ðŸ?o? <strong>Mejora de productividad</strong> - Configuración óptima.</li>
+              <li><BarChart3 class="benefit-icon" size="16" /> <strong>Análisis especializado</strong> - Evaluamos tu situación actual.</li>
+              <li><SlidersHorizontal class="benefit-icon" size="16" /> <strong>Soluciones a medida</strong> - Recomendaciones personalizadas.</li>
+              <li><PiggyBank class="benefit-icon" size="16" /> <strong>Optimización de presupuesto</strong> - Máximo valor por inversión.</li>
+              <li><Target class="benefit-icon" size="16" /> <strong>Decisiones informadas</strong> - Explicamos cada opción.</li>
+              <li><TrendingUp class="benefit-icon" size="16" /> <strong>Mejora de productividad</strong> - Configuración óptima.</li>
             </ul>
           </div>
 
@@ -98,7 +102,9 @@
 
         <div class="service-card">
           <div class="service-header">
-            <div class="service-icon">ðŸ?T»</div>
+            <div class="service-icon">
+              <Monitor size="36" />
+            </div>
             <h2>Venta de Equipos y Componentes</h2>
           </div>
 
@@ -124,11 +130,11 @@
           <div class="service-benefits">
             <h3>Beneficios para ti:</h3>
             <ul class="benefits-list">
-              <li>â"¨ <strong>Marcas certificadas</strong> - Producto nuevo con garantía.</li>
-              <li>ðŸ?T² <strong>Precios competitivos</strong> - Mejor precio sin sacrificar calidad.</li>
-              <li>ðŸ?o¦ <strong>Entrega rápida</strong> - Envío a todo Perú.</li>
-              <li>ðŸŽ <strong>Instalación incluida</strong> - Asesoría según tu equipo.</li>
-              <li>ðŸ??z <strong>Garantía completa</strong> - Soporte técnico post-venta.</li>
+              <li><BadgeCheck class="benefit-icon" size="16" /> <strong>Marcas certificadas</strong> - Producto nuevo con garantía.</li>
+              <li><Wallet class="benefit-icon" size="16" /> <strong>Precios competitivos</strong> - Mejor precio sin sacrificar calidad.</li>
+              <li><Truck class="benefit-icon" size="16" /> <strong>Entrega rápida</strong> - Envío a todo Perú.</li>
+              <li><Gift class="benefit-icon" size="16" /> <strong>Instalación incluida</strong> - Asesoría según tu equipo.</li>
+              <li><LifeBuoy class="benefit-icon" size="16" /> <strong>Garantía completa</strong> - Soporte técnico post-venta.</li>
             </ul>
           </div>
 
@@ -176,6 +182,26 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+import {
+  BadgeCheck,
+  BarChart3,
+  ClipboardCheck,
+  Gauge,
+  Gift,
+  Headset,
+  LifeBuoy,
+  Lock,
+  Monitor,
+  PiggyBank,
+  ShieldCheck,
+  SlidersHorizontal,
+  Target,
+  TrendingUp,
+  Truck,
+  Wallet,
+  Wrench,
+  Zap
+} from 'lucide-vue-next'
 
 const router = useRouter()
 
@@ -194,13 +220,44 @@ const navigateToProducts = () => {
 <style scoped>
 .services-section {
   padding: 80px 20px;
-  background: linear-gradient(135deg, var(--surface-color) 0%, var(--color-bg-light) 100%);
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(77, 184, 255, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 90% 10%, rgba(17, 46, 82, 0.55) 0%, transparent 55%),
+    linear-gradient(135deg, #0a1a2d 0%, #102a44 45%, #0b1b2f 100%);
   margin: 40px 0;
+}
+
+.services-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(77, 184, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(77, 184, 255, 0.08) 1px, transparent 1px);
+  background-size: 36px 36px;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.services-section::after {
+  content: '';
+  position: absolute;
+  inset: -30% -10% auto auto;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, rgba(77, 184, 255, 0.25), transparent 60%);
+  filter: blur(10px);
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .section-header {
@@ -210,7 +267,7 @@ const navigateToProducts = () => {
 
 .section-title {
   font-size: 48px;
-  color: var(--color-primary);
+  color: #e6f1ff;
   margin-bottom: 16px;
   font-weight: 800;
   letter-spacing: -0.5px;
@@ -218,7 +275,7 @@ const navigateToProducts = () => {
 
 .section-subtitle {
   font-size: 18px;
-  color: var(--color-text-light);
+  color: rgba(230, 241, 255, 0.72);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
@@ -232,7 +289,7 @@ const navigateToProducts = () => {
 }
 
 .service-card {
-  background: var(--surface-color);
+  background: rgba(255, 255, 255, 0.92);
   border-radius: 12px;
   padding: 40px;
   box-shadow: var(--shadow-sm);
@@ -240,11 +297,14 @@ const navigateToProducts = () => {
   display: flex;
   flex-direction: column;
   height: 100%;
+  border: 1px solid rgba(77, 184, 255, 0.2);
+  backdrop-filter: blur(6px);
 }
 
 .service-card:hover {
   transform: translateY(-8px);
   box-shadow: var(--shadow-md);
+  border-color: rgba(77, 184, 255, 0.5);
 }
 
 .service-header {
@@ -255,8 +315,15 @@ const navigateToProducts = () => {
 }
 
 .service-icon {
-  font-size: 44px;
   flex-shrink: 0;
+  color: var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(77, 184, 255, 0.12);
 }
 
 .service-header h2 {
@@ -313,10 +380,11 @@ const navigateToProducts = () => {
 }
 
 .service-benefits {
-  background: var(--color-bg-light);
+  background: rgba(15, 32, 55, 0.04);
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 24px;
+  border: 1px solid rgba(77, 184, 255, 0.12);
 }
 
 .service-benefits h3 {
@@ -337,6 +405,15 @@ const navigateToProducts = () => {
   font-size: 14px;
   line-height: 1.8;
   margin-bottom: 10px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.benefit-icon {
+  color: var(--color-accent);
+  margin-top: 3px;
+  flex-shrink: 0;
 }
 
 .benefits-list strong {
@@ -375,16 +452,17 @@ const navigateToProducts = () => {
 }
 
 .process-section {
-  background: var(--surface-color);
+  background: rgba(255, 255, 255, 0.94);
   padding: 60px 40px;
   border-radius: 12px;
   margin-bottom: 60px;
   box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(77, 184, 255, 0.2);
 }
 
 .process-section h2 {
   font-size: 36px;
-  color: var(--color-primary);
+  color: #0f1b2d;
   text-align: center;
   margin-bottom: 40px;
   font-weight: 800;
@@ -485,9 +563,7 @@ const navigateToProducts = () => {
   }
 
   .service-icon {
-    font-size: 36px;
+    transform: scale(0.9);
   }
 }
 </style>
-
-

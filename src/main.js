@@ -42,7 +42,24 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) return savedPosition
+    if (to.hash) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          const el = document.querySelector(to.hash)
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            resolve({ left: 0, top: el.offsetTop })
+          } else {
+            resolve({ left: 0, top: 0 })
+          }
+        }, 100)
+      })
+    }
+    return { top: 0 }
+  }
 })
 
 // Proteger rutas
