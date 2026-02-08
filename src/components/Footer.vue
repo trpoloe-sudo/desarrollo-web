@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
@@ -101,3 +101,4 @@ import { RouterLink } from 'vue-router'
   }
 }
 </style>
+

@@ -1,31 +1,33 @@
-<template>
+﻿<template>
   <section class="contact-section">
     <div class="contact-container">
       <div class="contact-wrapper">
         <div class="contact-info">
           <div class="credentials-box">
-            <h4>✅ Experiencia Comprobada</h4>
+            <h4>Experiencia Comprobada</h4>
             <ul class="credentials-list">
-              <li><span class="credential-icon">⭐</span> +15 años reparando equipos</li>
-              <li><span class="credential-icon">🔧</span> Técnicos certificados</li>
-              <li><span class="credential-icon">💼</span> 500+ clientes satisfechos</li>
-              <li><span class="credential-icon">🛡️</span> Garantía en todas las reparaciones</li>
+              <li><Star class="credential-icon" size="18" /> +15 años reparando equipos</li>
+              <li><CheckCircle class="credential-icon" size="18" /> Técnicos certificados</li>
+              <li><Users class="credential-icon" size="18" /> 500+ clientes satisfechos</li>
+              <li><ShieldCheck class="credential-icon" size="18" /> Garantía en todas las reparaciones</li>
             </ul>
           </div>
 
           <div class="availability-box">
-            <div class="availability-icon">🕐</div>
+            <div class="availability-icon">
+              <Clock size="28" />
+            </div>
             <div class="availability-content">
               <h4>Disponibilidad</h4>
               <p><strong>Lunes a Viernes:</strong> 9:00 AM - 6:00 PM</p>
               <p><strong>Sábados:</strong> 10:00 AM - 3:00 PM</p>
-              <p class="availability-note">💬 WhatsApp 24/7</p>
+              <p class="availability-note"><MessageCircle size="16" /> WhatsApp 24/7</p>
             </div>
           </div>
 
           <div class="advantages">
             <div class="advantage-item">
-              <span class="advantage-icon">⚡</span>
+              <Zap class="advantage-icon" size="22" />
               <div class="advantage-text">
                 <h4>Respuesta Rápida</h4>
                 <p>Menos de 2 horas laborales</p>
@@ -33,7 +35,7 @@
             </div>
 
             <div class="advantage-item">
-              <span class="advantage-icon">👨‍💼</span>
+              <UserCheck class="advantage-icon" size="22" />
               <div class="advantage-text">
                 <h4>Expertos Certificados</h4>
                 <p>+15 años de experiencia</p>
@@ -41,7 +43,7 @@
             </div>
 
             <div class="advantage-item">
-              <span class="advantage-icon">📞</span>
+              <Phone class="advantage-icon" size="22" />
               <div class="advantage-text">
                 <h4>Múltiples Canales</h4>
                 <p>WhatsApp, teléfono, email</p>
@@ -49,7 +51,7 @@
             </div>
 
             <div class="advantage-item">
-              <span class="advantage-icon">💯</span>
+              <Shield class="advantage-icon" size="22" />
               <div class="advantage-text">
                 <h4>Garantía Asegurada</h4>
                 <p>6 meses en reparaciones</p>
@@ -61,7 +63,7 @@
         <div class="form-wrapper">
           <form @submit.prevent="handleSubmit" class="contact-form" novalidate>
             <div class="form-group">
-              <label for="name" class="form-label">👤 Nombre Completo *</label>
+              <label for="name" class="form-label"><User size="16" /> Nombre Completo *</label>
               <input
                 id="name"
                 v-model="form.name"
@@ -75,7 +77,7 @@
             </div>
 
             <div class="form-group">
-              <label for="phone" class="form-label">📱 Teléfono / WhatsApp *</label>
+              <label for="phone" class="form-label"><Phone size="16" /> Teléfono / WhatsApp *</label>
               <input
                 id="phone"
                 v-model="form.phone"
@@ -89,7 +91,7 @@
             </div>
 
             <div class="form-group">
-              <label for="company" class="form-label">🏢 Empresa (Opcional)</label>
+              <label for="company" class="form-label"><Building2 size="16" /> Empresa (Opcional)</label>
               <input
                 id="company"
                 v-model="form.company"
@@ -100,7 +102,7 @@
             </div>
 
             <div class="form-group">
-              <label for="subject" class="form-label">🎯 ¿Qué necesitas? *</label>
+              <label for="subject" class="form-label"><Target size="16" /> ¿Qué necesitas? *</label>
               <select
                 id="subject"
                 v-model="form.subject"
@@ -109,19 +111,19 @@
                 @change="validateField('subject')"
               >
                 <option value="">-- Selecciona una opción --</option>
-                <option value="reparacion">🔧 Reparación de computadora/laptop</option>
-                <option value="diagnostico">🔍 Diagnóstico técnico</option>
-                <option value="venta">💻 Compra de equipo nuevo</option>
-                <option value="actualizacion">⬆️ Actualización/Upgrade</option>
-                <option value="mantenimiento">🧽 Limpieza y mantenimiento</option>
-                <option value="recovery">💾 Recuperación de datos</option>
-                <option value="otro">❓ Otra consulta</option>
+                <option value="reparacion">Reparación de computadora/laptop</option>
+                <option value="diagnostico">Diagnóstico técnico</option>
+                <option value="venta">Compra de equipo nuevo</option>
+                <option value="actualizacion">Actualización/Upgrade</option>
+                <option value="mantenimiento">Limpieza y mantenimiento</option>
+                <option value="recovery">Recuperación de datos</option>
+                <option value="otro">Otra consulta</option>
               </select>
               <span v-if="errors.subject" class="error-message">{{ errors.subject }}</span>
             </div>
 
             <div class="form-group">
-              <label for="message" class="form-label">💬 Describe tu problema *</label>
+              <label for="message" class="form-label"><MessageSquare size="16" /> Describe tu problema *</label>
               <textarea
                 id="message"
                 v-model="form.message"
@@ -132,7 +134,7 @@
                 @blur="validateField('message')"
               ></textarea>
               <span v-if="errors.message" class="error-message">{{ errors.message }}</span>
-              <small class="form-hint">Incluye detalles para una cotización más precisa.</small>
+              <small class="form-hint">Incluye detalles para una respuesta más precisa.</small>
             </div>
 
             <div class="form-group checkbox">
@@ -157,8 +159,8 @@
               :class="{ 'loading': isSubmitting }"
             >
               <span v-if="!isSubmitting" class="submit-text">
-                <span class="submit-icon">🧾</span>
-                Solicitar Cotización Ahora
+                <Send class="submit-icon" size="16" />
+                Enviar Consulta
               </span>
               <span v-else class="submit-text">
                 <span class="submit-loader"></span>
@@ -168,12 +170,12 @@
 
             <transition name="fade">
               <div v-if="successMessage" class="success-message">
-                ✅ {{ successMessage }}
+                {{ successMessage }}
               </div>
             </transition>
 
             <div class="contact-divider">
-              ━━━ O contacta directamente ━━━
+              O contacta directamente
             </div>
 
             <div class="alternative-actions">
@@ -184,7 +186,7 @@
                   @click="openWhatsApp"
                   title="Chatea por WhatsApp"
                 >
-                  <span class="alt-icon">💬</span>
+                  <MessageCircle class="alt-icon" size="16" />
                   WhatsApp
                 </button>
                 <button
@@ -193,7 +195,7 @@
                   @click="callDirect"
                   title="Llama ahora"
                 >
-                  <span class="alt-icon">📞</span>
+                  <Phone class="alt-icon" size="16" />
                   Llamar
                 </button>
               </div>
@@ -212,6 +214,23 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
+import {
+  Building2,
+  CheckCircle,
+  Clock,
+  MessageCircle,
+  MessageSquare,
+  Phone,
+  Send,
+  Shield,
+  ShieldCheck,
+  Star,
+  Target,
+  User,
+  UserCheck,
+  Users,
+  Zap
+} from 'lucide-vue-next'
 
 const form = reactive({
   name: '',
@@ -403,7 +422,6 @@ const callDirect = () => {
 }
 
 .advantage-icon {
-  font-size: 1.8rem;
   color: var(--color-accent);
 }
 
@@ -459,8 +477,8 @@ const callDirect = () => {
 }
 
 .credential-icon {
-  font-size: 1.2rem;
   flex-shrink: 0;
+  color: var(--color-accent);
 }
 
 .availability-box {
@@ -496,6 +514,9 @@ const callDirect = () => {
   font-size: 0.85rem;
   opacity: 0.9;
   margin-top: 8px !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .form-wrapper {
@@ -670,7 +691,7 @@ const callDirect = () => {
 }
 
 .submit-icon {
-  font-size: 1.2rem;
+  color: currentColor;
 }
 
 .submit-loader {
@@ -772,7 +793,7 @@ const callDirect = () => {
 }
 
 .alt-icon {
-  font-size: 1.2rem;
+  color: currentColor;
 }
 
 .response-badge {
@@ -886,3 +907,5 @@ const callDirect = () => {
   }
 }
 </style>
+
+

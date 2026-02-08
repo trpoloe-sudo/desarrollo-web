@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <section class="hero-section">
     <div class="hero-container">
       <!-- Contenido principal -->
@@ -18,15 +18,15 @@
           <!-- Características clave con palabras clave SEO -->
           <div class="key-features">
             <div class="feature">
-              <span class="feature-icon">✓</span>
+              <Check class="feature-icon" size="18" />
               <span class="feature-text">Reparación profesional de computadoras</span>
             </div>
             <div class="feature">
-              <span class="feature-icon">✓</span>
+              <Check class="feature-icon" size="18" />
               <span class="feature-text">Garantía 6 meses en reparaciones</span>
             </div>
             <div class="feature">
-              <span class="feature-icon">✓</span>
+              <Check class="feature-icon" size="18" />
               <span class="feature-text">Precios competitivos en Lima</span>
             </div>
           </div>
@@ -38,24 +38,14 @@
               @click="goToProducts"
               aria-label="Ver catálogo de productos"
             >
-              <span class="cta-icon">🛒</span>
+              <ShoppingCart class="cta-icon" size="18" />
               Ver Productos
             </button>
-            <button 
-              class="cta-primary" 
-              @click="openQuotation"
-              :disabled="isLoading"
-              aria-label="Solicitar una cotización personalizada de nuestros servicios técnicos"
-            >
-              <span class="cta-icon">{{ isLoading ? '⏳' : '📋' }}</span>
-              {{ isLoading ? 'Cargando...' : 'Solicitar Cotización' }}
-            </button>
-            <button 
-              class="cta-secondary" 
+            <button class="cta-secondary" 
               @click="openWhatsApp"
               aria-label="Contactar por WhatsApp con nuestro equipo técnico disponible 24/7"
             >
-              <span class="cta-icon">💬</span>
+              <MessageCircle class="cta-icon" size="18" />
               Contactar por WhatsApp
             </button>
           </div>
@@ -95,7 +85,7 @@
                   <h3 class="product-name-featured">{{ currentProduct.nombre }}</h3>
                   <p class="product-price">${{ currentProduct.precio.toFixed(2) }}</p>
                   <button class="add-to-cart-btn" @click.stop="addProductToCart">
-                    🛒 Añadir al Carrito
+                    Añadir al Carrito
                   </button>
                 </div>
               </div>
@@ -125,56 +115,17 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { Monitor, Zap, Shield } from 'lucide-vue-next'
+import { Monitor, Zap, Shield, Check, ShoppingCart, MessageCircle } from 'lucide-vue-next'
 import { useCartStore } from '@/stores/cartStore'
 import { googleSheetsAPI } from '@/services/googleSheetsAPI'
 
 const router = useRouter()
-const cartStore = useCartStore()
-const isLoading = ref(false)
+const cartStore = useCartStore()
 const products = ref([])
 const currentProduct = ref(null)
 const productInterval = ref(null)
 const loadingProducts = ref(true)
 
-const openQuotation = async () => {
-  isLoading.value = true
-  // Navegar a formulario de cotización con scroll suave
-  const quotationSection = document.querySelector('#quotation-section') 
-    || document.querySelector('.contact-section')
-  if (quotationSection) {
-    quotationSection.scrollIntoView({ behavior: 'smooth' })
-    // Esperar a que termine el scroll
-    await new Promise(resolve => setTimeout(resolve, 600))
-  } else {
-    console.warn('Sección de cotización no encontrada')
-  }
-  isLoading.value = false
-}
-
-const openWhatsApp = () => {
-  // Número de WhatsApp
-  const phoneNumber = '51978418809'
-  
-  // Validar número
-  if (!phoneNumber || phoneNumber.length < 10) {
-    console.error('Número de WhatsApp no configurado correctamente')
-    return
-  }
-  
-  // Mensaje mejorado con emojis y estructura clara
-  const message = encodeURIComponent(
-    '👋 Hola ZTarTech!\n\n' +
-    'Me interesa obtener información sobre sus servicios:\n\n' +
-    '🔧 Reparación de computadoras/laptops\n' +
-    '💻 Venta de equipos nuevos\n' +
-    '⚙️ Diagnóstico y asesoría técnica\n' +
-    '💾 Recuperación de datos\n\n' +
-    '¿Podrían enviarme presupuesto y más detalles?'
-  )
-  
-  window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank')
-}
 
 const goToProducts = () => {
   router.push('/products')
@@ -214,7 +165,7 @@ const addProductToCart = () => {
     })
     
     // Mostrar notificación
-    alert(`✅ ${currentProduct.value.nombre} añadido al carrito`)
+    alert(`Producto añadido al carrito: ${currentProduct.value.nombre}`)
     
     // Redireccionar a productos
     router.push('/productos')
@@ -331,8 +282,6 @@ onUnmounted(() => {
 
 .feature-icon {
   color: var(--color-accent);
-  font-size: 22px;
-  font-weight: bold;
   flex-shrink: 0;
 }
 
@@ -348,7 +297,6 @@ onUnmounted(() => {
   flex-wrap: wrap;
 }
 
-.cta-primary,
 .cta-secondary {
   padding: 16px 32px;
   font-size: 16px;
@@ -363,13 +311,6 @@ onUnmounted(() => {
   gap: 10px;
   text-decoration: none;
   min-height: 48px;
-}
-
-.cta-primary {
-  background: linear-gradient(135deg, var(--color-accent) 0%, #2f6fb4 100%);
-  color: white;
-  box-shadow: 0 8px 24px rgba(77, 184, 255, 0.3);
-  transform: translateY(0);
 }
 
 .cta-tertiary {
@@ -397,16 +338,6 @@ onUnmounted(() => {
   box-shadow: 0 6px 16px rgba(15, 28, 46, 0.3);
 }
 
-.cta-primary:hover:not(:disabled) {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(77, 184, 255, 0.4);
-}
-
-.cta-primary:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
 .cta-secondary {
   background: transparent;
   color: white;
@@ -421,7 +352,7 @@ onUnmounted(() => {
 }
 
 .cta-icon {
-  font-size: 20px;
+  color: currentColor;
 }
 
 /* Insignias de confianza */
@@ -738,8 +669,6 @@ onUnmounted(() => {
     flex-direction: column;
     gap: 12px;
   }
-
-  .cta-primary,
   .cta-secondary {
     width: 100%;
     justify-content: center;
@@ -778,8 +707,6 @@ onUnmounted(() => {
   .feature {
     font-size: 15px;
   }
-
-  .cta-primary,
   .cta-secondary {
     padding: 16px 28px;
     font-size: 16px;
@@ -787,3 +714,8 @@ onUnmounted(() => {
   }
 }
 </style>
+
+
+
+
+

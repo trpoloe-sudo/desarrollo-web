@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <section class="services-section">
     <div class="container">
       <div class="section-header">
@@ -12,7 +12,7 @@
       <div class="services-grid">
         <div class="service-card">
           <div class="service-header">
-            <div class="service-icon">🔧</div>
+            <div class="service-icon">ðŸ?§</div>
             <h2>Servicio Técnico y Reparación</h2>
           </div>
 
@@ -38,11 +38,11 @@
           <div class="service-benefits">
             <h3>Beneficios para ti:</h3>
             <ul class="benefits-list">
-              <li>⚡ <strong>Diagnóstico rápido</strong> - Identificamos el problema en máximo 2 horas.</li>
-              <li>💰 <strong>Presupuesto transparente</strong> - Cotización antes de reparar.</li>
-              <li>✅ <strong>Garantía en reparaciones</strong> - 6 meses de cobertura.</li>
-              <li>🚀 <strong>Rendimiento mejorado</strong> - Tu equipo funcionará como nuevo.</li>
-              <li>🛡️ <strong>Datos protegidos</strong> - Tratamiento confidencial de tu información.</li>
+              <li>âš¡ <strong>Diagnóstico rápido</strong> - Identificamos el problema en máximo 2 horas.</li>
+              <li>ðŸ?T° <strong>Presupuesto transparente</strong> - Cotización antes de reparar.</li>
+              <li>â"? <strong>Garantía en reparaciones</strong> - 6 meses de cobertura.</li>
+              <li>ðŸš, <strong>Rendimiento mejorado</strong> - Tu equipo funcionará como nuevo.</li>
+              <li>ðŸ?¡ï¸ <strong>Datos protegidos</strong> - Tratamiento confidencial de tu información.</li>
             </ul>
           </div>
 
@@ -55,7 +55,7 @@
 
         <div class="service-card">
           <div class="service-header">
-            <div class="service-icon">💡</div>
+            <div class="service-icon">ðŸ?T¡</div>
             <h2>Asesoría Técnica Profesional</h2>
           </div>
 
@@ -81,11 +81,11 @@
           <div class="service-benefits">
             <h3>Beneficios para ti:</h3>
             <ul class="benefits-list">
-              <li>📊 <strong>Análisis especializado</strong> - Evaluamos tu situación actual.</li>
-              <li>💼 <strong>Soluciones a medida</strong> - Recomendaciones personalizadas.</li>
-              <li>💵 <strong>Optimización de presupuesto</strong> - Máximo valor por inversión.</li>
-              <li>🎯 <strong>Decisiones informadas</strong> - Explicamos cada opción.</li>
-              <li>📈 <strong>Mejora de productividad</strong> - Configuración óptima.</li>
+              <li>ðŸ?oŠ <strong>Análisis especializado</strong> - Evaluamos tu situación actual.</li>
+              <li>ðŸ?T¼ <strong>Soluciones a medida</strong> - Recomendaciones personalizadas.</li>
+              <li>ðŸ?Tµ <strong>Optimización de presupuesto</strong> - Máximo valor por inversión.</li>
+              <li>ðŸŽ¯ <strong>Decisiones informadas</strong> - Explicamos cada opción.</li>
+              <li>ðŸ?o? <strong>Mejora de productividad</strong> - Configuración óptima.</li>
             </ul>
           </div>
 
@@ -98,7 +98,7 @@
 
         <div class="service-card">
           <div class="service-header">
-            <div class="service-icon">💻</div>
+            <div class="service-icon">ðŸ?T»</div>
             <h2>Venta de Equipos y Componentes</h2>
           </div>
 
@@ -124,11 +124,11 @@
           <div class="service-benefits">
             <h3>Beneficios para ti:</h3>
             <ul class="benefits-list">
-              <li>✨ <strong>Marcas certificadas</strong> - Producto nuevo con garantía.</li>
-              <li>💲 <strong>Precios competitivos</strong> - Mejor precio sin sacrificar calidad.</li>
-              <li>📦 <strong>Entrega rápida</strong> - Envío a todo Perú.</li>
-              <li>🎁 <strong>Instalación incluida</strong> - Asesoría según tu equipo.</li>
-              <li>🔄 <strong>Garantía completa</strong> - Soporte técnico post-venta.</li>
+              <li>â"¨ <strong>Marcas certificadas</strong> - Producto nuevo con garantía.</li>
+              <li>ðŸ?T² <strong>Precios competitivos</strong> - Mejor precio sin sacrificar calidad.</li>
+              <li>ðŸ?o¦ <strong>Entrega rápida</strong> - Envío a todo Perú.</li>
+              <li>ðŸŽ <strong>Instalación incluida</strong> - Asesoría según tu equipo.</li>
+              <li>ðŸ??z <strong>Garantía completa</strong> - Soporte técnico post-venta.</li>
             </ul>
           </div>
 
@@ -167,42 +167,6 @@
             <div class="step-number">5</div>
             <h3>Seguimiento</h3>
             <p>Garantía en el servicio y soporte técnico post-venta.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="why-us-section">
-        <h2>¿Por Qué Elegirnos?</h2>
-        <div class="why-us-grid">
-          <div class="why-us-item">
-            <div class="why-us-icon">👨‍💼</div>
-            <h3>Profesionales Certificados</h3>
-            <p>Equipo técnico con certificaciones en reparación y soporte de sistemas.</p>
-          </div>
-          <div class="why-us-item">
-            <div class="why-us-icon">⏱️</div>
-            <h3>Atención Rápida</h3>
-            <p>Respuesta en máximo 24 horas a todas tus solicitudes.</p>
-          </div>
-          <div class="why-us-item">
-            <div class="why-us-icon">🛡️</div>
-            <h3>Garantía en Todo</h3>
-            <p>Garantía en productos y 6 meses en trabajos de reparación.</p>
-          </div>
-          <div class="why-us-item">
-            <div class="why-us-icon">💬</div>
-            <h3>Atención Personalizada</h3>
-            <p>Te escuchamos y buscamos la solución que se ajuste a tus necesidades.</p>
-          </div>
-          <div class="why-us-item">
-            <div class="why-us-icon">🌍</div>
-            <h3>Cobertura Nacional</h3>
-            <p>Servicio a todo Perú con entrega y soporte técnico disponible.</p>
-          </div>
-          <div class="why-us-item">
-            <div class="why-us-icon">💰</div>
-            <h3>Precios Justos</h3>
-            <p>Precios competitivos sin comprometer la calidad del servicio.</p>
           </div>
         </div>
       </div>
@@ -464,55 +428,6 @@ const navigateToProducts = () => {
   margin: 0;
 }
 
-.why-us-section {
-  text-align: center;
-}
-
-.why-us-section h2 {
-  font-size: 36px;
-  color: var(--color-primary);
-  margin-bottom: 40px;
-  font-weight: 800;
-}
-
-.why-us-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-}
-
-.why-us-item {
-  background: var(--surface-color);
-  padding: 32px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
-}
-
-.why-us-item:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-}
-
-.why-us-icon {
-  font-size: 40px;
-  margin-bottom: 16px;
-}
-
-.why-us-item h3 {
-  font-size: 18px;
-  color: var(--color-primary);
-  margin-bottom: 12px;
-  font-weight: 700;
-}
-
-.why-us-item p {
-  font-size: 14px;
-  color: var(--color-text-light);
-  line-height: 1.6;
-  margin: 0;
-}
-
 @media (max-width: 1024px) {
   .services-grid {
     grid-template-columns: 1fr;
@@ -521,10 +436,6 @@ const navigateToProducts = () => {
 
   .process-grid {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .why-us-grid {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -558,14 +469,6 @@ const navigateToProducts = () => {
   .step-number {
     margin: 0;
   }
-
-  .why-us-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .why-us-section h2 {
-    font-size: 28px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -584,9 +487,7 @@ const navigateToProducts = () => {
   .service-icon {
     font-size: 36px;
   }
-
-  .why-us-icon {
-    font-size: 32px;
-  }
 }
 </style>
+
+

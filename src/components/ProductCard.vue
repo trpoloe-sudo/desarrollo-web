@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="product-card">
     <RouterLink :to="`/product/${product.id}`" class="card-link">
       <div class="image-container">
@@ -8,7 +8,7 @@
           @click.prevent="toggleFavorite"
           :class="['favorite-btn', { active: isFavorite }]"
         >
-          {{ isFavorite ? '❤️' : '🤍' }}
+          <Heart :fill="isFavorite ? 'currentColor' : 'none'" size="18" />
         </button>
       </div>
       <div class="product-info">
@@ -29,7 +29,7 @@
       @click="addToCart"
       class="add-btn"
     >
-      🛒 Añadir
+      Añadir
     </button>
     <button v-else disabled class="add-btn disabled">
       Agotado
@@ -42,6 +42,7 @@ import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useFavoritesStore } from '@/stores/favorites'
 import ExpandableText from './ExpandableText.vue'
+import { Heart } from 'lucide-vue-next'
 
 const props = defineProps({
   product: {
@@ -141,7 +142,7 @@ export default {
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  font-size: 1.2em;
+  color: var(--color-accent);
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
@@ -244,3 +245,4 @@ export default {
   }
 }
 </style>
+

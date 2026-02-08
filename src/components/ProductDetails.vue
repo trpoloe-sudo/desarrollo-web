@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="product-details">
     <div class="details-container">
       <div class="details-image-section">
@@ -58,7 +58,7 @@
 
         <div class="actions">
           <div class="quantity-selector">
-            <button @click="decrementQuantity" :disabled="quantity <= 1">−</button>
+            <button @click="decrementQuantity" :disabled="quantity <= 1">-</button>
             <input v-model.number="quantity" type="number" min="1" :max="product.stock">
             <button @click="incrementQuantity" :disabled="quantity >= product.stock">+</button>
           </div>
@@ -67,7 +67,7 @@
             @click="addToCart"
             class="add-to-cart-btn"
           >
-            🛒 Añadir al carrito
+            Añadir al carrito
           </button>
           <button v-else disabled class="add-to-cart-btn disabled">
             Agotado
@@ -76,34 +76,35 @@
             @click="toggleFavorite"
             :class="['favorite-btn', { active: isFavorite }]"
           >
-            {{ isFavorite ? '❤️ En Favoritos' : '🤍 Añadir a Favoritos' }}
+            <Heart class="favorite-icon" size="18" />
+            {{ isFavorite ? 'En Favoritos' : 'Añadir a Favoritos' }}
           </button>
         </div>
 
         <div class="tech-grid">
           <div class="tech-card">
-            <span class="tech-icon">🚚</span>
+            <Truck class="tech-icon" size="18" />
             <div>
               <p class="tech-title">Envío Gratis</p>
               <p class="tech-text">Desde $50 en Lima Metropolitana</p>
             </div>
           </div>
           <div class="tech-card">
-            <span class="tech-icon">↩️</span>
+            <RotateCcw class="tech-icon" size="18" />
             <div>
               <p class="tech-title">Devolución</p>
               <p class="tech-text">30 días sin costo</p>
             </div>
           </div>
           <div class="tech-card">
-            <span class="tech-icon">🛡️</span>
+            <ShieldCheck class="tech-icon" size="18" />
             <div>
               <p class="tech-title">Garantía</p>
               <p class="tech-text">1 año con soporte</p>
             </div>
           </div>
           <div class="tech-card">
-            <span class="tech-icon">💳</span>
+            <CreditCard class="tech-icon" size="18" />
             <div>
               <p class="tech-title">Pago Seguro</p>
               <p class="tech-text">Protección avanzada</p>
@@ -117,6 +118,7 @@
 
 <script setup>
 import { ref, computed, watch } from 'vue'
+import { CreditCard, Heart, RotateCcw, ShieldCheck, Truck } from 'lucide-vue-next'
 import { useFavoritesStore } from '@/stores/favorites'
 import { useCartStore } from '@/stores/cartStore'
 import ExpandableSpecs from './ExpandableSpecs.vue'
@@ -467,6 +469,9 @@ const toggleFavorite = () => {
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .favorite-btn:hover {
@@ -525,7 +530,7 @@ const toggleFavorite = () => {
 }
 
 .tech-icon {
-  font-size: 20px;
+  color: var(--color-accent);
 }
 
 .tech-title {
@@ -635,3 +640,4 @@ const toggleFavorite = () => {
   }
 }
 </style>
+

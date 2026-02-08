@@ -1,22 +1,22 @@
-<template>
+﻿<template>
   <div id="app" class="app">
-    <Header />
     <NavBar />
     <main class="main-content">
       <RouterView />
     </main>
     <Footer />
     <WhatsAppButton />
+    <CartFloatingButton />
   </div>
 </template>
 
 <script setup>
 import { onMounted } from 'vue'
 import { RouterView } from 'vue-router'
-import Header from './components/Header.vue'
 import NavBar from './components/NavBar.vue'
 import Footer from './components/Footer.vue'
 import WhatsAppButton from './components/WhatsAppButton.vue'
+import CartFloatingButton from './components/CartFloatingButton.vue'
 
 // Inyectar Schema Markup JSON-LD en el head
 onMounted(() => {
@@ -88,3 +88,4 @@ onMounted(() => {
   }
 }
 </style>
+

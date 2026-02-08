@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="expandable-text">
     <p
       :class="['text-content', { expanded: isExpanded, collapsed: !isExpanded }]"
@@ -12,7 +12,7 @@
       @click="toggleExpand"
       class="expand-btn"
     >
-      {{ isExpanded ? '▲ Menos' : '...Más' }}
+      {{ isExpanded ? 'Menos' : 'Más' }}
     </button>
   </div>
 </template>
@@ -120,3 +120,4 @@ onMounted(async () => {
   transform: translateX(2px) scale(0.98);
 }
 </style>
+

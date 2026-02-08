@@ -1,6 +1,6 @@
-<template>
+﻿<template>
   <div class="checkout-container">
-    <h1>🛒 Carrito de Compras</h1>
+    <h1><ShoppingCart class="title-icon" size="22" /> Carrito de Compras</h1>
 
     <div class="checkout-grid">
       <section class="cart-summary">
@@ -28,7 +28,7 @@
               </div>
               <div class="item-price">
                 <p>${{ (item.precio * item.quantity).toFixed(2) }}</p>
-                <button @click="cartStore.removeItem(item.id)" class="btn-remove">🗑️</button>
+                <button @click="cartStore.removeItem(item.id)" class="btn-remove">Eliminar</button>
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@
       </section>
 
       <section v-if="cartStore.items.length > 0" class="payment-section">
-        <h2>💳 Información de Pago</h2>
+        <h2>Información de Pago</h2>
 
         <div v-if="!paymentProcessed" class="payment-form">
           <div class="form-group">
@@ -176,6 +176,7 @@ import { ref, computed } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
 import { useUserStore } from '@/stores/user'
+import { ShoppingCart } from 'lucide-vue-next'
 
 const router = useRouter()
 const cartStore = useCartStore()
@@ -278,6 +279,14 @@ async function proceedToPayment() {
   text-align: center;
   color: var(--color-primary);
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.title-icon {
+  color: var(--color-accent);
 }
 
 .checkout-grid {
@@ -622,3 +631,4 @@ input:focus {
   }
 }
 </style>
+

@@ -1,13 +1,13 @@
-<template>
+﻿<template>
   <div class="dashboard-container">
     <div class="dashboard-header">
-      <h1>📊 Mi Dashboard</h1>
+      <h1><LayoutDashboard class="title-icon" size="22" /> Mi Dashboard</h1>
       <p>Bienvenido, {{ userStore.user?.name || userStore.user?.email.split('@')[0] }}</p>
     </div>
 
     <div class="dashboard-grid">
       <section class="dashboard-section user-info">
-        <h2>👤 Mi Información</h2>
+        <h2><User class="title-icon" size="18" /> Mi Información</h2>
         <div class="info-card">
           <p><strong>Email:</strong> {{ userStore.user?.email }}</p>
           <p><strong>Miembro desde:</strong> {{ formatDate(userStore.user?.createdAt) }}</p>
@@ -16,7 +16,7 @@
       </section>
 
       <section class="dashboard-section stats">
-        <h2>📈 Estadísticas</h2>
+        <h2><BarChart3 class="title-icon" size="18" /> Estadísticas</h2>
         <div class="stats-grid">
           <div class="stat-card">
             <h3>Órdenes</h3>
@@ -35,7 +35,7 @@
     </div>
 
     <section class="dashboard-section orders">
-      <h2>📦 Historial de Compras</h2>
+      <h2><ShoppingBag class="title-icon" size="18" /> Historial de Compras</h2>
 
       <div v-if="userStore.getOrders().length === 0" class="empty-state">
         <p>Aún no has realizado ninguna compra</p>
@@ -103,6 +103,7 @@ import { computed, ref } from 'vue'
 import { useRouter, RouterLink } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { useFavoritesStore } from '@/stores/favorites'
+import { BarChart3, LayoutDashboard, ShoppingBag, User } from 'lucide-vue-next'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -151,6 +152,10 @@ function logout() {
 .dashboard-header h1 {
   margin: 0 0 10px 0;
   font-size: 2.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .dashboard-header p {
@@ -178,6 +183,13 @@ function logout() {
   color: var(--color-text);
   border-bottom: 2px solid var(--color-accent);
   padding-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title-icon {
+  color: var(--color-accent);
 }
 
 .info-card {
@@ -413,3 +425,4 @@ tr:hover {
   }
 }
 </style>
+

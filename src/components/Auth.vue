@@ -1,18 +1,13 @@
-<template>
+﻿<template>
   <div class="auth-container">
     <div class="auth-card">
       <h2>{{ isLogin ? 'Iniciar Sesión' : 'Crear Cuenta' }}</h2>
 
       <div class="google-login-section">
-        <button
-          @click="handleGoogleLogin"
-          type="button"
-          class="btn-google"
-          :disabled="isLoading"
-        >
-          <span class="google-icon">🔐</span>
-          {{ isLoading ? 'Cargando...' : 'Continuar con Google' }}
-        </button>
+        <div id="google-button-container" class="google-button-container"></div>
+        <p v-if="!googleReady" class="hint">
+          Google Sign-In no está disponible por ahora.
+        </p>
         <p class="divider">o continúa con email</p>
       </div>
 
@@ -26,8 +21,9 @@
             placeholder="tu@email.com"
             autocomplete="email"
             required
-            :class="{ 'input-error': error }"
+            :class="{ 'input-error': fieldErrors.email }"
           />
+          <span v-if="fieldErrors.email" class="field-error" aria-live="polite">{{ fieldErrors.email }}</span>
         </div>
 
         <div class="form-group">
@@ -36,11 +32,12 @@
             v-model="form.password"
             type="password"
             id="password"
-            placeholder="••••••••"
+            placeholder="Tu contraseña"
             :autocomplete="isLogin ? 'current-password' : 'new-password'"
             required
-            :class="{ 'input-error': error }"
+            :class="{ 'input-error': fieldErrors.password }"
           />
+          <span v-if="fieldErrors.password" class="field-error" aria-live="polite">{{ fieldErrors.password }}</span>
         </div>
 
         <div v-if="!isLogin" class="form-group">
@@ -52,11 +49,12 @@
             placeholder="Tu nombre"
             autocomplete="name"
             required
-            :class="{ 'input-error': error }"
+            :class="{ 'input-error': fieldErrors.name }"
           />
+          <span v-if="fieldErrors.name" class="field-error" aria-live="polite">{{ fieldErrors.name }}</span>
         </div>
 
-        <div v-if="error" class="error-message">{{ error }}</div>
+        <div v-if="error" class="error-message" aria-live="polite">{{ error }}</div>
 
         <button type="submit" class="btn-primary" :disabled="isLoading">
           <span v-if="isLoading" class="btn-loader"></span>
@@ -70,13 +68,19 @@
           {{ isLogin ? 'Regístrate' : 'Inicia sesión' }}
         </button>
       </p>
-      <div id="google-button-container" class="google-button-container"></div>
+      <button
+        v-if="userStore.isLoggedIn"
+        class="btn-secondary logout-btn"
+        @click="logout"
+      >
+        Cerrar Sesión
+      </button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import {
@@ -98,6 +102,11 @@ const form = ref({
   password: '',
   name: ''
 })
+const fieldErrors = reactive({
+  email: '',
+  password: '',
+  name: ''
+})
 
 onMounted(async () => {
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
@@ -110,6 +119,7 @@ onMounted(async () => {
   try {
     await initializeGoogleSignIn(clientId, handleGoogleSignInSuccess)
     googleReady.value = true
+    renderGoogleButton('google-button-container', { width: 320 })
 
     showGooglePrompt(() => {
       console.log('Google prompt cerrado')
@@ -121,6 +131,7 @@ onMounted(async () => {
 })
 
 function handleGoogleLogin() {
+  if (!googleReady.value) return
   if (!isGoogleSignInAvailable()) {
     error.value = 'Google Sign-In no está disponible. Por favor intenta más tarde.'
     return
@@ -156,7 +167,7 @@ function handleGoogleSignInSuccess(googleData) {
       googleData.picture || null
     )
 
-    showNotification('✅ Sesión iniciada con Google', 'success')
+    showNotification('Sesión iniciada con Google', 'success')
 
     setTimeout(() => {
       router.push('/')
@@ -174,14 +185,36 @@ async function handleSubmit() {
   try {
     isLoading.value = true
     error.value = ''
+    fieldErrors.email = ''
+    fieldErrors.password = ''
+    fieldErrors.name = ''
 
-    if (isLogin.value) {
-      userStore.login(form.value.email, form.value.password)
-    } else {
-      userStore.register(form.value.email, form.value.password, form.value.name)
+    const emailValue = form.value.email.trim()
+    const passwordValue = form.value.password.trim()
+    const nameValue = form.value.name.trim()
+
+    if (!emailValue || !/^\S+@\S+\.\S+$/.test(emailValue)) {
+      fieldErrors.email = 'Ingresa un email válido'
+    }
+    if (!passwordValue || passwordValue.length < 6) {
+      fieldErrors.password = 'La contraseña debe tener al menos 6 caracteres'
+    }
+    if (!isLogin.value && nameValue.length < 2) {
+      fieldErrors.name = 'Ingresa tu nombre'
     }
 
-    showNotification(isLogin.value ? '✅ Sesión iniciada' : '✅ Cuenta creada', 'success')
+    if (fieldErrors.email || fieldErrors.password || fieldErrors.name) {
+      isLoading.value = false
+      return
+    }
+
+    if (isLogin.value) {
+      userStore.login(emailValue, passwordValue)
+    } else {
+      userStore.register(emailValue, passwordValue, nameValue)
+    }
+
+    showNotification(isLogin.value ? 'Sesión iniciada' : 'Cuenta creada', 'success')
 
     setTimeout(() => {
       router.push('/')
@@ -196,6 +229,11 @@ async function handleSubmit() {
 
 function showNotification(message, type) {
   console.log(`[${type.toUpperCase()}] ${message}`)
+}
+
+function logout() {
+  userStore.logout()
+  router.push('/')
 }
 </script>
 
@@ -323,6 +361,13 @@ input:focus {
   font-size: 0.9em;
 }
 
+.field-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.85em;
+  color: var(--color-error);
+}
+
 .toggle-auth {
   text-align: center;
   margin-top: 20px;
@@ -346,37 +391,17 @@ input:focus {
   margin-bottom: 20px;
 }
 
-.btn-google {
-  width: 100%;
-  padding: 12px;
-  background: white;
-  border: 2px solid var(--color-border);
-  border-radius: 6px;
-  font-size: 1em;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
+.google-button-container {
+  min-height: 48px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 10px;
-  color: var(--color-text);
 }
 
-.btn-google:hover:not(:disabled) {
-  border-color: var(--color-accent);
-  background: var(--color-bg-light);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-sm);
-}
-
-.btn-google:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.google-icon {
-  font-size: 18px;
+.hint {
+  margin: 8px 0 0;
+  font-size: 0.85em;
+  color: var(--color-text-light);
+  text-align: center;
 }
 
 .divider {
@@ -411,6 +436,22 @@ input:focus {
   text-align: center;
 }
 
+.btn-secondary {
+  width: 100%;
+  padding: 10px;
+  margin-top: 12px;
+  background: var(--color-bg-light);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: #e9edf5;
+}
+
 .btn-loader {
   width: 16px;
   height: 16px;
@@ -426,3 +467,4 @@ input:focus {
   }
 }
 </style>
+

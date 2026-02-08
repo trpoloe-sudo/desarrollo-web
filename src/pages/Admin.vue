@@ -1,6 +1,6 @@
-<template>
+﻿<template>
   <div class="admin-container">
-    <h1>⚙️ Panel de Administración</h1>
+    <h1><ShieldCheck class="title-icon" size="22" /> Panel de Administración</h1>
 
     <div class="admin-tabs">
       <button
@@ -14,7 +14,7 @@
     </div>
 
     <section v-if="activeTab === 'products'" class="admin-section">
-      <h2>📦 Gestión de Productos</h2>
+      <h2><Package class="title-icon" size="18" /> Gestión de Productos</h2>
 
       <div class="admin-form">
         <h3>{{ editingProduct ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h3>
@@ -81,8 +81,8 @@
               <td>${{ product.precio }}</td>
               <td>{{ product.stock }}</td>
               <td class="actions">
-                <button @click="editProduct(product)" class="btn-edit">✏️ Editar</button>
-                <button @click="deleteProduct(product.id)" class="btn-delete">🗑️ Eliminar</button>
+                <button @click="editProduct(product)" class="btn-edit">Editar</button>
+                <button @click="deleteProduct(product.id)" class="btn-delete">Eliminar</button>
               </td>
             </tr>
           </tbody>
@@ -91,7 +91,7 @@
     </section>
 
     <section v-if="activeTab === 'orders'" class="admin-section">
-      <h2>📋 Gestión de Órdenes</h2>
+      <h2><ClipboardList class="title-icon" size="18" /> Gestión de Órdenes</h2>
 
       <div v-if="allOrders.length === 0" class="empty-state">
         No hay órdenes aún
@@ -130,7 +130,7 @@
     </section>
 
     <section v-if="activeTab === 'users'" class="admin-section">
-      <h2>👥 Gestión de Usuarios</h2>
+      <h2><Users class="title-icon" size="18" /> Gestión de Usuarios</h2>
 
       <div v-if="users.length === 0" class="empty-state">
         No hay usuarios registrados aún
@@ -174,6 +174,7 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { ClipboardList, Package, ShieldCheck, Users } from 'lucide-vue-next'
 
 const userStore = useUserStore()
 const activeTab = ref('products')
@@ -215,9 +216,9 @@ const productForm = ref({
 })
 
 const tabLabels = {
-  products: '📦 Productos',
-  orders: '📋 Órdenes',
-  users: '👥 Usuarios'
+  products: 'Productos',
+  orders: 'Órdenes',
+  users: 'Usuarios'
 }
 
 const allOrders = computed(() => {
@@ -329,6 +330,10 @@ function formatDate(dateString) {
   text-align: center;
   color: var(--color-text);
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .admin-tabs {
@@ -383,6 +388,13 @@ function formatDate(dateString) {
   color: var(--color-text);
   border-bottom: 2px solid var(--color-accent);
   padding-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.title-icon {
+  color: var(--color-accent);
 }
 
 .admin-form {
@@ -648,3 +660,4 @@ select {
   }
 }
 </style>
+

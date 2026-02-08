@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="product-detail-page">
     <div class="breadcrumb">
       <RouterLink to="/productos">Productos</RouterLink>
@@ -46,7 +46,7 @@
                 <span class="reviewer-name">María López</span>
                 <span class="review-date">Hace 1 mes</span>
               </div>
-              <div class="review-rating">★★★★</div>
+              <div class="review-rating">★★★★☆</div>
             </div>
             <p class="review-text">Muy buena calidad. El envío fue rápido. Solo le faltan algunos accesorios.</p>
           </div>
@@ -105,10 +105,10 @@ const relatedProducts = computed(() => {
 const handleAddToCart = (data) => {
   if (data.quantity) {
     pixelTracking.trackAddToCart(data.product, data.quantity)
-    alert(`✅ ${data.product.nombre} (x${data.quantity}) añadido al carrito`)
+    alert(`Producto añadido al carrito: ${data.product.nombre} (x${data.quantity})`)
   } else {
     pixelTracking.trackAddToCart(data.nombre)
-    alert(`✅ ${data.nombre} añadido al carrito`)
+    alert(`Producto añadido al carrito: ${data.nombre}`)
   }
 }
 
@@ -330,3 +330,4 @@ onMounted(async () => {
   }
 }
 </style>
+

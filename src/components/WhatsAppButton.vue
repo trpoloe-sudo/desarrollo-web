@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <a
     :href="`https://wa.me/51978418809?text=Hola%20quisiera%20informaci%C3%B3n%20sobre%20vuestros%20productos`"
     target="_blank"
@@ -94,3 +94,4 @@
   }
 }
 </style>
+

@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="products">
     <div class="container">
       <h1>Nuestros Productos</h1>
@@ -82,7 +82,7 @@ const handleAddToCart = (product) => {
 }
 
 function showCartNotification(productName) {
-  alert(`✅ ${productName} añadido al carrito`)
+  alert(`Producto añadido al carrito: ${productName}`)
 }
 
 watch(() => searchQuery.value, (newQuery) => {
@@ -192,3 +192,4 @@ h1 {
   }
 }
 </style>
+

@@ -1,7 +1,16 @@
-<template>
+﻿<template>
   <nav class="navbar" role="navigation" aria-label="Navegación principal">
-    <div class="container">
-      <!-- Botón hamburguesa para móvil -->
+    <div class="container nav-shell">
+      <div class="brand">
+        <RouterLink to="/" class="brand-link">
+          <img :src="logoImage" alt="Ztar Tech" class="brand-logo" />
+          <div class="brand-text">
+            <span class="brand-title">Ztar Tech</span>
+            <span class="brand-subtitle">Venta y reparación de computadoras</span>
+          </div>
+        </RouterLink>
+      </div>
+
       <button 
         v-if="isMobile" 
         class="hamburger-btn" 
@@ -21,10 +30,6 @@
         </svg>
       </button>
 
-      <!-- Nombre de la marca -->
-      <RouterLink to="/" class="logo">ZTartech</RouterLink>
-
-      <!-- Menú de navegación -->
       <ul 
         v-show="!isMobile || mobileMenuOpen" 
         class="nav-list" 
@@ -33,25 +38,15 @@
       >
         <li><RouterLink to="/" class="nav-link" @click="closeMobileMenu">Inicio</RouterLink></li>
         <li><RouterLink to="/products" class="nav-link" @click="closeMobileMenu">Productos</RouterLink></li>
-        <li class="cart-link">
-          <RouterLink to="/cart" class="nav-link cart-badge" aria-label="Ir al carrito" @click="closeMobileMenu">
-            <ShoppingCart size="20" />
-            Carrito
-            <span v-if="cartStore.itemCount > 0" class="badge" aria-label="Tienes 1 producto en el carrito">{{ cartStore.itemCount }}</span>
-          </RouterLink>
-        </li>
-        <li class="favorites-link">
-          <RouterLink to="/products" class="nav-link favorites-badge" aria-label="Ver favoritos" @click="closeMobileMenu">
-            <Heart size="20" />
-            Favoritos
-            <span v-if="favoritesStore.count > 0" class="badge" aria-label="Tienes 1 favorito">{{ favoritesStore.count }}</span>
-          </RouterLink>
-        </li>
+        <li><RouterLink to="/products" class="nav-link" @click="closeMobileMenu">Destacados</RouterLink></li>
+        <li><RouterLink to="/" class="nav-link" @click="closeMobileMenu">Nosotros</RouterLink></li>
+        <li><RouterLink to="/" class="nav-link" @click="closeMobileMenu">Ubicación</RouterLink></li>
+        <li><RouterLink to="/#contact" class="nav-link" @click="closeMobileMenu">Contacto</RouterLink></li>
         <li v-if="!userStore.isLoggedIn" class="auth-link">
           <RouterLink to="/auth" class="nav-link" @click="closeMobileMenu">Iniciar Sesión</RouterLink>
         </li>
         <li v-else class="user-menu">
-          <div class="user-dropdown" @click.outside="closeDropdown" @keydown.escape="closeDropdown">
+          <div class="user-dropdown">
             <button 
               @click="toggleDropdown" 
               class="user-btn"
@@ -60,7 +55,7 @@
               aria-label="Menú de usuario"
             >
               <img v-if="userStore.user?.picture" :src="userStore.user.picture" :alt="userStore.user.name" class="user-avatar">
-              <User v-else size="20" />
+              <User v-else size="18" />
               {{ userStore.user?.name || userStore.user?.email.split('@')[0] }}
             </button>
             <div 
@@ -90,38 +85,94 @@
           </div>
         </li>
       </ul>
+
+      <RouterLink to="/cart" class="cart-pill" aria-label="Ir al carrito">
+        <ShoppingCart size="18" />
+        <span>Carrito</span>
+        <span class="pill-count">{{ cartStore.itemCount }}</span>
+      </RouterLink>
     </div>
   </nav>
 </template>
 
 <script setup>
 import { RouterLink, useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useCartStore } from '../stores/cartStore'
 import { useFavoritesStore } from '../stores/favorites'
 import { useUserStore } from '../stores/user'
+import { ShoppingCart, Heart, User, LayoutDashboard, Settings, LogOut } from 'lucide-vue-next'
+import logoImage from '@/img/brand-logo.svg'
 
 const router = useRouter()
 const cartStore = useCartStore()
 const favoritesStore = useFavoritesStore()
 const userStore = useUserStore()
-const showMenu = ref(false)
+
+const isMobile = ref(false)
+const mobileMenuOpen = ref(false)
+const dropdownOpen = ref(false)
+const isAdmin = computed(() => userStore.user?.role === 'admin')
+
+const updateIsMobile = () => {
+  isMobile.value = window.innerWidth <= 768
+  if (!isMobile.value) {
+    mobileMenuOpen.value = false
+  }
+}
+
+const handleDocumentClick = (event) => {
+  const target = event.target
+  if (!(target instanceof Element)) return
+  if (!target.closest('.user-dropdown')) {
+    dropdownOpen.value = false
+  }
+}
+
+onMounted(() => {
+  updateIsMobile()
+  window.addEventListener('resize', updateIsMobile)
+  document.addEventListener('click', handleDocumentClick)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', updateIsMobile)
+  document.removeEventListener('click', handleDocumentClick)
+})
+
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
+const closeMobileMenu = () => {
+  mobileMenuOpen.value = false
+}
+
+const toggleDropdown = () => {
+  dropdownOpen.value = !dropdownOpen.value
+}
+
+const closeDropdown = () => {
+  dropdownOpen.value = false
+}
 
 function logout() {
   userStore.logout()
-  showMenu.value = false
+  closeDropdown()
+  closeMobileMenu()
   router.push('/')
 }
 </script>
 
 <style scoped>
 .navbar {
-  background-color: var(--primary-color);
-  padding: 0;
-  box-shadow: var(--box-shadow);
+  background: linear-gradient(180deg, #0b1c2f 0%, #112f4d 100%);
+  padding: 10px 0;
+  box-shadow: 0 14px 32px rgba(6, 16, 32, 0.55);
   position: sticky;
   top: 0;
   z-index: 100;
+  border-bottom: 1px solid rgba(90, 170, 240, 0.22);
 }
 
 .container {
@@ -130,64 +181,116 @@ function logout() {
   width: 100%;
 }
 
+.nav-shell {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+}
+
+.brand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: white;
+}
+
+.brand-logo {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+  border-radius: 14px;
+  background: rgba(77, 184, 255, 0.12);
+  padding: 6px;
+  box-shadow: 0 10px 22px rgba(10, 28, 54, 0.55);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand-title {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.3px;
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  color: rgba(214, 233, 255, 0.7);
+}
+
 .nav-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 0;
+  gap: 24px;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
 .nav-list li {
-  flex: 1;
-  min-width: 120px;
+  flex: 0 0 auto;
 }
 
 .nav-link {
-  display: block;
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  color: rgba(221, 236, 255, 0.9);
   text-decoration: none;
-  padding: 15px 20px;
-  transition: background-color 0.3s ease;
+  padding: 8px 6px;
+  transition: color 0.2s ease;
   text-align: center;
-  position: relative;
+  font-size: 14px;
 }
 
 .nav-link:hover {
-  background-color: var(--secondary-color);
+  color: #ffffff;
 }
 
 .nav-link.router-link-active {
-  background-color: var(--accent-color);
-  color: #0b1c2c;
+  color: #ffffff;
   font-weight: 700;
 }
 
-.cart-link,
-.favorites-link {
-  position: relative;
-}
-
-.cart-badge,
-.favorites-badge {
-  position: relative;
-}
-
-.badge {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background-color: var(--danger-color);
-  color: white;
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
+.cart-pill {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: 0.8em;
-  font-weight: bold;
+  gap: 8px;
+  color: white;
+  text-decoration: none;
+  background: rgba(12, 36, 62, 0.85);
+  border: 1px solid rgba(96, 174, 240, 0.35);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.cart-pill:hover {
+  background: rgba(22, 58, 92, 0.95);
+  transform: translateY(-1px);
+}
+
+.pill-count {
+  background: #e8f2ff;
+  color: #0b1c2f;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 18px;
+  text-align: center;
 }
 
 .user-menu {
@@ -199,12 +302,14 @@ function logout() {
 }
 
 .user-btn {
-  display: block;
-  width: 100%;
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: rgba(221, 236, 255, 0.9);
   background: none;
   border: none;
-  padding: 15px 20px;
+  padding: 6px 0;
   cursor: pointer;
   text-align: center;
   transition: background-color 0.3s ease;
@@ -219,11 +324,11 @@ function logout() {
   position: absolute;
   top: 100%;
   right: 0;
-  background: white;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
+  background: #0c1f35;
+  border: 1px solid rgba(96, 174, 240, 0.3);
+  border-radius: 10px;
   min-width: 200px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 12px 28px rgba(6, 16, 32, 0.5);
   z-index: 200;
   animation: slideDown 0.2s ease-out;
 }
@@ -244,7 +349,7 @@ function logout() {
   width: 100%;
   padding: 12px 20px;
   text-align: left;
-  color: var(--color-text);
+  color: rgba(232, 242, 255, 0.95);
   text-decoration: none;
   background: none;
   border: none;
@@ -253,22 +358,54 @@ function logout() {
 }
 
 .dropdown-item:hover {
-  background-color: var(--color-bg-light);
+  background-color: rgba(96, 174, 240, 0.18);
 }
 
 .dropdown-item.logout {
-  color: var(--danger-color);
-  border-top: 1px solid var(--color-border);
+  color: #ff9aa3;
+  border-top: 1px solid rgba(96, 174, 240, 0.2);
+}
+
+.user-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
 }
 
 @media (max-width: 768px) {
-  .nav-list li {
-    flex: 0 0 50%;
+  .nav-shell {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "brand hamburger"
+      "menu menu"
+      "cart cart";
   }
 
-  .nav-link {
-    padding: 12px 10px;
-    font-size: 0.9em;
+  .brand {
+    grid-area: brand;
+  }
+
+  .hamburger-btn {
+    grid-area: hamburger;
+    justify-self: end;
+  }
+
+  .nav-list {
+    grid-area: menu;
+    justify-content: flex-start;
+    gap: 12px;
+    padding-top: 12px;
+  }
+
+  .cart-pill {
+    grid-area: cart;
+    justify-self: start;
+  }
+
+  .brand-logo {
+    width: 60px;
+    height: 60px;
   }
 }
 </style>
+

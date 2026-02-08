@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="expandable-specs">
     <div class="specs-header">
       <h3>Especificaciones Técnicas</h3>
@@ -17,7 +17,7 @@
         @click="toggleExpand"
         class="expand-btn"
       >
-        {{ isExpanded ? '▲ Menos' : '...Más' }}
+        {{ isExpanded ? 'Menos' : 'Más' }}
       </button>
     </div>
   </div>
@@ -138,3 +138,4 @@ onMounted(async () => {
   transform: translateX(2px) scale(0.98);
 }
 </style>
+

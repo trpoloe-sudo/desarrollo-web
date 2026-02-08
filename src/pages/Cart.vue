@@ -1,7 +1,7 @@
-<template>
+﻿<template>
   <div class="cart">
     <div class="container">
-      <h1>🛒 Carrito de Compras</h1>
+      <h1><ShoppingCart class="title-icon" size="22" /> Carrito de Compras</h1>
 
       <div v-if="cartStore.items.length === 0" class="empty-cart">
         <p>Tu carrito está vacío</p>
@@ -37,7 +37,7 @@
             <div class="item-total">
               <p class="total">${{ (item.precio * item.quantity).toFixed(2) }}</p>
               <button @click="cartStore.removeItem(item.id)" class="remove-btn">
-                🗑️ Eliminar
+                Eliminar
               </button>
             </div>
           </div>
@@ -109,6 +109,7 @@ import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cartStore'
 import { useUserStore } from '../stores/user'
+import { ShoppingCart } from 'lucide-vue-next'
 
 const router = useRouter()
 const cartStore = useCartStore()
@@ -206,6 +207,14 @@ h1 {
   color: var(--color-primary);
   margin-bottom: 30px;
   font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.title-icon {
+  color: var(--color-accent);
 }
 
 .empty-cart {
@@ -580,3 +589,4 @@ h1 {
   }
 }
 </style>
+
