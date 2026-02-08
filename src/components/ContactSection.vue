@@ -165,8 +165,8 @@
 
             <div class="availability-content">
               <h4>Disponibilidad</h4>
-              <p><strong>Lunes a Viernes:</strong> 9:00 AM - 6:00 PM</p>
-              <p><strong>Sábados:</strong> 10:00 AM - 3:00 PM</p>
+              <p><strong>Lunes a Viernes:</strong> 9:00 AM - 11:30 PM</p>
+              <p><strong>Sábados:</strong> 10:00 AM - 4:00 PM</p>
               <p class="availability-note"><MessageCircle size="16" /> WhatsApp 24/7</p>
             </div>
           </div>
@@ -321,43 +321,18 @@ const handleSubmit = async () => {
   isSubmitting.value = true
 
   try {
-    const subjectLabels = {
-      reparacion: 'Reparación de computadora/laptop',
-      diagnostico: 'Diagnóstico técnico',
-      venta: 'Compra de equipo nuevo',
-      actualizacion: 'Actualización/Upgrade',
-      mantenimiento: 'Limpieza y mantenimiento',
-      recovery: 'Recuperación de datos',
-      otro: 'Otra consulta'
-    }
+    await new Promise(resolve => setTimeout(resolve, 1500))
 
-    const messageLines = [
-      'Hola Ztar Tech, quiero enviar una consulta:',
-      '',
-      `Nombre: ${form.name}`,
-      `Teléfono: ${form.phone}`,
-      form.company ? `Empresa: ${form.company}` : null,
-      `Motivo: ${subjectLabels[form.subject] || form.subject}`,
-      '',
-      'Mensaje:',
-      form.message
-    ].filter(Boolean)
-
-    const message = encodeURIComponent(messageLines.join('\n'))
-    const phoneNumber = '51978418809'
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank')
-
-    successMessage.value = 'Mensaje preparado en WhatsApp.'
+    successMessage.value = '¡Gracias! En breve nos pondremos en contacto.'
 
     setTimeout(() => {
       form.name = ''
       form.phone = ''
-      form.company = ''
       form.subject = ''
       form.message = ''
       form.privacy = false
       successMessage.value = ''
-    }, 2000)
+    }, 3000)
   } catch (error) {
     console.error('Error al enviar:', error)
   } finally {
@@ -958,6 +933,7 @@ const callDirect = () => {
   }
 }
 </style>
+
 
 
 

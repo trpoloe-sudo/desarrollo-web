@@ -38,9 +38,7 @@
       >
         <li><RouterLink to="/" class="nav-link" @click="closeMobileMenu">Inicio</RouterLink></li>
         <li><RouterLink to="/products" class="nav-link" @click="closeMobileMenu">Productos</RouterLink></li>
-        <li><RouterLink to="/products" class="nav-link" @click="closeMobileMenu">Destacados</RouterLink></li>
-        <li><RouterLink to="/" class="nav-link" @click="closeMobileMenu">Nosotros</RouterLink></li>
-        <li><RouterLink to="/" class="nav-link" @click="closeMobileMenu">Ubicación</RouterLink></li>
+        <li><RouterLink to="/#services" class="nav-link" @click="closeMobileMenu">Servicios</RouterLink></li>
         <li><RouterLink to="/#contact" class="nav-link" @click="closeMobileMenu">Contacto</RouterLink></li>
         <li v-if="!userStore.isLoggedIn" class="auth-link">
           <RouterLink to="/auth" class="nav-link" @click="closeMobileMenu">Iniciar Sesión</RouterLink>
@@ -247,19 +245,61 @@ function logout() {
   align-items: center;
   color: rgba(221, 236, 255, 0.9);
   text-decoration: none;
-  padding: 8px 6px;
-  transition: color 0.2s ease;
+  padding: 8px 12px;
+  border-radius: 999px;
+  position: relative;
+  transition: color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
   text-align: center;
   font-size: 14px;
+  overflow: hidden;
+}
+
+.nav-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(77, 184, 255, 0.28), rgba(92, 232, 255, 0.12));
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: -1;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 4px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(140, 210, 255, 0.9), transparent);
+  opacity: 0;
+  transform: scaleX(0.4);
+  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .nav-link:hover {
   color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(9, 20, 36, 0.35);
+}
+
+.nav-link:hover::before {
+  opacity: 1;
+}
+
+.nav-link:hover::after {
+  opacity: 1;
+  transform: scaleX(1);
 }
 
 .nav-link.router-link-active {
   color: #ffffff;
   font-weight: 700;
+  box-shadow: inset 0 0 0 1px rgba(140, 210, 255, 0.35);
+}
+
+.nav-link.router-link-active::before {
+  opacity: 1;
 }
 
 .cart-pill {

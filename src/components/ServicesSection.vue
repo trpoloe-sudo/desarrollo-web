@@ -1,5 +1,5 @@
 ﻿<template>
-  <section class="services-section">
+  <section class="services-section" id="services">
     <div class="container">
       <div class="section-header">
         <h1 class="section-title">Nuestros Servicios</h1>
@@ -40,11 +40,11 @@
           <div class="service-benefits">
             <h3>Beneficios para ti:</h3>
             <ul class="benefits-list">
-              <li><Zap class="benefit-icon" size="16" /> <strong>Diagnóstico rápido</strong> - Identificamos el problema en máximo 2 horas.</li>
-              <li><ClipboardCheck class="benefit-icon" size="16" /> <strong>Presupuesto transparente</strong> - Cotización antes de reparar.</li>
-              <li><ShieldCheck class="benefit-icon" size="16" /> <strong>Garantía en reparaciones</strong> - 6 meses de cobertura.</li>
-              <li><Gauge class="benefit-icon" size="16" /> <strong>Rendimiento mejorado</strong> - Tu equipo funcionará como nuevo.</li>
-              <li><Lock class="benefit-icon" size="16" /> <strong>Datos protegidos</strong> - Tratamiento confidencial de tu información.</li>
+              <li><Zap class="benefit-icon" size="16" /> <strong>Diagnóstico rápido</strong>Identificamos el problema en máximo 2 horas.</li>
+              <li><ClipboardCheck class="benefit-icon" size="16" /> <strong>Presupuesto transparente</strong>Cotización antes de reparar.</li>
+              <li><ShieldCheck class="benefit-icon" size="16" /> <strong>Garantía en reparaciones</strong>6 meses de cobertura.</li>
+              <li><Gauge class="benefit-icon" size="16" /> <strong>Rendimiento mejorado</strong>Tu equipo funcionará como nuevo.</li>
+              <li><Lock class="benefit-icon" size="16" /> <strong>Datos protegidos</strong>Tratamiento confidencial de tu información.</li>
             </ul>
           </div>
 
