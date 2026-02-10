@@ -192,7 +192,9 @@ onUnmounted(() => {
 
 <style scoped>
 .hero-section {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  background:
+    linear-gradient(rgba(11, 28, 47, 0.62), rgba(17, 47, 77, 0.62)),
+    url('/img/hsbg.jpeg') center/cover no-repeat;
   color: #ffffff;
   padding: 60px 20px;
   position: relative;
@@ -317,7 +319,7 @@ onUnmounted(() => {
   padding: 16px 32px;
   font-size: 16px;
   font-weight: 700;
-  border: 2px solid rgba(255, 255, 255, 0.35);
+  border: 2px solid #59d0ff;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -328,14 +330,21 @@ onUnmounted(() => {
   text-decoration: none;
   min-height: 48px;
   color: white;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 12px rgba(15, 28, 46, 0.2);
+  background: rgba(25, 78, 127, 0.35);
+  box-shadow:
+    0 0 8px rgba(89, 208, 255, 0.65),
+    0 0 18px rgba(89, 208, 255, 0.45),
+    0 4px 12px rgba(15, 28, 46, 0.24);
+  animation: tadaInvite 2.8s ease-in-out infinite, neonPulse 1.8s ease-in-out infinite alternate;
 }
 
 .cta-tertiary:hover {
-  background: rgba(255, 255, 255, 0.18);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(15, 28, 46, 0.3);
+  background: rgba(35, 105, 166, 0.4);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 0 12px rgba(89, 208, 255, 0.9),
+    0 0 26px rgba(89, 208, 255, 0.65),
+    0 8px 18px rgba(15, 28, 46, 0.32);
 }
 
 .cta-secondary {
@@ -353,6 +362,27 @@ onUnmounted(() => {
 
 .cta-icon {
   color: currentColor;
+}
+
+@keyframes tadaInvite {
+  0%, 72%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  75%, 79%, 83%, 87% {
+    transform: scale(1.05) rotate(-3deg);
+  }
+  77%, 81%, 85% {
+    transform: scale(1.05) rotate(3deg);
+  }
+}
+
+@keyframes neonPulse {
+  from {
+    border-color: #59d0ff;
+  }
+  to {
+    border-color: #9fe9ff;
+  }
 }
 
 /* Insignias de confianza */

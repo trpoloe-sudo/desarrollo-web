@@ -6,7 +6,7 @@
           <img :src="logoImage" alt="Ztar Tech" class="brand-logo" />
           <div class="brand-text">
             <span class="brand-title">Ztar Tech</span>
-            <span class="brand-subtitle">Venta y reparación de computadoras</span>
+            <span class="brand-subtitle">PC Building, venta y reparación</span>
           </div>
         </RouterLink>
       </div>
@@ -36,12 +36,12 @@
         id="nav-menu"
         @keydown.escape="closeMobileMenu"
       >
-        <li><RouterLink to="/" class="nav-link" @click="closeMobileMenu">Inicio</RouterLink></li>
-        <li><RouterLink to="/products" class="nav-link" @click="closeMobileMenu">Productos</RouterLink></li>
-        <li><RouterLink to="/#services" class="nav-link" @click="closeMobileMenu">Servicios</RouterLink></li>
-        <li><RouterLink to="/#contact" class="nav-link" @click="closeMobileMenu">Contacto</RouterLink></li>
+        <li><RouterLink to="/" class="nav-link" :class="{ 'is-active': isHomeActive }" @click="closeMobileMenu">Inicio</RouterLink></li>
+        <li><RouterLink to="/products" class="nav-link" :class="{ 'is-active': isProductsActive }" @click="closeMobileMenu">Productos</RouterLink></li>
+        <li><RouterLink to="/#services" class="nav-link" :class="{ 'is-active': isServicesActive }" @click="closeMobileMenu">Servicios</RouterLink></li>
+        <li><RouterLink to="/#contact" class="nav-link" :class="{ 'is-active': isContactActive }" @click="closeMobileMenu">Contacto</RouterLink></li>
         <li v-if="!userStore.isLoggedIn" class="auth-link">
-          <RouterLink to="/auth" class="nav-link" @click="closeMobileMenu">Iniciar Sesión</RouterLink>
+          <RouterLink to="/auth" class="nav-link" :class="{ 'is-active': isAuthActive }" @click="closeMobileMenu">Iniciar Sesión</RouterLink>
         </li>
         <li v-else class="user-menu">
           <div class="user-dropdown">
@@ -94,7 +94,7 @@
 </template>
 
 <script setup>
-import { RouterLink, useRouter } from 'vue-router'
+import { RouterLink, useRouter, useRoute } from 'vue-router'
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useCartStore } from '../stores/cartStore'
 import { useFavoritesStore } from '../stores/favorites'
@@ -103,6 +103,7 @@ import { ShoppingCart, Heart, User, LayoutDashboard, Settings, LogOut } from 'lu
 import logoImage from '@/img/brand-logo.svg'
 
 const router = useRouter()
+const route = useRoute()
 const cartStore = useCartStore()
 const favoritesStore = useFavoritesStore()
 const userStore = useUserStore()
@@ -111,6 +112,11 @@ const isMobile = ref(false)
 const mobileMenuOpen = ref(false)
 const dropdownOpen = ref(false)
 const isAdmin = computed(() => userStore.user?.role === 'admin')
+const isHomeActive = computed(() => route.path === '/' && route.hash !== '#services' && route.hash !== '#contact')
+const isProductsActive = computed(() => route.path === '/products')
+const isServicesActive = computed(() => route.path === '/' && route.hash === '#services')
+const isContactActive = computed(() => route.path === '/' && route.hash === '#contact')
+const isAuthActive = computed(() => route.path === '/auth')
 
 const updateIsMobile = () => {
   isMobile.value = window.innerWidth <= 768
@@ -164,13 +170,16 @@ function logout() {
 
 <style scoped>
 .navbar {
-  background: linear-gradient(180deg, #0b1c2f 0%, #112f4d 100%);
-  padding: 10px 0;
+  background:
+    linear-gradient(rgba(9, 24, 42, 0.68), rgba(9, 24, 42, 0.68)),
+    url('/img/navbarbg.jpg') center/cover no-repeat;
+  padding: 6px 0;
   box-shadow: 0 14px 32px rgba(6, 16, 32, 0.55);
   position: sticky;
   top: 0;
   z-index: 100;
   border-bottom: 1px solid rgba(90, 170, 240, 0.22);
+  text-align: center;
 }
 
 .container {
@@ -183,7 +192,7 @@ function logout() {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
 }
 
 .brand {
@@ -194,14 +203,16 @@ function logout() {
 .brand-link {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
+  justify-content: center;
+  gap: 10px;
   text-decoration: none;
   color: white;
+  text-align: center;
 }
 
 .brand-logo {
-  width: 76px;
-  height: 76px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   border-radius: 14px;
   background: rgba(77, 184, 255, 0.12);
@@ -212,12 +223,14 @@ function logout() {
 .brand-text {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 2px;
+  text-align:   center;
 }
 
 .brand-title {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 24px;
   letter-spacing: 0.3px;
 }
 
@@ -231,9 +244,11 @@ function logout() {
   margin: 0;
   padding: 0;
   display: flex;
-  gap: 24px;
+  gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: center;
+  min-height: 92px;
 }
 
 .nav-list li {
@@ -243,15 +258,16 @@ function logout() {
 .nav-link {
   display: inline-flex;
   align-items: center;
-  color: rgba(221, 236, 255, 0.9);
+  color: #eef5ff;
   text-decoration: none;
   padding: 8px 12px;
-  border-radius: 999px;
+  border-radius: 0;
   position: relative;
-  transition: color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  transition: all 0.3s ease;
   text-align: center;
   font-size: 14px;
   overflow: hidden;
+  border-bottom: 8px solid transparent;
 }
 
 .nav-link::before {
@@ -278,9 +294,14 @@ function logout() {
 }
 
 .nav-link:hover {
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: 0 8px 18px rgba(9, 20, 36, 0.35);
+  background-color: #ffffff;
+  color: #0b3f6b;
+  padding-top: 44px;
+  padding-bottom: 12px;
+  border-bottom: 6px solid #4f9de6;
+  box-shadow: 0 10px 20px rgba(8, 31, 57, 0.25);
+  transform: none;
+  border-radius: 0;
 }
 
 .nav-link:hover::before {
@@ -292,13 +313,18 @@ function logout() {
   transform: scaleX(1);
 }
 
-.nav-link.router-link-active {
-  color: #ffffff;
+.nav-link.is-active {
+  background-color: #ffffff;
+  color: #0b3f6b;
   font-weight: 700;
-  box-shadow: inset 0 0 0 1px rgba(140, 210, 255, 0.35);
+  padding-top: 44px;
+  padding-bottom: 12px;
+  border-bottom: 6px solid #4f9de6;
+  box-shadow: 0 10px 20px rgba(8, 31, 57, 0.25);
+  border-radius: 0;
 }
 
-.nav-link.router-link-active::before {
+.nav-link.is-active::before {
   opacity: 1;
 }
 
@@ -306,20 +332,36 @@ function logout() {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: white;
+  color: #eef5ff;
   text-decoration: none;
-  background: rgba(12, 36, 62, 0.85);
-  border: 1px solid rgba(96, 174, 240, 0.35);
-  padding: 8px 14px;
-  border-radius: 999px;
+  background: transparent;
+  border: none;
+  border-bottom: 6px solid transparent;
+  padding: 8px 12px;
+  border-radius: 0;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .cart-pill:hover {
-  background: rgba(22, 58, 92, 0.95);
-  transform: translateY(-1px);
+  background-color: #ffffff;
+  color: #0b3f6b;
+  padding-top: 44px;
+  padding-bottom: 12px;
+  border-bottom: 6px solid #4f9de6;
+  box-shadow: 0 10px 20px rgba(8, 31, 57, 0.25);
+  border-radius: 0;
+}
+
+.cart-pill.router-link-exact-active {
+  background-color: #ffffff;
+  color: #0b3f6b;
+  padding-top: 44px;
+  padding-bottom: 12px;
+  border-bottom: 6px solid #4f9de6;
+  box-shadow: 0 10px 20px rgba(8, 31, 57, 0.25);
+  border-radius: 0;
 }
 
 .pill-count {
@@ -388,7 +430,7 @@ function logout() {
   display: block;
   width: 100%;
   padding: 12px 20px;
-  text-align: left;
+  text-align: center;
   color: rgba(232, 242, 255, 0.95);
   text-decoration: none;
   background: none;
@@ -432,14 +474,30 @@ function logout() {
 
   .nav-list {
     grid-area: menu;
-    justify-content: flex-start;
-    gap: 12px;
-    padding-top: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding-top: 8px;
+    min-height: auto;
+  }
+
+  .nav-link,
+  .nav-link:hover,
+  .nav-link.is-active {
+    padding: 8px 12px;
+    border-bottom-width: 4px;
+  }
+
+  .cart-pill,
+  .cart-pill:hover,
+  .cart-pill.router-link-exact-active {
+    padding: 8px 12px;
+    border-bottom-width: 4px;
   }
 
   .cart-pill {
     grid-area: cart;
-    justify-self: start;
+    justify-self: center;
   }
 
   .brand-logo {
@@ -448,4 +506,3 @@ function logout() {
   }
 }
 </style>
-
