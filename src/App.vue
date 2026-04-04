@@ -24,13 +24,14 @@ import ConfirmDialog from './components/ConfirmDialog.vue'
 
 // Inyectar Schema Markup JSON-LD en el head
 onMounted(() => {
+  const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin
   const brandImage = new URL('/brand-logo-transparent.png', window.location.origin).href
   const schemaMarkup = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Ztar Tech",
     "description": "Servicio técnico, reparación y venta de computadoras en Perú",
-    "url": "https://ztartech.webcindario.com",
+    "url": siteUrl,
     "image": brandImage,
     "telephone": "+51978418809",
     "email": "cotizaciones@ztartech.com",
