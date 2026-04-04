@@ -86,9 +86,7 @@ import { useUserStore } from '@/stores/user'
 import { useUiStore } from '@/stores/ui'
 import {
   initializeGoogleSignIn,
-  renderGoogleButton,
-  showGooglePrompt,
-  isGoogleSignInAvailable
+  renderGoogleButton
 } from '@/services/googleAuth'
 
 const router = useRouter()
@@ -122,52 +120,18 @@ onMounted(async () => {
     await initializeGoogleSignIn(clientId, handleGoogleSignInSuccess)
     googleReady.value = true
     renderGoogleButton('google-button-container', { width: 320 })
-
-    showGooglePrompt(() => {
-      console.log('Google prompt cerrado')
-    })
   } catch (err) {
     console.error('Error inicializando Google Sign-In:', err)
     error.value = 'Google Sign-In no disponible. Usa el login tradicional.'
   }
 })
 
-function handleGoogleLogin() {
-  if (!googleReady.value) return
-  if (!isGoogleSignInAvailable()) {
-    error.value = 'Google Sign-In no está disponible. Por favor intenta más tarde.'
-    return
-  }
-
-  isLoading.value = true
-
-  try {
-    const container = document.getElementById('google-button-container')
-    if (container && container.children.length === 0) {
-      renderGoogleButton('google-button-container')
-    }
-
-    showGooglePrompt(() => {
-      console.log('Por favor usa el botón de Google abajo')
-    })
-  } catch (err) {
-    error.value = 'Error al inicializar Google Sign-In'
-    console.error(err)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-async function handleGoogleSignInSuccess(googleData) {
+async function handleGoogleSignInSuccess(googleResponse) {
   try {
     isLoading.value = true
     error.value = ''
 
-    await userStore.loginWithGoogle(
-      googleData.email,
-      googleData.name,
-      googleData.picture || null
-    )
+    await userStore.loginWithGoogle(googleResponse)
 
     uiStore.success('Sesión iniciada con Google.')
 

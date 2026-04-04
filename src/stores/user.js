@@ -64,15 +64,17 @@ export const useUserStore = defineStore('user', () => {
     return setCurrentUser(session?.user ?? session)
   }
 
-  async function loginWithGoogle(email, name, picture = null) {
-    if (!email || !name) {
-      throw new Error('Email y nombre son requeridos para Google Sign-In')
+  async function loginWithGoogle(googleResponse) {
+    const credential = typeof googleResponse === 'string'
+      ? googleResponse
+      : String(googleResponse?.credential || '').trim()
+
+    if (!credential) {
+      throw new Error('Google no devolvio una credencial valida')
     }
 
     const session = await authApi.loginWithGoogle({
-      email: email.trim(),
-      name: name.trim(),
-      picture
+      credential
     })
 
     return setCurrentUser(session?.user ?? session)

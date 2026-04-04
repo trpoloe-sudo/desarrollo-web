@@ -18,12 +18,22 @@ import {
   clearSessionCookie,
   setSessionCookie,
 } from "../utils/sessionCookie.js";
+import { createPublicKey, verify as verifySignature } from "crypto";
 
 const router = Router();
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const VALID_ROLES = new Set(["admin", "customer"]);
 const VALID_ORDER_STATUSES = new Set(["pending", "completed", "cancelled"]);
+const GOOGLE_CERTS_URL = "https://www.googleapis.com/oauth2/v1/certs";
+const VALID_GOOGLE_ISSUERS = new Set([
+  "accounts.google.com",
+  "https://accounts.google.com",
+]);
+const DEFAULT_CERTS_CACHE_MS = 60 * 60 * 1000;
+
+let cachedGoogleCerts = null;
+let cachedGoogleCertsExpiresAt = 0;
 
 const isNonEmptyString = (value) =>
   typeof value === "string" && value.trim().length > 0;
@@ -35,6 +45,166 @@ const isFiniteNumber = (value) => Number.isFinite(Number(value));
 const respondWithAuthenticatedUser = (res, payload, statusCode = 200) => {
   setSessionCookie(res, payload.session.token);
   return res.status(statusCode).json({ user: payload.user });
+};
+
+const createHttpError = (statusCode, message) => {
+  const error = new Error(message);
+  error.statusCode = statusCode;
+  return error;
+};
+
+const parseMaxAgeMs = (cacheControlHeader) => {
+  const match = String(cacheControlHeader || "").match(/max-age=(\d+)/i);
+  const seconds = Number.parseInt(match?.[1] || "", 10);
+
+  if (!Number.isFinite(seconds) || seconds <= 0) {
+    return DEFAULT_CERTS_CACHE_MS;
+  }
+
+  return seconds * 1000;
+};
+
+const base64UrlToBuffer = (value) => {
+  const normalized = String(value || "")
+    .replace(/-/g, "+")
+    .replace(/_/g, "/");
+
+  const padding = normalized.length % 4;
+  const padded = padding === 0 ? normalized : normalized + "=".repeat(4 - padding);
+
+  return Buffer.from(padded, "base64");
+};
+
+const parseJwtSection = (value, label) => {
+  try {
+    return JSON.parse(base64UrlToBuffer(value).toString("utf8"));
+  } catch {
+    throw createHttpError(400, `La respuesta de Google contiene un ${label} invalido.`);
+  }
+};
+
+const getConfiguredGoogleClientIds = () => {
+  return [
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.VITE_GOOGLE_CLIENT_ID,
+    ...(process.env.GOOGLE_ALLOWED_CLIENT_IDS || "")
+      .split(",")
+      .map((value) => value.trim())
+      .filter(Boolean),
+  ].filter(Boolean);
+};
+
+const getGoogleCertificates = async () => {
+  if (cachedGoogleCerts && Date.now() < cachedGoogleCertsExpiresAt) {
+    return cachedGoogleCerts;
+  }
+
+  const response = await fetch(GOOGLE_CERTS_URL);
+
+  if (!response.ok) {
+    throw createHttpError(503, "No se pudo validar Google Sign-In en este momento.");
+  }
+
+  const certificates = await response.json();
+
+  if (!certificates || typeof certificates !== "object") {
+    throw createHttpError(503, "Google no devolvio certificados validos para el inicio de sesion.");
+  }
+
+  cachedGoogleCerts = certificates;
+  cachedGoogleCertsExpiresAt =
+    Date.now() + parseMaxAgeMs(response.headers.get("cache-control"));
+
+  return certificates;
+};
+
+const isAllowedAudience = (audience, allowedAudiences) => {
+  if (Array.isArray(audience)) {
+    return audience.some((item) => allowedAudiences.includes(item));
+  }
+
+  return allowedAudiences.includes(String(audience || ""));
+};
+
+const verifyGoogleCredential = async (credential) => {
+  if (!isNonEmptyString(credential)) {
+    throw createHttpError(400, "Google no devolvio una credencial valida.");
+  }
+
+  const clientIds = getConfiguredGoogleClientIds();
+
+  if (clientIds.length === 0) {
+    throw createHttpError(503, "Google Sign-In no esta configurado en el servidor.");
+  }
+
+  const parts = credential.split(".");
+
+  if (parts.length !== 3) {
+    throw createHttpError(400, "La credencial de Google no tiene un formato valido.");
+  }
+
+  const [encodedHeader, encodedPayload, encodedSignature] = parts;
+  const header = parseJwtSection(encodedHeader, "encabezado");
+  const payload = parseJwtSection(encodedPayload, "contenido");
+
+  if (header.alg !== "RS256" || !header.kid) {
+    throw createHttpError(400, "La credencial de Google usa una firma no soportada.");
+  }
+
+  let certificates = await getGoogleCertificates();
+  let certificate = certificates[header.kid];
+
+  if (!certificate) {
+    cachedGoogleCerts = null;
+    cachedGoogleCertsExpiresAt = 0;
+    certificates = await getGoogleCertificates();
+    certificate = certificates[header.kid];
+  }
+
+  if (!certificate) {
+    throw createHttpError(401, "La credencial de Google ya no es valida. Intenta nuevamente.");
+  }
+
+  const signingInput = Buffer.from(`${encodedHeader}.${encodedPayload}`);
+  const signature = base64UrlToBuffer(encodedSignature);
+  const publicKey = createPublicKey(certificate);
+  const isSignatureValid = verifySignature("RSA-SHA256", signingInput, publicKey, signature);
+
+  if (!isSignatureValid) {
+    throw createHttpError(401, "No se pudo verificar la firma de Google.");
+  }
+
+  if (!VALID_GOOGLE_ISSUERS.has(String(payload.iss || ""))) {
+    throw createHttpError(401, "El emisor de la credencial de Google no es valido.");
+  }
+
+  if (!isAllowedAudience(payload.aud, clientIds)) {
+    throw createHttpError(401, "La credencial de Google no corresponde a esta aplicacion.");
+  }
+
+  const expirationTime = Number.parseInt(String(payload.exp || ""), 10);
+
+  if (!Number.isFinite(expirationTime) || expirationTime * 1000 <= Date.now()) {
+    throw createHttpError(401, "La credencial de Google ya expiro. Intenta nuevamente.");
+  }
+
+  const email = String(payload.email || "").trim().toLowerCase();
+  const emailVerified =
+    payload.email_verified === true || payload.email_verified === "true";
+
+  if (!email) {
+    throw createHttpError(400, "Google no devolvio un email para esta cuenta.");
+  }
+
+  if (!emailVerified) {
+    throw createHttpError(403, "La cuenta de Google no tiene el email verificado.");
+  }
+
+  return {
+    email,
+    name: String(payload.name || "").trim() || email.split("@")[0],
+    picture: payload.picture ? String(payload.picture).trim() : null,
+  };
 };
 
 const validateRegisterBody = (body) => {
@@ -72,16 +242,8 @@ const validateLoginBody = (body) => {
 const validateGoogleBody = (body) => {
   const errors = [];
 
-  if (!isValidEmail(body.email)) {
-    errors.push("email must be a valid email address");
-  }
-
-  if (!isNonEmptyString(body.name)) {
-    errors.push("name is required");
-  }
-
-  if ("picture" in body && body.picture != null && typeof body.picture !== "string") {
-    errors.push("picture must be a string when provided");
+  if (!isNonEmptyString(body.credential)) {
+    errors.push("credential is required");
   }
 
   return errors;
@@ -168,15 +330,18 @@ router.post("/google", async (req, res) => {
   }
 
   try {
+    const googleProfile = await verifyGoogleCredential(req.body.credential);
     const payload = await authenticateWithGoogle({
-      email: req.body.email,
-      name: req.body.name,
-      picture: req.body.picture ?? null,
+      email: googleProfile.email,
+      name: googleProfile.name,
+      picture: googleProfile.picture,
     });
 
     return respondWithAuthenticatedUser(res, payload);
   } catch (error) {
-    return res.status(400).json({ error: error.message });
+    return res
+      .status(error.statusCode || 400)
+      .json({ error: error.message || "No se pudo iniciar sesion con Google." });
   }
 });
 

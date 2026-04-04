@@ -85,10 +85,21 @@ describe('UserStore', () => {
       picture: 'https://example.com/photo.png'
     }))
 
-    const user = await userStore.loginWithGoogle('test@example.com', 'Test User', 'https://example.com/photo.png')
+    const user = await userStore.loginWithGoogle({
+      credential: 'google-id-token'
+    })
 
+    expect(authApi.loginWithGoogle).toHaveBeenCalledWith({
+      credential: 'google-id-token'
+    })
     expect(user.provider).toBe('google')
     expect(user.picture).toBe('https://example.com/photo.png')
+  })
+
+  it('throws error when Google does not return a credential', async () => {
+    const userStore = useUserStore()
+
+    await expect(userStore.loginWithGoogle({})).rejects.toThrow('Google no devolvio una credencial valida')
   })
 
   it('logs out user and clears in-memory session state', async () => {

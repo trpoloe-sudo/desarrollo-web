@@ -73,15 +73,16 @@ export async function initializeGoogleSignIn(clientId, onSuccess) {
       client_id: clientId,
       callback: (response) => {
         try {
-          const decoded = parseJwt(response.credential)
+          if (!response?.credential) {
+            throw new Error('Google no devolvio una credencial valida')
+          }
+
           onSuccess({
-            email: decoded.email,
-            name: decoded.name,
-            picture: decoded.picture,
-            email_verified: decoded.email_verified
+            credential: response.credential,
+            selectBy: response.select_by || null
           })
         } catch (error) {
-          console.error('Error decodificando Google token:', error)
+          console.error('Error procesando Google token:', error)
           throw error
         }
       }
@@ -104,12 +105,14 @@ export function renderGoogleButton(containerId, options = {}) {
     theme: 'outline',
     size: 'large',
     text: 'signin_with',
+    shape: 'pill',
     width: '100%'
   }
 
   try {
     const container = document.getElementById(containerId)
     if (container && window.google && window.google.accounts) {
+      container.replaceChildren()
       google.accounts.id.renderButton(
         container,
         { ...defaultOptions, ...options }
@@ -120,46 +123,6 @@ export function renderGoogleButton(containerId, options = {}) {
   } catch (error) {
     console.error('Error renderizando botón de Google:', error)
     return false
-  }
-}
-
-/**
- * Muestra el prompt de Google Sign-In
- * @param {Function} onPromptClosed - Callback cuando se cierra el prompt
- */
-export function showGooglePrompt(onPromptClosed) {
-  try {
-    if (window.google && window.google.accounts) {
-      google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-          if (typeof onPromptClosed === 'function') {
-            onPromptClosed()
-          }
-        }
-      })
-    }
-  } catch (error) {
-    console.error('Error mostrando Google prompt:', error)
-  }
-}
-
-/**
- * Decodifica un JWT (sin validar firma, solo para el cliente)
- * @param {string} token - JWT token
- */
-function parseJwt(token) {
-  try {
-    const base64Url = token.split('.')[1]
-    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split('')
-        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
-        .join('')
-    )
-    return JSON.parse(jsonPayload)
-  } catch (error) {
-    throw new Error('Error al decodificar JWT: ' + error.message)
   }
 }
 
