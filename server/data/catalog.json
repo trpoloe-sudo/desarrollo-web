@@ -1,0 +1,834 @@
+{
+  "managedProducts": [
+    {
+      "id": 1,
+      "categoria": "COMPUTADORAS",
+      "nombre": "All-in-One Lenovo N305",
+      "descripcion": "23.8\" FHD IPS Core i3-N305 hasta 3.8GHz 8GB DDR4-3200MHz (SO-DIMM)",
+      "precio": 557.2934132,
+      "stock": 15,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/pc/le/pclenf0j6002kld.jpg",
+      "especificaciones": "Almacenamiento: 512GB SSD M.2 PCIe NVMe, Video: Integrada Intel UHD Graphics, LAN GbE (RJ-45) / WLAN Wi-Fi 6 802.11ax (2x2) / Bluetooth 5.2, Audio: HD / Parlantes: 2Wx2, Camara Web HD / Microfono Mono, Teclado USB Calliope en color Blanco y en Español (LA), Mouse USB Calliope en color Blanco, Pantalla Antirreflejante/250nits/99% sRGB, Color Cloud Grey (Gris), Adaptador de poder de 65W / 89%.\r\nIncluye Sistema Operativo Windows 11 Home Single Language, 64-bits en Español."
+    },
+    {
+      "id": 2,
+      "categoria": "COMPUTADORAS",
+      "nombre": "All-in-One Lenovo A100",
+      "descripcion": "23.8\" FHD IPS, Celeron N100 hasta 3.4GHz, 8GB DDR4-3200 (SO-DIMM)",
+      "precio": 387.2155689,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/pc/le/pclenf0j6000cld.jpg",
+      "especificaciones": "Almacenamiento: 512GB SSD M.2 PCIe NVMe, Video: Integrada Intel UHD Graphics, LAN GbE (RJ-45) / WLAN Wi-Fi 6 802.11ax (2x2) / Bluetooth 5.2, Audio: HD / Parlantes: 2Wx2, Camara Web HD / Microfono Mono, Teclado USB Calliope en color Blanco y en Español (LA), Mouse USB Calliope en color Blanco, Pantalla Antirreflejante/250nits/99% sRGB, Color Cloud Grey (Gris), Adaptador de poder de 65W / 89%.\r\nNo Incluye Sistema Operativo."
+    },
+    {
+      "id": 3,
+      "categoria": "CASES",
+      "nombre": "MSI MAG FORGE M100A",
+      "descripcion": "Case Gamer",
+      "precio": 56.79640719,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cs/ms/csmsforgem100a.jpg",
+      "especificaciones": "Motherboard - Factor de Forma soportados: Micro-ATX / Mini-ITX"
+    },
+    {
+      "id": 4,
+      "categoria": "CASES",
+      "nombre": "Case gamer TEROS TE-1174N",
+      "descripcion": "Mid Tower, USB 3.0 / USB 2.0, audio, ventilador ARGB, negro",
+      "precio": 59.52095808,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cs/at/csatxte1174n.jpg",
+      "especificaciones": "El case gamer TEROS TE-1174N es la elección perfecta para entusiastas del gaming y usuarios exigentes. Este Mid Tower ofrece amplio espacio para tarjetas gráficas de hasta 41 cm y coolers de CPU de hasta 16 cm, compatible con placas Micro-ATX, ATX, E-ATX y Mini-ITX. Incluye ventiladores ARGB preinstalados y soporte para radiadores. Su diseño elegante en color negro cuenta con un panel lateral de vidrio templado y filtros antipolvo. Con puertos USB 3.0 y control remoto, este case es ideal para configuraciones avanzadas. No incluye fuente de alimentación."
+    },
+    {
+      "id": 5,
+      "categoria": "CASES",
+      "nombre": "Case gamer TEROS TE-1312, Mid Tower, USB 3.0 / USB 2.0, audio, ventilador ARGB, negro",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 86.40718563,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/cs/a0/csa00bkte1312-b.jpg",
+      "especificaciones": "🎨 Diseño        Mid Tower, Negro\n🖥️ Compatibilidad (Placa Madre)        Micro-ATX, Mini-ITX\n🔌 Compatibilidad (Fuente de Poder)        ATX (Máx. 140 mm)\n📏 Dimensiones (Largo x Ancho x Alto)        548 x 230 x 449 mm\n⚖️ Peso        5.6 kg\n💾 Bahías de Unidades        3.5\", 2.5\"\n💨 Refrigeración (Ventiladores)        3x 120 mm ARGB (frontal, trasero, superior)\n💦 Refrigeración (Radiadores)        120 mm y 240 mm (frontal)\n⬆️ Refrigeración (Cooler CPU)        Máx. 165 mm\n🎮 Tarjeta Gráfica        Máx. 300 mm\n➕ Slots de Expansión        4\n🔗 Puertos        USB 3.0 Tipo-A, USB 2.0 Tipo-A, Audio, Micrófono\n🔘 Botones        Power, LED\n🛡️ Filtros        Vidrio templado (lados izquierdo y derecho)\n🎁 Accesorios Incluidos        Control Remoto"
+    },
+    {
+      "id": 6,
+      "categoria": "CASES",
+      "nombre": "Case gamer TEROS TE-1314G, Mid Tower, USB 3.0 / USB 2.0, audio, ventilador ARGB, negro",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 67.2754491,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cs/m0/csm00bkte1314g.jpg",
+      "especificaciones": "📦 Factor de Forma: Mid Tower\r\n⚙️ Motherboards Soportadas (FF): Micro-ATX, Mini-ITX\r\n⬆️ Orientación: Vertical\r\n📏 Dimensiones:\r\n📏 Largo: 52.8 CM\r\n📏 Ancho: 44.9 CM\r\n📏 Alto: 23 CM\r\n⚖️ Peso: 7.39 KG\r\n⚡ Incluye Fuente de Poder: No\r\n💾 Bahías Internas:\r\n3.5\": 1\r\n2.5\": 3\r\n📏 Medidas Máximas:\r\n📏 Alto Fan Cooler CPU: 16.5 CM\r\n📏 Largo Tarjeta de Video: 34 CM\r\n📏 Largo Fuente Power: 22 CM\r\n⚙️ Slots de Expansión: 4\r\n🔘 Pulsadores: Power, LED Control Button\r\n🔌 Puertos:\r\n🔊 Audio: 1\r\n🔌 USB 2.0 Tipo-A: 1\r\n🔌 USB 3 Tipo-A: 1\r\n💨 Ventiladores:\r\n💨 Preinstalado Front ARGB: 2 x 120 mm\r\n💨 Preinstalado Rear ARGB: 2 x 120 mm\r\n💦 Soporte de Radiador (Front): 120 mm, 240 mm\r\n💦 Soporta Radiador: Sí\r\n💎 Glass y Dust Filter: Tempered Glass (Lados izquierdo y derecho)\r\n🎨 Color: Negro\r\n📦 Formato de Fuente: ATX\r\n🕹️ Accesorios: Control Remoto"
+    },
+    {
+      "id": 7,
+      "categoria": "CASES",
+      "nombre": "Case Gamer Teros TE1175N, Mid Tower, Negro, USB 3.0, USB 2.0, Audio.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 47.39520958,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/carrusel/CSATXTE1175N/CSATXTE1175N_reemplazo_1764880921.jpg",
+      "especificaciones": "Panel lateral Vidrio transparente, puertos USB 3.0 x 2, USB 2.0 x 1, Audífono y microfono, fan posterior y frontis 12 cm ARGB. No incluye fuente de alimentación."
+    },
+    {
+      "id": 8,
+      "categoria": "CASES",
+      "nombre": "Case TEROS TE-1034S, Mini Tower ATX, 250 W, USB 3.0 / 2.0, audio HD, negro",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 30.47904192,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cs/m2/csm25bkte1034s.jpg",
+      "especificaciones": "Presentamos el case TEROS TE-1034S, perfecta para tus proyectos de PC. Este Mini Tower soporta placas madre Micro-ATX y Mini-ITX, e incluye una fuente de poder ATX de 250 W con conectores 24-PIN y SATA Power. Con un diseño compacto y elegante, mide 34.5 cm de largo, 16.5 cm de ancho y 30 cm de alto. Incluye un ventilador trasero de 80 mm preinstalado, con espacio para múltiples bahías y slots de expansión, ideal para configuraciones potentes en espacios pequeños."
+    },
+    {
+      "id": 9,
+      "categoria": "ACCESORIOS",
+      "nombre": "Concentrador de puertos (Hub) TEROS TE-7134N Gen 3 USB-C, 7 en 1",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 31.47208383,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/ac/ct/accte7134n.jpg",
+      "especificaciones": "💻 Marca: Teros\r\n📱 Modelo: TE7134N\r\n🔢 Número de Parte: TE7134N\r\n🔌 Puertos:\r\n1 x USB Tipo C Interface\r\n1 x Salida HDMI 2.0 (compatible con 3840 x 2160p a 60 Hz)\r\n2 x USB 3.0 (5.0 Gbps)\r\n1 x RJ45 (compatible con 10/100/1000 Mbps)\r\n1 x Lector SD 3.0/TF 3.0\r\n1 x PD 3.0 (hasta 100W mediante USB-C)\r\n⚙️ Características:\r\nCarcasa de aluminio\r\nPuerto USB-C con PD 3.0 (admite entrada de hasta 20V/5A - 100W)\r\nEstado de LED: Verde = Conectado / Amarillo = Transmisión activa\r\nCorriente máxima total: 2.5A (USB1 + USB2)\r\nSoporta TV o proyector, retrocompatible\r\n📏 Dimensiones: 0.29 x 4.5 x 1.38 cm"
+    },
+    {
+      "id": 10,
+      "categoria": "ACCESORIOS",
+      "nombre": "Cooler para procesador TEROS TE-8162N, Intel y AMD, TDP 150W Máx, aire",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 25.43413174,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/ac/cp/accpute8162n.jpg",
+      "especificaciones": "Cooler de procesador TEROS TE-8162N con potencia máxima de 150W y altura de 15.6 CM. Fabricado en aluminio y cobre, incluye un ventilador de 12 x 12 x 2.5 CM con velocidad ajustable de 800-2000 RPM ± 10%. Cuenta con iluminación ARGB para un toque personalizado. No incluye radiador."
+    },
+    {
+      "id": 11,
+      "categoria": "ALMACENAMIENTO",
+      "nombre": "Disco Sólido SSD CotriTech M.2, PCIe NVMe, 256GB",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 28.44311377,
+      "stock": 12,
+      "imagen_url": "https://coolboxpe.vtexassets.com/arquivos/ids/266428-800-800?v=638174470694070000&width=800&height=800&aspect=true",
+      "especificaciones": "💾 Capacidad de disco: 256 GB\r\n🖥️ Requisitos del sistema: PCIe\r\n🔌 Interfaz: M.2\r\n📦 Factor de forma: M.2\r\n⏱️ Vida útil: >1,000,000 horas\r\n🔋 Consumo de energía: 0.48W (inactivo), 2.89W (lectura), 2.83W (escritura)\r\n🌡️ Temperatura de almacenamiento: -45°C a 105°C"
+    },
+    {
+      "id": 12,
+      "categoria": "FUENTE",
+      "nombre": "Fuente de alimentacion CERTIFICADA Teros TE7160, ATX, 600W, 80 Plus Bronze, 100V - 240VAC",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 53.45434132,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/ps/te/pste7160wbrzv1.jpg",
+      "especificaciones": "💡 Marca: Teros\r\n🔌 Modelo: TE-7160\r\n📦 Factor de forma: ATX\r\n📏 Dimensiones: 14.00 x 15.00 x 8.60 cm\r\n⚡ Potencia: 600W\r\n🔋 Eficiencia: 80 PLUS Bronze\r\n🔌 Voltaje de entrada: 100-240 VAC\r\n🔌 Conectores:\r\n1 x 24-pin ATX Main Power\r\n1 x 8-pin ATX 12V Power\r\n2 x 8-pin PCIe Power\r\n6 x SATA\r\n3 x Periféricos de 4 pines\r\n💨 Ventilador: Interno de 12 cm\r\n📦 Presentación: Caja\r\n📏 Largo: 14 cm"
+    },
+    {
+      "id": 13,
+      "categoria": "FUENTE",
+      "nombre": "Fuente de alimentación COOLER MASTER MWE Bronze 750 V3, 750W, 80 PLUS Bronze, Formato ATX.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 91.73652695,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/ps/cm/pscmmpe7501acaa.jpg",
+      "especificaciones": "📦 Factor de Forma: ATX\r\n📏 Dimensiones: 14.00 x 15.00 x 8.60 cm\r\n⚡ Potencia (Watts): 750\r\n🔋 Eficiencia: 80 PLUS BRONZE\r\n🔌 Voltaje de Entrada: 100 - 240 VAC\r\n🔄 Frecuencia: 50Hz / 60Hz\r\n⚡ Corriente de Entrada: 10 - 6 A\r\n⚙️ PFC: ACTIVE PFC\r\n🔌 Conectores de Fuente:\r\n1 x 24-pin ATX Main Power (1)\r\n1 x 8-pin ATX 12V power (2)\r\n1 x 8-pin PCIe Power (4)\r\n💾 Conectores SATA: 6\r\n🔌 Periféricos 4 Pines: 3\r\n💨 Ventilador Interno: Sí\r\n📏 Tamaño del Fan: 12.00 cm\r\n⚙️ Tipo de Fan: HDB\r\n🛡️ Certificaciones Seguridad: OTP, SCP, OPP, UVP, OVP\r\n📏 Largo Fuente Power: 140 mm"
+    },
+    {
+      "id": 14,
+      "categoria": "FUENTE",
+      "nombre": "Fuente de alimentación Gigabyte P750BS, 750W, ATX, 80 Plus Bronze, 100V ~ 240VAC.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 85.07185629,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/ps/gb/psgbp750bs.jpg",
+      "especificaciones": "📦 Factor de Forma: ATX\r\n📏 Dimensiones: 14.00 x 15.00 x 8.60 cm\r\n⚡ Potencia (Watts): 750\r\n🔋 Eficiencia: 80 PLUS BRONZE\r\n🔌 Voltaje de Entrada: 100 - 240 VAC\r\n🔄 Frecuencia: 50Hz / 60Hz\r\n⚡ Corriente de Entrada: 6 A\r\n⏱️ MTBF: >100 000 HRS.\r\n⚙️ PFC: Active PFC (>0.9 typical)\r\n🔌 Conectores de Fuente:\r\n1 x 24-pin ATX Main Power (1)\r\n1 x 8-pin ATX 12V power (2)\r\n1 x 8-pin PCIe Power (4)\r\n💾 Conectores SATA: 7\r\n🔌 Periféricos 4 Pines: 1\r\n💨 Ventilador Interno: Sí\r\n📏 Tamaño del Fan: 12 cm\r\n⚙️ Tipo de Fan: Fluid Dynamic Bearing (FDB)\r\n🛡️ Certificaciones Seguridad: OTP, SCP, OPP, OCP, UVP, OVP"
+    },
+    {
+      "id": 15,
+      "categoria": "FUENTE",
+      "nombre": "Fuente de alimentación MSI MAG A650BN, 650W, 80 PLUS Bronze Certified, Formato ATX.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 74.28143713,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/ps/ms/psmsmaga650bn.jpg",
+      "especificaciones": "📦 Factor de Forma: ATX\r\n📏 Dimensiones: 14.00 x 15.00 x 8.60 cm\r\n⚡ Potencia (Watts): 650\r\n🔋 Eficiencia: 80 PLUS BRONZE\r\n🔌 Voltaje de Entrada: 100 - 240 VAC\r\n🔄 Frecuencia: 50Hz / 60Hz\r\n⚙️ PFC: ACTIVE PFC\r\n🔌 Conectores de Fuente:\r\n1 x 24-pin ATX Main Power (1)\r\n1 x 8-pin ATX 12V power (1)\r\n1 x 8-pin PCIe Power (2)\r\n💾 Conectores SATA: 5\r\n🔌 Periféricos 4 Pines: 2\r\n💾 Conector Floppy: 1\r\n💨 Ventilador Interno: Sí\r\n📏 Tamaño del Fan: 12.00 cm\r\n⚙️ Tipo de Fan: Sleeve Bearing\r\n🛡️ Certificaciones Seguridad: OTP, SCP, OPP, OCP, OVP\r\n📏 Largo Fuente Power: 140 mm"
+    },
+    {
+      "id": 16,
+      "categoria": "FUENTE",
+      "nombre": "Fuente de alimentación TEROS TE-7175, ATX, 750W, 80 Plus Gold, 100V-240VAC, CERTIFICADA",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 79.82035928,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/te/71/te7175wgold.jpg",
+      "especificaciones": "📦 Formato: ATX\r\n🔌 Modular: MODULAR FULL\r\n📏 Dimensiones: 16.00 x 15.00 x 8.60 CM\r\n⚡ Potencia (Watts): 750\r\n🔋 Eficiencia: 80 PLUS GOLD\r\n🔌 Voltaje de Entrada: 100 - 240 VAC\r\n🔄 Frecuencia: 50Hz / 60Hz\r\n⚡ Corriente de Entrada: 12-6 A\r\n🔌 Conectores de Fuente:\r\n1 x 24-pin ATX Main Power (1)\r\n1 x 8-pin ATX 12V power (2)\r\n1 x 8-pin PCIe Power (4)\r\n💾 Conectores SATA: 9\r\n🔌 Periféricos 4 Pines: 6\r\n💾 Conector Floppy: 2\r\n💨 Ventilador Interno: Sí\r\n📏 Tamaño del Fan: 12 CM\r\n🔗 Contenido: Cable Poder (1.8 MTS)\r\n📦 Presentación: Caja\r\n📏 Largo Fuente Power: 16 CM"
+    },
+    {
+      "id": 17,
+      "categoria": "COMPUTADORAS",
+      "nombre": "RAM: 16GB DDR5-5600MHz TEAMGROUP T-FORCE RGB",
+      "descripcion": "Case: Teros TE1175N Mid Tower RGB\n\nFuente: MSI MAG A650BN 650W 80+ Bronze\n\nPlaca: Gigabyte H610M K V2 (LGA1700)\n\nGPU: MSI RTX 3050 VENTUS 6GB\n\nSSD: Kingston NV2 500GB NVMe PCIe 4.0\n\nCPU: Intel Core i5-13400F 2.5/4.6GHz",
+      "precio": 765.5688623,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cs/at/csatxte1175n.jpg",
+      "especificaciones": "1x\n\nMemoria TEAMGROUP T-FORCE DELTA TUF GAMING ALLIANCE RGB DDR5, 16GB DDR5-5600MHz, CL36 1.2V\n\n219.50\n\n1x\n\nCase Gamer Teros TE1175N, Mid Tower, Negro, USB 3.0, USB 2.0, Audio\n\n198.80\n\n1x\n\nFuente de alimentación MSI MAG A650BN, 650W, 80 PLUS Bronze Certified, Formato ATX\n\n248.10\n\n1x\n\nMotherboard Gigabyte H610M K V2, Chipset Intel H610, LGA1700, Micro ATX\n\n320.90\n\n1x\n\nTarjeta de video MSI GeForce RTX 3050 VENTUS 2X 6G OC, 6GB GDDR6, PCI-Express Gen 4.0\n\n792.19\n\n1x\n\nUnidad de estado sólido SSD Kingston NV2 500GB de capacidad, M.2, NVMe, PCIe 4.0\n\n190.00\n\n1x\n\nProcesador Intel Core i5-13400F 2.50/4.60GHz 20MB SmartCaché, LGA1700, 65W, Intel 7(10nm)\n\n588.40"
+    },
+    {
+      "id": 18,
+      "categoria": "COMPUTADORAS",
+      "nombre": "Gamer R5 5600g, 16gb Ram, Ssd 500gb, 24 PuLG Combo",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 610.7784431,
+      "stock": 12,
+      "imagen_url": "https://www.yangali.websimp.com/storage/images/68816d8696679.webp",
+      "especificaciones": "🧠 Procesador: AMD Ryzen 5 5600G 4.4GHz, 缓存 16MB, ADEON VEGA 7 2gb\n⚙️ Placa: ASUS PRIME A520M-A II/CSM, AMD AM4, 4xDDR4 Hasta 128GB, DP - HDMI - VGA\n💾 Memoria RAM: Team Group T-Force Vulcan Z, 16gb (2x8GB) DDR4 3200MHz\n💾 Disco sólido SSD: TeamGroup MP33 M.2 512GB PCIe 3.0 x4 NVMe, Lectura 1600 MB/s, Escritura 1000 MB/s\n🖥️ Case Gaming: 1ST PLAYER, Cooler RGB, Ventana Transparente\n⚡ Fuente de Poder: 1ST PLAYER PS-500AX, DK5.0 500W 80 PLUS BRONZE\n🖥️ Monitor: LG 24MQ400 24\"\" LED IPS FHD 1920 x 1080, 75Hz, HDMI, VGA\n⌨️ Kit Gaming 4 en 1: VSG CRUX, Teclado + Mouse + Auriculares + Pad (VG-KMH677)\n⚡ Estabilizador: Forza FVR-1012USB 1000VA 500W 4 Entradas - 4xAC, 2xUSB"
+    },
+    {
+      "id": 19,
+      "categoria": "COMPUTADORAS",
+      "nombre": "Intel Core I9 12900f 32gb 1tb + Monitor 24 Combo",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 1670.658683,
+      "stock": 12,
+      "imagen_url": "https://http2.mlstatic.com/D_NQ_NP_2X_856421-MPE87504492817_072025-F-intel-core-i9-32gb-1tb-monitor-27-gamer-video-rtx.webp",
+      "especificaciones": "🧠 Procesador: INTEL CORE I9 12900F 2.40 / 5.10GHZ 30 MB LGA1700\r\n⚙️ Placa Madre: DDR4 WIFI/BLUETOOTH LGA 1700\r\n💾 Memoria RAM: DDR4 de 32GB 3200MHz PC (16x2)\r\n📺 Tarjeta de Video: 6GB GDDR6 RTX 3050 96BIT\r\n⚡ Fuente de Poder: Certificada 550W 80 PLUS BRONZE\r\n💾 Disco Sólido: 1 TB M2 NVMe PCIe 4.0\r\n🖥️ Case: Black ARGB sin fuente USB 3.0\r\n🖥️ Monitor: 24\"\" Curvo Full HD 100Hz 5ms VGA/HDMI\r\n⌨️ Teclado y Mouse: Logitech MK220 inalámbrico\r\n⚡ Estabilizador: 8 Tomas USB"
+    },
+    {
+      "id": 20,
+      "categoria": "MEMORIAS",
+      "nombre": "Memoria TEAMGROUP T-FORCE DELTA TUF GAMING ALLIANCE RGB DDR5, 16GB DDR5-5600MHz, CL36 1.2V",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 65.71856287,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/me/16/me16tfdt5600hc3.jpg",
+      "especificaciones": "DESCRIPCION        CAPACIDAD        16 GB\nTIPO        DDR5\nVOLTAJE        1.2V\nFRECUENCIA        5600 MHZ\nESTANDAR        PC5-44800\nNUMERO DE MODULOS        1\n(1 x 16GB)\nCONFIGURACION        FORMATO        DIMM\nNUMERO DE PINES        288 PINES\nLATENCIA        CL36\nTIMING        36-36-36-76"
+    },
+    {
+      "id": 21,
+      "categoria": "MEMORIAS",
+      "nombre": "Memoria UDIMM Patriot Viper Steel 8GB DDR4-3200MHz PC4-25600 CL16 1.35V 288-pin",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 24.94011976,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/me/8g/me8gpv320c6.jpg",
+      "especificaciones": "DESCRIPCION\tCAPACIDAD\t8 GB\r\nTIPO\tDDR4\r\nVOLTAJE\t1.35V\r\nFRECUENCIA\t3200 MHZ\r\nESTANDAR\tPC4-25600\r\n(1 x 8GB)\r\nCONFIGURACION\tFORMATO\tUDIMM\r\nNUMERO DE PINES\t288 PINES\r\nLATENCIA\tCL16\r\nTIMING\t20-20-40\nUSB 3.2 GEN 1 HEADER        2\nUSB 2.0 HEADER        4\nPUERTOS BACK PANEL        USB 3.2 GEN 1 TIPO-A        4\nUSB 2.0 TIPO-A        2\nVGA        1\nHDMI        1\nRJ-45        1\nAUDIO JACKS        3\nPS/2 COMBO        1\nBIOS        AMI BIOS UEFI\nFACTOR DE FORMA Y DIMENSIONES        FACTOR DE FORMA        Micro-ATX\nDIMENSIONES        22.6 cm x 22.1 cm"
+    },
+    {
+      "id": 22,
+      "categoria": "MONITORES",
+      "nombre": "Monitor 27\" curvo FHD VA, HDMI, VGA TEROS TE-2731S",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 146.6541916,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mo/n2/mon27cte2731s.jpg",
+      "especificaciones": "📏 Tamaño de pantalla: 27 pulgadas\r\n📺 Tecnología: VA\r\n🔄 Curvatura: 1800R\r\nresolución Máxima: 1920 x 1080 Full HD\r\n🎨 Contraste: 5,000,000:1\r\n🔆 Brillo: 250 cd/m2\r\n📐 Ángulo de visión: 178º\r\n⏱️ Tiempo de respuesta: 5 ms\r\n🔄 Tasa de refresco: 100 Hz\r\n📐 Inclinación: Frontal 5°, Posterior 15°\r\n🔩 Montaje en pared: VESA 10 x 10 cm\r\n🎮 Características adicionales: Crosshair Mode, Kensington Lock\r\n🔌 Conectividad: HDMI, D-SUB VGA (15 pines)\r\n⚡ Consumo de energía: Operativo ≤ 34W, Reposo ≤ 1W\r\n📏 Dimensiones (sin base): 61.6 x 36.5 x 4.5 cm\r\n📏 Dimensiones (con base): 61.6 x 45 x 20 cm\r\n⚖️ Peso: 3.485 kg\r\n📦 Incluye: Cable HDMI, manual, base, adaptador DC 12V; 4A"
+    },
+    {
+      "id": 23,
+      "categoria": "PLACAS",
+      "nombre": "Motherboard ASUS PRIME A620M-K, Chipset AMD A620, Socket AMD AM5, Micro ATX",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 101.1976048,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/mb/as/mbasa620m-k.jpg",
+      "especificaciones": "TIPO DE SOCKET\tAM5 AMD\r\nPROCESADORES\tAMD COMPATIBLE\tProcesador AMD Ryzen 9 SAM5 9XXX\r\nProcesador AMD Ryzen 7 SAM5 9XXX\r\nProcesador AMD Ryzen 5 SAM5 9XXX\r\nProcesador AMD Ryzen 3 SAM5 9XXX\r\nProcesador AMD Ryzen 3 SAM5 8XXX\r\nProcesador AMD Ryzen 9 SAM5 8XXX\r\nProcesador AMD Ryzen 7 SAM5 8XXX\r\nProcesador AMD Ryzen 5 SAM5 8XXX\r\nProcesador AMD Ryzen 9 SAM5 7XXX\r\nProcesador AMD Ryzen 7 SAM5 7XXX\r\nProcesador AMD Ryzen 5 SAM5 7XXX\r\nMEMORIAS RAM\tCOMPATIBLES\tMemoria RAM DDR5 8200 MHz PC5-65600\r\nMemoria RAM DDR5 7600 MHz PC5-60800\r\nMemoria RAM DDR5 7200 MHz PC5-57600\r\nMemoria RAM DDR5 6800 MHz PC5-54400\r\nMemoria RAM DDR5 6400 MHz PC5-51200\r\nMemoria RAM DDR5 6000 MHz PC5-48000\r\nMemoria RAM DDR5 5600 MHz PC5-44800\r\nMemoria RAM DDR5 5200 MHz PC5-41600\r\nMemoria RAM DDR5 4800 MHz PC5-38400\r\nNUMERO DE SOCKETS DIMM\t2\r\nEXPANSION MAXIMA EN GB\t96\r\nTECNOLOGIA\tAMD EXPO\r\nDual Channel\r\nTIPO DE RAM\tDDR5\r\nVIDEO\tRevisar caracteristicas del Procesador\r\nSONIDO\tTECNOLOGIA\t7.1 Surround Sound High Definition\r\nCHIPSET\tRealtek Audio Codec\r\nCANALES\t7.1\r\nCONECTIVIDAD\tETHERNET\tCHIPSET\tRealtek 1Gb\r\nVELOCIDAD\t10 Mbps\r\n100 Mbps\r\n1000 Mbps\r\nALMACENAMIENTO SERIAL ATA\tNUMERO DE PUERTOS\t4\r\nVELOCIDAD DE TRANSFERENCIA\t6 Gbit/s\r\nRAID SATA\tRAID 10\r\nRAID 1\r\nRAID 0\r\nALMACENAMIENTO M.2\tNUMERO TOTAL DE SLOTS M.2 KEY M\t1\r\nM.2 CPU\t1 x PCIe 4.0 x4 tipos\t2242\r\n2260\r\n2280\r\nSLOTS DE EXPANSION\tPCI Express CPU\tPCI Express x16 slot, PCIe 4.0 modo x16\t1\r\nPCI Express CHIPSET\tPCI Express x1 slot, PCIe 3.0\t1\r\nPUERTOS INTERNOS\tFRONT PANEL AUDIO HEADER\t1\r\nUSB 3.2 GEN 1 HEADER\t2\r\nUSB 2.0 HEADER\t4\r\nPUERTOS BACK PANEL\tUSB 3.2 GEN 1 TIPO-A\t4\r\nUSB 2.0 TIPO-A\t2\r\nVGA\t1\r\nHDMI\t1\r\nRJ-45\t1\r\nAUDIO JACKS\t3\r\nPS/2 COMBO\t1\r\nBIOS\tAMI BIOS UEFI\r\nFACTOR DE FORMA Y DIMENSIONES\tFACTOR DE FORMA\tMicro-ATX\r\nDIMENSIONES\t22.6 cm x 22.1 cm"
+    },
+    {
+      "id": 24,
+      "categoria": "PLACAS",
+      "nombre": "Motherboard Gigabyte A520M K V2 (rev. 1.0) Chipset AMD A520, Socket AM4, Micro ATX",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 72.18562874,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/mb/gb/mbgba520mkv2.jpg",
+      "especificaciones": "TIPO DE SOCKET        AM4 AMD\nPROCESADORES        AMD COMPATIBLE        Procesador AMD Ryzen 9 SAM4 5XXX\nProcesador AMD Ryzen 7 SAM4 5XXX\nProcesador AMD Ryzen 5 SAM4 5XXX\nProcesador AMD Ryzen 5 SAM4 4XXX\nProcesador AMD Ryzen 5 SAM4 3XXX\nProcesador AMD Ryzen 3 SAM4 3XXX\nMEMORIAS RAM        COMPATIBLES        Memoria RAM DDR4 4000 MHz PC4-32000\nMemoria RAM DDR4 3600 MHz PC4-28800\nMemoria RAM DDR4 3200 MHz PC4-25600\nMemoria RAM DDR4 3000 MHz PC4-24000\nMemoria RAM DDR4 2666 MHz PC4-21300\nNUMERO DE SOCKETS DIMM        2\nEXPANSION MAXIMA EN GB        64\nTECNOLOGIA        Intel XMP\nDual Channel\nTIPO DE RAM        DDR4\nVIDEO        Revisar caracteristicas del Procesador\nSONIDO        TECNOLOGIA        High Definition (HD)\nCHIPSET        Realtek Audio Codec\nCANALES        7.1\nCONECTIVIDAD        ETHERNET        CHIPSET        Realtek 1GbE\nVELOCIDAD        100 Mbps\n1000 Mbps\nALMACENAMIENTO SERIAL ATA        NUMERO DE PUERTOS        4\nVELOCIDAD DE TRANSFERENCIA        6 Gbit/s\nRAID SATA        RAID 10\nRAID 1\nRAID 0\nALMACENAMIENTO M.2        NUMERO TOTAL DE SLOTS M.2 KEY M        1\nDISTRIBUCION DE SLOTS M.2 KEY M        M.2 CONECTADO AL PROCESADOR        1 PCIe 3.0 x4 y SATA, tipo 2280\nSLOTS DE EXPANSION        CONECTADO AL PROCESADOR        1 PCI Express x16 slot, PCIe 3.0 modo x16\nCONECTADO AL CHIPSET        1 PCI Express x1 slot, PCIe 3.0\nPUERTOS INTERNOS        FRONT PANEL AUDIO HEADER        1\nUSB 3.2 GEN 1 HEADER        2\nUSB 2.0 / 1.1 HEADER        4\nPUERTOS BACK PANEL        USB 3.2 GEN 1 TIPO-A        4\nUSB 2.0 / 1.1 TIPO-A        2\nVGA        1\nHDMI        1\nRJ-45        1\nAUDIO JACKS        3\nPS/2 COMBO        1\nALMACENAMIENTO SERIAL ATA        NUMERO DE PUERTOS        4\nVELOCIDAD DE TRANSFERENCIA        6 Gbit/s\nRAID SATA        RAID 10\nRAID 1\nRAID 0\nALMACENAMIENTO M.2        NUMERO TOTAL DE SLOTS M.2 KEY M        1\nM.2 CPU        1 x PCIe 4.0 x4 tipos        2242\n2260\n2280\nSLOTS DE EXPANSION        PCI Express CPU        PCI Express x16 slot, PCIe 4.0 modo x16        1\nPCI Express CHIPSET        PCI Express x1 slot, PCIe 3.0        1\nPUERTOS INTERNOS        FRONT PANEL AUDIO HEADER        1\nUSB 3.2 GEN 1 HEADER        2\nUSB 2.0 HEADER        4\nPUERTOS BACK PANEL        USB 3.2 GEN 1 TIPO-A        4\nUSB 2.0 TIPO-A        2\nVGA        1\nHDMI        1\nRJ-45        1\nAUDIO JACKS        3\nPS/2 COMBO        1\nBIOS        AMI BIOS UEFI\nFACTOR DE FORMA Y DIMENSIONES        FACTOR DE FORMA        Micro-ATX\nDIMENSIONES        22.6 cm x 22.1 cm"
+    },
+    {
+      "id": 25,
+      "categoria": "PLACA",
+      "nombre": "Motherboard Gigabyte H610M K V2, Chipset Intel H610, LGA1700, Micro ATX",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 96.07784431,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/mb/gb/mbgbh610mkv2d5.jpg",
+      "especificaciones": "Soporta Procesadores de 14th, 13th y 12th Generacion Intel Core i9 / i7 / i5 / i3 / Pentium Gold / Celeron, 2 x Ranuras de memoria DDR5 / Soporte maximo hasta 96GB, Almacenamiento de 1 x M.2 (Key-M / 2 x SATA 6Gb/s, Sonido Realtek Audio CODEC / Audio HD / 7.1-channel, 1 x Realtek GbE LAN chip (1 Gbps/100 Mbps) Ethernet (RJ-45), Formato Micro ATX."
+    },
+    {
+      "id": 26,
+      "categoria": "PLACAS",
+      "nombre": "Motherboard MSI PRO A620M-E, Chipset AMD A620, Socket AM5, HDMI, VGA, mATX",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 102.9565868,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mb/ms/mbmsa620m-epro.jpg",
+      "especificaciones": "⚙️ Chipset: AMD A620\r\n🔌 Socket: AM5 AMD\r\n🧠 Compatibilidad CPU: AMD Ryzen 9 SAM5 7XXX, Ryzen 7 SAM5 7XXX, Ryzen 5 SAM5 7XXX\r\n💾 RAM: DDR5 hasta 6000 MHz PC5-48000\r\n🔢 Sockets DIMM: 2\r\n💾 Expansión máxima RAM: 64 GB\r\n⚙️ Tecnologías: AMD EXPO, Dual Channel\r\n🔊 Sonido: Alta definición con Realtek ALC897 Codec, 7.1 canales\r\n🌐 Ethernet: Realtek RTL8111H (10, 100, 1000 Mbps)\r\n💾 Puertos SATA: 4 puertos SATA 6 Gbit/s (soporte RAID 10, 1, 0)\r\n💾 Slots: 1 slot M.2 Key M (conectado al procesador), 1 slot PCIe 4.0 x16 (conectado al chipset)\r\n🔌 Puertos internos: Audio frontal, USB 3.2 Gen 1, USB 2.0\r\n🔌 Puertos traseros: USB 3.2 Gen 1 Tipo-A, USB 2.0 Tipo-A, VGA, HDMI, RJ-45, audio jacks, PS/2 Keyboard, PS/2 Mouse\r\n⚙️ BIOS: AMI BIOS UEFI\r\n📦 Factor de forma: Micro-ATX\r\n📏 Dimensiones: 211 mm"
+    },
+    {
+      "id": 27,
+      "categoria": "PORTATILES",
+      "nombre": "Notebook 2en1 Advance CN4058, 10.1\" , Celeron N4020 1.10 GHz, 8GB RAM,128GB,Pantalla touch",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 230.5389222,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/nb/ad/nbadvcn4058bk-s.jpg",
+      "especificaciones": "🧠 CPU Modelo: N4020\r\n💾 Disco Duro Capacidad: 128 GB\r\n💾 Memoria Capacidad: 8 GB\r\n📏 Pantalla Tamaño: 10.1 PULG\r\n💻 Sistema Operativo Versión: WINDOWS 11 HOME\r\n🔋 Batería Capacidad: 3000 MAH"
+    },
+    {
+      "id": 28,
+      "categoria": "PORTATILES",
+      "nombre": "Notebook Lenovo IdeaPad Slim 3 15.6\" FHD TN Core i5-12450H 2.0/4.4GHz 16GB LPDDR5-4800",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 529.9401198,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/carrusel/NBLEN83ER001DLM/nblen83er001dlm_1753482430.jpg",
+      "especificaciones": "🧠 CPU Modelo: 12450H\r\n💾 Disco Duro Capacidad: 512 GB\r\n💾 Memoria Capacidad: 16 GB\r\n📏 Pantalla Tamaño: 15.6 PULG\r\n💻 Sistema Operativo Versión: NO INCLUYE SISTEMA OPERATIVO\r\n🔋 Batería Capacidad: 47 WH"
+    },
+    {
+      "id": 29,
+      "categoria": "PORTATILES",
+      "nombre": "Notebook Lenovo V15 G3 IAP 15.6\" FHD TN, Core i3-1215U 1.2 / 4.4GHz, 8GB DDR4-3200MHz",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 433.5329341,
+      "stock": 12,
+      "imagen_url": "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/1301/PMP00003533907/full_image-1.jpg",
+      "especificaciones": "🧠 CPU Modelo: 12450H\r\n💾 Disco Duro Capacidad: 512 GB\r\n💾 Memoria Capacidad: 16 GB\r\n🖥️ Pantalla Tamaño: 15.6 PULG\r\n💻 Sistema Operativo Versión: NO INCLUYE SISTEMA OPERATIVO\r\n🔋 Batería Capacidad: 47 WH"
+    },
+    {
+      "id": 30,
+      "categoria": "COMPUTADORAS",
+      "nombre": "Pc Gamer Ryzen 7 5700g/32gb/1tbssd + Monitor 27 Combo",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 805.3892216,
+      "stock": 12,
+      "imagen_url": "https://media.falabella.com/falabellaPE/119396738_01/w=1500,h=1500,fit=pad",
+      "especificaciones": "🧠 PROCESADOR: AMD Ryzen 7 5700G 3.8GHz 8 Core 20MB Cache AM4\r\n⚙️ PLACA MADRE: A520M K AM4\r\n💾 MEMORIA RAM: DDR4 de 32GB 3200MHz PC 16GB x 2\r\n💾 DISCO SÓLIDO: 1 TB M2 NVMe PCIe 4.0\r\n🖥️ MONITOR: 27\"\" IPS Full HD LED VGA-HDMI\r\n⚡ ESTABILIZADOR: 8 Tomas FVR-902\r\n⌨️ COMBO GAMER 4 EN 1: (Teclado-Mouse-Headset-Pad Mouse)\r\n🖥️ CASE GAMER: Fuente de 500W USB 3.0"
+    },
+    {
+      "id": 31,
+      "categoria": "COMPUTADORAS",
+      "nombre": "PC OFICINA AMD Ryzen 3 3200G, 8GB DDR4-3200MHz, Gigabyte A520M K,  NV2 500GB, Fuente 600W",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 323.4251497,
+      "stock": 12,
+      "imagen_url": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAFwAXAMBIgACEQEDEQH/xAAcAAACAgMBAQAAAAAAAAAAAAAFBgQHAAMIAQL/xABAEAABAgQEAwQHAwoHAAAAAAABAgMABAURBhIhMQcTQSJRYbEUMnGBkaGyc7PBFSMkJUJiY3LR4UNSZHR1goP/xAAYAQEBAQEBAAAAAAAAAAAAAAAAAgEDBP/EAB0RAQEBAAIDAQEAAAAAAAAAAAABAgMREiExBEH/2gAMAwEAAhEDEQA/ALxjIyIdVn2aZTn52aVlaZQVKP4Qvpslt6iZGRVMniTEE7hiu1ldQabCEByWSkgFlSSbpI7iLb7xOl+I7svhBVSm5MPzzSGsyEqyIXnUpN72PVJvbvHfE515TuO3P+fXBetWdrIiFUKtIU1N56bZYvslau0r2Dc+6KNqfEfEdWUUJmUSTBPqSoym3io6/C0D5dwKUXZlzMtWqluKuVe8xTgtis8RZSVYUunSi5oggArVkSb+4n4gREo/EOYnp5yVeprSS2wh7Oh465iRa1v3YQaosfkhSwQUkosR7Y24bX+uXz/oGfqVAWu3i1j/ABZV0fyqB/pEuUxJIzLyGUh5K1mwCk/0MICnIlUV8Iq8qpWwX+EBYcvUpSYUlLTt1K9UFJF/jEuEHD6AMRMrCzdY1Tp/l0636eHWH6AyFXiUudawnMu09sOONrQ4pJTmFknNqLjS4F/C8HKzVJWjyDk7OrKWkdEpzKUTslIG5PdFU4m4iVCpNPs0q0tLA5HUlJD1iNlX9W47vjE6s6duHG9a7z/FfKW+9SXAy7MNvTDd5sOG6HU5swtpvfoPHvgnIu+kYMrYC3HW5ZciyhwpIQNVFSU9NDb4+yAlTXUUovIrSGVkL0F1hV+pOp9nh7YfKhXaTUeFPoVPYalZiXdY5zLaAkLOYArHffr7YrMknpPNrk8/HkIbKddzDBSGGfSGbtpUStIOYX6wAaNoYKQr9KY+0T5iDmM48ytykwEgD843sPEQOw8u1VcPfIs/UqJnERWWTmj3ON+YgTQHP1if9gz9So0NS3NY1OTqZPLMLUEhCk6k95t+MaS5rAfFyr4dnR+4PqEaHvDr7hxbIILKUtltJS7bVRyLuPL4xZkVNhZzNjKmDKodkgm+hs0rpFsxIV8bvPNtyPLd5SC4rMSm4Jy2sdu8n3RTmKZn0Wfcczl0vOZnnFIsLkADTpsIunHMrNTVD/Q3g0pt1K3FFNzk1Bt46xS2LqC5MIU3LzC3VJN1c6YQnTQq3tsNYmyX66ce9ZssBVzt6etZl2QXCoiybWF+kRqY+hfOk1pClPo5qV7bX0/vE/8AJjz0ulbT8gptLfZabmE5wRpa0R6bSUyczMTNQdabughtsG6isjra9gPnGcds77er9k49ZzcX49DbfZKApKSDuQbWgxTrJm2QE5bLTpe/WBIShKMofS+4Gyey2o3Jvre1hr5iCNOUBMs2NxnTY/8AaOjwS9ifEhVpKb+0b+oQHorlp9H/AB7XmYI8SV/oc2P4jf1CAdKctNtHvkGvMwaaObAzEq70OaHeB9Qj753jGqYyTLC2XhdCxYiNDPgpSVY/kClwlRCgU32AbXaLpiieHa749ppcH5xXMGbooBpf99IvaJEWoyonpCYlVKKQ82pGYbpuN/dHOeO6NXKHUEJqXKLkwpXJW07cOAkA9NNhvHS0VVxolg/M0xYtzWwS2CNlXBv8vnAUmoK5wD3ZIBUSP2bR5zhMPNt88i5tmVtBGpSi2jMPBNwbtixvoq97+O0AJxpLd0tnMMot37a6R0zUahhclVSDaQsh5JSW0va2Bvc2131T3dd94KU13O8wsgJusaD2wPm22/QZNaEJSHEBZA7ykX8o3SDp57V7esNhbrGa+tzPQrxFczS02L/tN+Yhaoj5VNG59WWQn5mC+PHczM2L37SPMQu0Rdphf2KfMxKjNzfGPkunviHzPGPC5Ghu4arvjulDvLv3S4vuOfOFyr4+pQ+2+5XHQcSMioeKUx6TidtmzhRLS4zFrUpJubnu6Rbi1BCSpRASBck9BHPmJ5uZfn5ucyKIm3FKQsG/ZBsL220gACyHw8FrUoLG56a3gCtHJng52Vhs3ynZUM1Dw/VK47MNyDSuUyguPPqHZbACiL95NrAQPbw88+FICVc2+5G8Vn0jU7iLNPZ5t7li0u6fSGgTfl59VJHgCbe6Nsq5kdQSbAEExvqGGqvISCJmYknjLNXSZhpJKUjftEeqN99IEKzqRlCwQbaw19MS+Inix8OsvqSQQSixBvfUQFpCrPLP8NPmY+6gQmQUkbC3mI0Uo2dX/IPxiVjIcj3PGhsLdWENpUtZ2SkXJjY5LvsozuoyAdFKAPdtvGhs4UqvxApI+2+5XHRMc58JteINJ/8Ab7lcdGRg1TLQfl3GVeq4gpPvhaGDZXL2rKtteGqMgBFKoUvTZKYlmQAH7lZA8LRFbwxKMqBQhOkMMZAR5WVbl2ciUgA7jvhOxRwwoVbzvSrf5NnFa82XSMij+8jY+6x8YeYyA5jxlw8xJQ2XM0iqdlr6TEmC4LX6p9ZPwt4wp0unVV9Z9Apk3MqPZ/NMKVYgnuEdkR4EgbC0By/JcPscT2UtURxpKv2nlJbsPEKUD8oPyPBTFD9vTqjISidL5FKWr4BIHzjoG0ewFb4D4Vt4UrTVWcqzs3MIbUjJysqe0NepMWRGRkB//9k=",
+      "especificaciones": "• 1x Case TEROS TE-1034S, Mini Tower ATX, 250 W, USB 3.0 / 2.0, audio HD, negro - S/. 101.80\n• 1x Fuente de alimentacion CERTIFICADA Teros TE7160, ATX, 600W, 80 Plus Bronze, 100V - 240VAC - S/. 178.54\n• 1x Unidad de estado sólido SSD Kingston NV2 500GB de capacidad, M.2, NVMe, PCIe 4.0 - S/. 190.00\n• 1x Motherboard Gigabyte A520M K V2 (rev. 1.0) Chipset AMD A520, Socket AM4, Micro ATX - S/. 241.10\n• 1x Memoria UDIMM Patriot Viper Steel 8GB DDR4-3200MHz PC4-25600 CL16 1.35V 288-pin - S/. 83.30\n• 1x Procesador AMD Ryzen 3 3200G, 3.60GHz, 4MB L3, 4 Core, AM4, 14nm, 65 W. - S/. 285.50\n\nTotal: S/. 1080.24"
+    },
+    {
+      "id": 32,
+      "categoria": "PROCESADORES",
+      "nombre": "Procesador AMD Ryzen 3 3200G, 3.60GHz, 4MB L3, 4 Core, AM4, 14nm, 65 W.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 85.47904192,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cp/am/cpam4r33200g.jpg",
+      "especificaciones": "SOCKET\tAM4 AMD\r\nLITOGRAFIA AMD\tTSMC 12nm FinFET\r\nNUCLEOS\tCANTIDAD DE NUCLEOS\t4\r\nCANTIDAD DE SUBPROCESOS\t4\r\nFRECUENCIAS\tFRECUENCIA BASE\t3.60 GHz\r\nFRECUENCIA DE AUMENTO MAXIMA HASTA\t4.00 GHz\r\nDESBLOQUEADO\tSI\r\nCACHE\tCACHE L1 TOTAL\t384 KB\r\nCACHE L2 TOTAL\t2 MB\r\nCACHE L3 TOTAL\t4 MB\r\nPOTENCIA\tTDP\t65 Watt\r\nINCORPORA CONTROLADOR GRAFICO\tSI\r\nPROCESADOR GRAFICO\tAMD Radeon Vega 8 Graphics\r\nINCLUYE FAN COOLER\tSI"
+    },
+    {
+      "id": 33,
+      "categoria": "PROCESADORES",
+      "nombre": "Procesador AMD Ryzen 5 4500, 3.6 / 4.1 GHz, 8MB L3, 6-Core, AM4, 7nm, 65W.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 83.53293413,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cp/am/cpam4r54500.jpg",
+      "especificaciones": "SOCKET\tAM4 AMD\r\nLITOGRAFIA AMD\tTSMC 7nm FinFET\r\nNUCLEOS\tCANTIDAD DE NUCLEOS\t6\r\nCANTIDAD DE SUBPROCESOS\t12\r\nFRECUENCIAS\tFRECUENCIA BASE\t3.60 GHz\r\nFRECUENCIA DE AUMENTO MAXIMA HASTA\t4.10 GHz\r\nDESBLOQUEADO\tSI\r\nCACHE\tCACHE L1 TOTAL\t384 KB\r\nCACHE L2 TOTAL\t3 MB\r\nCACHE L3 TOTAL\t8 MB\r\nPOTENCIA\tTDP\t65 Watt\r\nINCORPORA CONTROLADOR GRAFICO\tNO\r\nINCLUYE FAN COOLER\tSI\nUSB 3.2 GEN 1 HEADER        2\nUSB 2.0 / 1.1 HEADER        4\nPUERTOS BACK PANEL        USB 3.2 GEN 1 TIPO-A        4\nUSB 2.0 / 1.1 TIPO-A        2\nVGA        1\nHDMI        1\nRJ-45        1\nAUDIO JACKS        3\nPS/2 COMBO        1\nALMACENAMIENTO SERIAL ATA        NUMERO DE PUERTOS        4\nVELOCIDAD DE TRANSFERENCIA        6 Gbit/s\nRAID SATA        RAID 10\nRAID 1\nRAID 0\nALMACENAMIENTO M.2        NUMERO TOTAL DE SLOTS M.2 KEY M        1\nM.2 CPU        1 x PCIe 4.0 x4 tipos        2242\n2260\n2280\nSLOTS DE EXPANSION        PCI Express CPU        PCI Express x16 slot, PCIe 4.0 modo x16        1\nPCI Express CHIPSET        PCI Express x1 slot, PCIe 3.0        1\nPUERTOS INTERNOS        FRONT PANEL AUDIO HEADER        1\nUSB 3.2 GEN 1 HEADER        2\nUSB 2.0 HEADER        4\nPUERTOS BACK PANEL        USB 3.2 GEN 1 TIPO-A        4\nUSB 2.0 TIPO-A        2\nVGA        1\nHDMI        1\nRJ-45        1\nAUDIO JACKS        3\nPS/2 COMBO        1\nBIOS        AMI BIOS UEFI\nFACTOR DE FORMA Y DIMENSIONES        FACTOR DE FORMA        Micro-ATX\nDIMENSIONES        22.6 cm x 22.1 cm"
+    },
+    {
+      "id": 34,
+      "categoria": "PROCESADORES",
+      "nombre": "Procesador AMD Ryzen 5 8500G 3.50 / 5.00 GHz, 16MB L3 Cache, 6-Cores, 4nm, TDP: 65W",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 182.6646707,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cp/am/cpam5r58500g.jpg",
+      "especificaciones": "SOCKET\tAM5 AMD\r\nLITOGRAFIA AMD\tTSMC 4nm FinFET\r\nNUCLEOS\tCANTIDAD DE NUCLEOS\t6\r\nCANTIDAD DE SUBPROCESOS\t12\r\nFRECUENCIAS\tFRECUENCIA BASE\t3.50 GHz\r\nFRECUENCIA DE AUMENTO MAXIMA HASTA\t5.00 GHz\r\nCACHE\tCACHE L2 TOTAL\t6 MB\r\nCACHE L3 TOTAL\t16 MB\r\nPOTENCIA\tTDP\t65 Watt\r\nINCORPORA CONTROLADOR GRAFICO\tSI\r\nPROCESADOR GRAFICO\tAMD Radeon Graphics\r\nINCLUYE FAN COOLER\tSI"
+    },
+    {
+      "id": 35,
+      "categoria": "PROCESADORES",
+      "nombre": "Procesador Intel Core i3-12100 3.3 / 4.3GHz 12MB Intel Smart Caché, LGA1700, Intel 7(10nm)",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 154.8203593,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cp/il/cpili312100.jpg",
+      "especificaciones": "SOCKET\tLGA1700 INTEL\r\nLITOGRAFIA INTEL\tIntel 7\r\nNUCLEOS\tCANTIDAD DE NUCLEOS\t4\r\nCANTIDAD DE PERFORMANCE-CORES\t4\r\nCANTIDAD DE SUBPROCESOS\t8\r\nFRECUENCIAS\tFRECUENCIA TURBO MAXIMA\t4.30 GHz\r\nFRECUENCIA BASE DE PERFORMANCE-CORE\t3.30 GHz\r\nFRECUENCIA TURBO MAXIMA DEL PERFORMANCE-CORE\t4.30 GHz\r\nCACHE\tINTEL SMART CACHE\t12 MB\r\nCACHE L2 TOTAL\t5 MB\r\nPOTENCIA\tPOTENCIA BASE\t60 Watt\r\nPOTENCIA TURBO MAXIMA\t89 Watt\r\nINCORPORA CONTROLADOR GRAFICO\tSI\r\nPROCESADOR GRAFICO\tGraficos UHD Intel 730\r\nINCLUYE FAN COOLER\tSI"
+    },
+    {
+      "id": 36,
+      "categoria": "PROCESADORES",
+      "nombre": "Procesador Intel Core i5-13400F 2.50/4.60GHz 20MB SmartCaché, LGA1700, 65W, Intel 7(10nm)",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 176.1676647,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/cp/il/cpili513400f.jpg",
+      "especificaciones": "NUCLEOS\tCANTIDAD DE NUCLEOS\t10\r\nCANTIDAD DE PERFORMANCE-CORES\t6\r\nCANTIDAD DE EFFICIENT-CORES\t4\r\nCANTIDAD DE SUBPROCESOS\t16\r\nFRECUENCIAS\tFRECUENCIA TURBO MAXIMA\t4.60 GHz\r\nFRECUENCIA BASE DE PERFORMANCE-CORE\t2.50 GHz\r\nFRECUENCIA BASE DE EFFICIENT-CORE\t1.80 GHz\r\nFRECUENCIA TURBO MAXIMA DEL PERFORMANCE-CORE\t4.60 GHz\r\nFRECUENCIA TURBO MAXIMA DE EFFICIENT-CORE\t3.30 GHz\r\nCACHE\tINTEL SMART CACHE\t20 MB\r\nCACHE L2 TOTAL\t9.5 MB\r\nPOTENCIA\tPOTENCIA BASE\t65 Watt\r\nPOTENCIA TURBO MAXIMA\t148 Watt\r\nINCORPORA CONTROLADOR GRAFICO\tNO\r\nINCLUYE FAN COOLER\tSI"
+    },
+    {
+      "id": 37,
+      "categoria": "PROCESADORES",
+      "nombre": "Procesador Intel Core i7-12700F, 2.10 / 4.90GHz, 25MB SmartCaché, LGA1700, Intel 7(10nm)",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 344.8540419,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/cp/il/cpili712700f.jpg",
+      "especificaciones": "🧠 Generación: 12ª generación\r\n🔢 Núcleos: 12 (8 de alto rendimiento + 4 eficientes)\r\n🧵 Subprocesos: 20\r\n🔬 Litografía: Intel 7\r\n⚡ Frecuencia base (alto rendimiento): 2.10 GHz\r\n⚡ Frecuencia base (eficiente): 1.60 GHz\r\n⚡ Frecuencia turbo máxima: 4.90 GHz\r\n💾 Caché: 25 MB Intel Smart Cache\r\n⚡ Consumo de potencia base: 65 Watts\r\n⚡ Potencia turbo máxima: 180 Watts\r\n🚫 Controlador gráfico: No incorporado\r\n💨 Enfriamiento: Fan cooler incluido\r\n📦 Presentación: Caja con código BX8071512700F"
+    },
+    {
+      "id": 38,
+      "categoria": "SERVICIOS",
+      "nombre": "SERVICIO A DOMICILIO",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 5.988023952,
+      "stock": 12,
+      "imagen_url": "https://i.ibb.co/Q74gLRgw/18157095.jpg",
+      "especificaciones": "SOLICITA UNA VISITA PARA DIAGNOSTICO ZONAS ALEDAÑAS A SURCO"
+    },
+    {
+      "id": 39,
+      "categoria": "ALMACENAMIENTO",
+      "nombre": "SSD ULTRARAPIDO KINGSTON M.2 250GB PCIE 4.0 NVME 3.500/2.100 MB/S",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 41.61676647,
+      "stock": 12,
+      "imagen_url": "https://rimage.ripley.com.pe/home.ripley/Attachment/MKP/3949/PMP20000114618/full_image-1.png",
+      "especificaciones": "💾 Capacidad de disco: 256 GB\r\n🔌 Requisitos del sistema: Puerto M.2 PCIe2.0 o superior\r\n🔌 Interfaz: M.2 PCIe\r\n📦 Factor de forma: M.2 2280\r\n⏱️ Vida útil: 2,000,000 horas\r\n⚡ Consumo de energía: 5W\r\n🌡️ Temperatura de servicio: 0 a 65°C"
+    },
+    {
+      "id": 40,
+      "categoria": "TARJETAS DE VIDEO",
+      "nombre": "Tarjeta de video Asus DUAL-GTX1650-O4GD6-P-EVO, 4GB GDDR6 128-bit, PCI-E 3.0.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 188.6002994,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/vd/4g/vd4gasgtx1650dp.jpg",
+      "especificaciones": "GPU 🔶 GPU: NVIDIA GeForce GTX 1650\r\nnúcleos 🔶 CUDA Cores: 896\r\n⚡ Boost Clock: 1755 MHz\r\n💾 Memoria: 4 GB GDDR6\r\n⚡ Velocidad de memoria: 12 Gbps\r\n🚌 Bus de memoria: 128 bits\r\n🔌 Interfaz: PCI Express 3.0 x16\r\n📺 Salidas: HDMI, DisplayPort, DVI-D\r\n🖥️ Soporte para monitores: Hasta 3\r\n🖥️ Resolución máxima digital: 7680 x 4320\r\n⚙️ API: OpenGL 4.6\r\n⚡ Fuente de alimentación recomendada: 300 Watts\r\n🔌 Conector de power: 6 pines PCIe\r\n📏 Dimensiones: 21.2 x 12.1 x 4 cm\r\n💨 Ventiladores: Dos"
+    },
+    {
+      "id": 41,
+      "categoria": "TARJETAS DE VIDEO",
+      "nombre": "Tarjeta de video MSI GeForce RTX 3050 GAMING X 6G, 6GB GDDR6, PCI-Express Gen 4.0",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 256.0441617,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/vd/6g/vd6gmsrtx3050v2.jpg",
+      "especificaciones": "🔶 GPU: NVIDIA GeForce RTX 3050\r\n🔶 CUDA Cores: 2304\r\n⚡ Boost Clock: 1507 MHz\r\n💾 Memoria: 6 GB GDDR6\r\n⚡ Velocidad de memoria: 14 Gbps\r\n🚌 Bus de memoria: 96 bits\r\n🔌 Interfaz: PCI Express x16, soporte PCIe 4.0 modo x8\r\n📺 Salidas: Dos HDMI, un DisplayPort\r\n🖥️ Soporte para monitores: Hasta tres\r\n🖥️ Resolución máxima digital: 7680 x 4320\r\n⚙️ Compatibilidad: DirectX 12 Ultimate, OpenGL 4.6\r\n⚡ Consumo: 70 Watt\r\n⚡ Fuente de alimentación recomendada: 300 Watt\r\n📏 Dimensiones: 205 x 109 x 42 mm\r\n🔒 Soporte: HDCP\r\n📏 Longitud: 205 mm\r\n💨 Ventiladores: Dos"
+    },
+    {
+      "id": 42,
+      "categoria": "TARJETAS DE VIDEO",
+      "nombre": "Tarjeta de video MSI GeForce RTX 3050 VENTUS 2X 6G OC, 6GB GDDR6, PCI-Express Gen 4.0",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 237.1826347,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/vd/6g/vd6gmsrtx3050v2.jpg",
+      "especificaciones": "GPU\tCORE\tNVIDIA GeForce RTX 3050\r\nCUDA CORES\t2304\r\nBOOST CLOCK\t1492 MHz\r\nMEMORIA\tCAPACIDAD\t6 GigaByte\r\nTIPO\tGDDR6\r\nBUS\t96 bit\r\nVELOCIDAD\t14 Gbps\r\nINTERFAZ\tPCI Express x16 slot, PCIe 4.0 modo x8\r\nSALIDAS, MONITORES, RESOLUCION\tHDMI\t2\r\nDISPLAYPORT\t1\r\nSOPORTE MAXIMO MONITORES\t3\r\nRESOLUCION MAXIMA DIGITAL\t7680 x 4320\r\nAPI\tDirectX 12 Ultimate\r\nOpenGL 4.6\r\nCONSUMO\t70 Watt\r\nFUENTE RECOMENDADA\t300 Watt\r\nDIMENSIONES\t189 x 109 x 42 mm\r\nSOPORTE HDCP\tSi\r\nLARGO VIDEO CARD\t189 mm\r\nNUMERO DE FANS\t2"
+    },
+    {
+      "id": 43,
+      "categoria": "TARJETAS DE VIDEO",
+      "nombre": "Tarjeta de video MSI GeForce RTX 3060 VENTUS 2X 12G OC, 12GB GDDR6, PCI-Express Gen 4.0",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 382.8143713,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/vd/12/vd12msrtx3060v2.jpg",
+      "especificaciones": "🔶 GPU: NVIDIA GeForce RTX 3060\r\n🔶 CUDA Cores: 3584\r\n⚡ Boost Clock: 1807 MHz\r\n💾 Memoria: 12 GB GDDR6\r\n🚌 Bus de memoria: 192 bits\r\n⚡ Velocidad de memoria: 15 Gbps\r\n🔌 Interfaz: PCI Express x16, modo PCIe 4.0\r\n📺 Salidas de video: 1 HDMI, 3 DisplayPort\r\n🖥️ Soporte para monitores: Hasta 4\r\n🖥️ Resolución máxima digital: 7680 x 4320\r\n⚙️ Compatibilidad: DirectX 12, OpenGL 4.6\r\n⚡ Consumo: 170 Watts\r\n⚡ Fuente de alimentación recomendada: 550 Watts\r\n🔌 Conector de power: 8 pines PCIe\r\n📏 Dimensiones: 235 x 124 x 42 mm\r\n💨 Ventiladores: Dos\r\n🔒 Soporte: HDCP"
+    },
+    {
+      "id": 44,
+      "categoria": "TARJETAS DE VIDEO",
+      "nombre": "Tarjeta de video MSI Nvidia GeForce GT 710, 2GB DDR3 64-bit, PCI-e 2.0, Low-Profile.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 64.04191617,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/vd/2m/vd2msgt710lpd3.jpg",
+      "especificaciones": "GPU\tCORE\tNVIDIA GeForce GT 710\r\nCLOCK\t954 MHz\r\nMEMORIA\tCAPACIDAD\t2 GigaByte\r\nCLOCK\t1600 MHz\r\nTIPO\tDDR3\r\nBUS\t64 bit\r\nINTERFAZ\tPCI Express x16 slot, PCIe 2.0 modo x8\r\nSALIDAS, MONITORES, RESOLUCION\tVGA\t1\r\nHDMI\t1\r\nDVI-D\t1\r\nSOPORTE MAXIMO MONITORES\t2\r\nAPI\tOpenGL 4.5\r\nDirectX 12 API\r\nFUENTE RECOMENDADA\t300 Watt\r\nDIMENSIONES\t146 x 69 x 19 mm\r\nSOPORTE HDCP\tSi"
+    },
+    {
+      "id": 45,
+      "categoria": "ALMACENAMIENTO",
+      "nombre": "Unidad de estado sólido SSD Kingston NV2 1TB de capacidad, M.2, NVMe, PCIe 4.0",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 77.84431138,
+      "stock": 12,
+      "imagen_url": "https://coolboxpe.vtexassets.com/arquivos/ids/348086-800-800?v=638443063052600000&width=800&height=800&aspect=true",
+      "especificaciones": "💾 Capacidad de disco: 1 TB\r\n🔌 Requisitos del sistema: PCIe 3.0, PCIe 4.0\r\n🔌 Interfaz: M.2\r\n📦 Factor de forma: M.2 2280\r\n⏱️ Vida útil: 1.5 mm de horas (Nota: Esta unidad de medida parece incorrecta. Probablemente debería ser en horas o ciclos de escritura.)\r\n⚡ Consumo de energía: 4W\r\n🌡️ Temperatura de almacenamiento: -40 °C ~ 85 °C"
+    },
+    {
+      "id": 46,
+      "categoria": "ALMACENAMIENTO",
+      "nombre": "Unidad de estado sólido SSD Kingston NV2 500GB de capacidad, M.2, NVMe, PCIe 4.0",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 56.88622754,
+      "stock": 12,
+      "imagen_url": "https://coolboxpe.vtexassets.com/arquivos/ids/398694-800-800?v=638663370032430000&width=800&height=800&aspect=true",
+      "especificaciones": "💾 Capacidad de disco: 500 GB\r\n🔌 Requisitos del sistema: Puerto M.2 PCIe2.0 o superior\r\n🔌 Interfaz: M.2 PCIe\r\n📦 Factor de forma: M.2 2280\r\n⏱️ Vida útil: 2,000,000 horas\r\n⚡ Consumo de energía: 5W\r\n🌡️ Temperatura de servicio: 0 a 70°C"
+    },
+    {
+      "id": 47,
+      "categoria": "ALMACENAMIENTO",
+      "nombre": "Unidad en estado solido MP33 M.2 PCIe SSD, 256GB, DC +3.3V",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 35.00898204,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/on-line/items/large/ss/d2/ssd256tfmp33m24.jpg",
+      "especificaciones": "🔢 Número de Parte: TM8FP6256G0C101\r\n💾 Capacidad: 256 GB\r\n🔌 Interfaz: PCI-E 3.0 x4 con NVMe 1.3\r\n⚡ Velocidad de Lectura: 1600 MB/s\r\n⚡ Velocidad de Escritura: 1000 MB/s\r\n📦 Formato: 2280\r\n💻 Requisitos del Sistema (Windows): Windows 10, Windows 7, Windows 8, Windows 8.1\r\n💻 Requisitos del Sistema (Linux): Linux 2.6.33 o superior\r\n📏 Dimensiones del Producto: 8.00 x 2.20 x 0.38 CM\r\n⚖️ Peso: 6 GR\r\n🌡️ Condiciones de Operación (Temperatura): 0°C - 70° C\r\n🌡️ Condiciones de Almacenamiento (Temperatura): -40°C - 85°C\r\n⚡ Comentarios Adicionales: Voltaje: DC +3.3V"
+    },
+    {
+      "id": 48,
+      "categoria": "MOCHILAS",
+      "nombre": "BACKPACK TEROS CITY BLUE TE-ACS9022BL,para notebooks de hasta 15.6\"",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 22.52095808,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/nb/ac/nbacte9022bl.jpg",
+      "especificaciones": "Mochila TEROS TE-ACS9022BL para para notebook de hasta 15.6\",con tres bolsillos con cremallera, bolsillo frontal con organizadores y bolsillo trasero oculto. El compartimento principal incluye espacio para portátil y documentos, además de dos bolsillos laterales para botellas o paraguas. Asa superior para fácil transporte, panel trasero y correas acolchadas con malla de aire para mayor comodidad, y tira para carry-on. Ideal para organización y comodidad en movimiento."
+    },
+    {
+      "id": 49,
+      "categoria": "MONITORES",
+      "nombre": "Monitor Teros TE-2128S, 21.5\" IPS, 100Hz, 1920x1080, Full HD, HDMI, VGA, VESA, FREESYNC",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 76.64670659,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mo/n2/mon215fte2128s.jpg",
+      "especificaciones": "Potencia tu experiencia visual con el monitor TEROS TE-2128S. Disfruta de imágenes nítidas en Full HD (1920x1080) con su pantalla IPS de 21.5, ángulos de visión de 178º y una fluidez increíble gracias a su 1ms de respuesta y 100Hz de refresco. Ideal para gamers y profesionales, incorpora Freesync Premium, Flicker-Free y Low Blue Light. Su diseño elegante y montaje VESA lo hacen perfecto para cualquier espacio."
+    },
+    {
+      "id": 50,
+      "categoria": "MONITORES",
+      "nombre": "Monitor plano gaming TEROS TE-2753G, 27\" 2K QHD IPS, 180 Hz, 1 ms, HDMI, DP",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 245.0479042,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mo/n2/mon27fte2753g.jpg",
+      "especificaciones": "El monitor plano gaming TEROS TE-2753G de 27 pulgadas QHD IPS (2560 x 1440) ofrece una experiencia visual vibrante con su tasa de refresco de 180 Hz y tiempo de respuesta de 1 ms. Equipado con tecnología FreeSync Premium, Flicker Free y Low Blue Light, garantiza comodidad y fluidez. Su pantalla HDR 400 y ángulos de visión amplios (178°) mejoran la calidad de imagen. Con conectividad HDMI y DisplayPort, montaje VESA y luz trasera personalizable, es ideal para gaming y productividad."
+    },
+    {
+      "id": 51,
+      "categoria": "MONITORES",
+      "nombre": "Monitor plano TEROS TE-2415S, 23.8\" FHD IPS, HDMI, DP",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 98.45808383,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mo/n2/mon238fte2415s.jpg",
+      "especificaciones": "El monitor plano TEROS TE-2415S de 23.8\" ofrece una experiencia visual Full HD (1920x1080) con tecnología IPS, relación de aspecto 16:9 y brillo de 300 cd/m². Equipado con HDMI, DP, altavoces integrados, y tiempo de respuesta de 1 ms. Compatible con VESA 7.5 x 7.5 cm, incluye FreeSync, Low Blue Light, Flicker Free, y Gaming Mode, ideal para entornos gaming y profesionales. Su base fija de metal y diseño resistente aseguran durabilidad y estabilidad."
+    },
+    {
+      "id": 52,
+      "categoria": "MONITORES",
+      "nombre": "Monitor LG 22MR410-B, 21.45\" FHD VA (1920x1080) HDMIx1/VGAx1/HP-Out",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 108.3023952,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mo/n2/mon22lg22mr410.jpg",
+      "especificaciones": "Relacion de Contraste: 3000:1, Relación de aspecto: 16:9, Brillo (Tipico): 250 cd/m², Pixel Pitch: 0.2493 x 0.241 mm, Tiempo de respuesta: 5ms (GtG at Faster), Angulo de vision: 178º (R/L) / 178º (U/D), Adaptador de poder: 100-240Vac~50/60Hz, Consumo de Potencia (Típica / Modo Sleep): 20W/0.5W.\r\nDimensiones con base (Anc.x Alt.x Prof.): 49.19 x 37.81 x 20.0 cm. / Peso con base: 2.6 kg."
+    },
+    {
+      "id": 53,
+      "categoria": "MONITORES",
+      "nombre": "Monitor plano SAMSUNG Essential Monitor S3, 22\" FHD IPS, 100Hz, HDMI, VGA",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 99.74251497,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mo/ns/monsmls22d300ga.jpg",
+      "especificaciones": "Descubre el monitor Samsung Essential S3 de 22\", diseñado para productividad y entretenimiento. Con una pantalla FHD IPS de 1920x1080, ofrece colores vibrantes y un ángulo de visión amplio de 178°. Disfruta de un rendimiento fluido con 100 Hz, 5 ms de respuesta y funciones como Eye Saver y Flicker Free. Compacto y versátil, incluye HDMI, VGA y montaje VESA 100x100. Eficiencia garantizada con su bajo consumo energético de solo 25W.}"
+    },
+    {
+      "id": 54,
+      "categoria": "MONITORES",
+      "nombre": "Monitor Samsung LS24D360GALXPE 24\" FHD (1920x1080) VA Curvo, HDMI x1/VGA x1/Auriculares x1",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 138.5269461,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mo/ns/monsmls24d360ga.jpg",
+      "especificaciones": "Pantalla curva 1800R. Una experiencia de visualización más envolvente. El monitor curvo envuelve más estrechamente tu campo de visión para crear una vista más amplia que mejora la percepción de la profundidad y minimiza las distracciones periféricas. La frecuencia de actualización de 100 Hz reduce la demora y el desenfoque de movimiento para que no se pierda nada en momentos de ritmo acelerado. Obtén ventajas con los ajustes de juego optimizables y su modo de protección visual que reduce la fatiga ocular al minimizar la luz azul y reducir el parpadeo irritante de la pantalla."
+    },
+    {
+      "id": 55,
+      "categoria": "TECLADOS",
+      "nombre": "Kit Inalámbrico Teclado + Mouse TEROS TE-4061N, 2.4GHz, receptor nano USB, negro",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 8.685628743,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/kb/ms/kbmswste4061n.jpg",
+      "especificaciones": "El kit inalámbrico TEROS TE-4061N incluye un teclado y un mouse diseñados para ofrecer funcionalidad y comodidad. El teclado multimedia en español cuenta con teclas de acción suave, ideal para una experiencia de escritura eficiente. El mouse óptico de 1000 DPI ofrece precisión con sus dos botones y scroll. Funciona con un receptor USB Nano de 2.4 GHz, brindando una cobertura de hasta 10 metros. Compatible con Windows y Linux, este kit es una opción versátil para cualquier entorno de trabajo o uso diario."
+    },
+    {
+      "id": 56,
+      "categoria": "TECLADOS",
+      "nombre": "Kit teclado y mouse TEROS TE-4062N, USB, acabado elegante, negro, español / óptico",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 5.748502994,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/kb/ms/kbmste4062n.jpg",
+      "especificaciones": "Mejora tu productividad con el Kit Teclado y Mouse Teros TE4062N. Este set incluye un teclado estándar en español de 105 teclas con arquitectura de membrana y un mouse ergonómico. Ambos cuentan con interfaz USB y cables de 1.5 m para máxima comodidad. Diseño compacto y ligero en color negro: teclado (40 x 14 x 2.5 cm, 364 g) y mouse (19.5 x 6 x 3.5 cm, 68 g).\r\nCompatible con Windows 11."
+    },
+    {
+      "id": 57,
+      "categoria": "TECLADOS",
+      "nombre": "Teclado mecánico TE-4068G, retroiluminación rainbow, USB 2.0, español, color negro",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 23.44610778,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/kb/cb/kbcbkte4068g_reemplazo.jpg",
+      "especificaciones": "Desata tu máximo rendimiento con el Teclado Mecánico TEROS TE-4068G y su espectacular retroiluminación rainbow, ideal para gamers y profesionales. Con 105 teclas, función multimedia integrada y conexión USB 2.0, ofrece una respuesta rápida y fluida. Su diseño ergonómico en negro, con cable de 1.6 metros, garantiza comodidad y durabilidad. Incluye indicadores LED para NumLock, CapsLock y WinLock. Dimensiones (ancho x alto x profundidad): 43.5 x 12.7 x 3.5 cm y Peso: 745 g."
+    },
+    {
+      "id": 58,
+      "categoria": "TECLADOS",
+      "nombre": "Kit gamer TEROS TE-4063N, teclado multimedia, mouse, headset, mouse pad",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 21.64071856,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/kb/ms/kbmshdste4063n.jpg",
+      "especificaciones": "Lleva tu experiencia gamer al siguiente nivel con este Kit gamer Teros TE-4063N. Este set incluye teclado en español con 8 teclas multimedia, mouse óptico con rueda funcional, audífonos con conector 3.5 mm + USB y mousepad de goma (30 x 23 cm). Diseño en color negro con efectos de iluminación estática y ciclo de color. Perfecto para disfrutar horas de juego con comodidad y estilo, todo en un práctico empaque."
+    },
+    {
+      "id": 59,
+      "categoria": "TECLADOS",
+      "nombre": "Kit Teclado y Mouse Logitech MK200, USB, Negro.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 32.39820359,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/items/kb/us/kbusbsplogmk200.jpg",
+      "especificaciones": "LOGITECH\r\nMODELO\tMK200\r\nNUMERO DE PARTE\t920-002116\r\nKIT\tTECLADO + MOUSE\r\nCONECTOR\tUSB\r\nTIPO\tMULTIMEDIA\r\nIDIOMA\tESPAÑOL\r\nCOLOR\tNEGRO\r\nPRESENTACION\tCAJA\r\nCONTENIDO\tTECLADO\r\nMOUSE\r\nCOMENTARIO\tDISEÑO ANTISALPICADURAS\r\nTECLAS PLANAS Y SILENCIOSAS\r\nTAMAÑO NORMAL"
+    },
+    {
+      "id": 60,
+      "categoria": "MEMORIAS",
+      "nombre": "Memoria DIMM Kingston FURY Beast 32GB DDR5-6000MHz PC5-48000, 2Rx8, CL30, 1.4V, 288-Pin",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 144.6317365,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/me/32/me32kf560c30bba.jpg",
+      "especificaciones": "MODELO\tFURY BEAST\r\nNUMERO DE PARTE\tKF560C30BBA-32\r\nDESCRIPCION\tCAPACIDAD\t32 GB\r\nTIPO\tDDR5\r\nVOLTAJE\t1.4V\r\nFRECUENCIA\t6000 MHZ\r\nESTANDAR\tPC5-48000\r\nNUMERO DE MODULOS\t1\r\nCONFIGURACION\tFORMATO\tDIMM\r\nNUMERO DE PINES\t288 PINES\r\nLATENCIA\tCL30\r\nTIMING\t30-36-36\r\nTECNOLOGIA\tSDRAM\r\n2Rx8\r\nINFORMACION ADICIONAL\tMODULO CON DISIPADOR DE CALOR\r\nSOPORTA INTEL XMP 3.0"
+    },
+    {
+      "id": 61,
+      "categoria": "MEMORIAS",
+      "nombre": "Memoria RAM Biwin Opal DW100 RGB 64GB (2x32GB) DDR5-6000MHz, CL30, 1.35V, Color Blanco",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 341.7694611,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/me/64/me64bwdw100rgbw.jpg",
+      "especificaciones": "Potencia tu PC con la Memoria RAM BIWIN OPAL DW100 RGB en color blanco. Con una capacidad de 64 GB (2 x 32GB) y tecnología DDR5, ofrece una frecuencia de 6000 MHz y un voltaje de 1.35V. Su latencia CL30 y el timing 38-38-76 aseguran un rendimiento rápido y eficiente. Compatible con Intel y AMD para overclocking, y cuenta con certificaciones CE, FCC, RoHS y más."
+    },
+    {
+      "id": 62,
+      "categoria": "MEMORIAS",
+      "nombre": "Memoria U-DIMM Predator Vesta II RGB, 32GB (2x16GB) DDR5-6000MHz, PC5-48000, CL32, 1.35V.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 155.1347305,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/me/32/me32prbl9bwr379.jpg",
+      "especificaciones": "MARCA\tPREDATOR\r\nMODELO\tVESTA II\r\nNUMERO DE PARTE\tBL.9BWWR.379\r\nDESCRIPCION\tCAPACIDAD\t32 GB\r\nTIPO\tDDR5\r\nVOLTAJE\t1.35V\r\nFRECUENCIA\t6000 MHZ\r\nESTANDAR\tPC5-48000\r\nNUMERO DE MODULOS\t2\r\n(2 x 16GB)\r\nCONFIGURACION\tFORMATO\tUDIMM\r\nLATENCIA\tCL32\r\nTIMING\t38-38-76\r\nTECNOLOGIA\tDRAM\r\nINFORMACION ADICIONAL\tINTEL XMP 3.0 / AMD E.X.P.O / ON-DIE ECC / PMIC PROGRAMABLE / ILUMINACION RGB / DISIPADOR DE CALOR METALICO FABRICADO EN ALEACION DE ALUMINIO."
+    },
+    {
+      "id": 63,
+      "categoria": "MEMORIAS",
+      "nombre": "Memoria Biwin HX100 32GB DDR5-6000MHz (2 x 16GB), CL36, 1.35V, Color Negro",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 123.8233533,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/me/32/me32gbwhx100n2.jpg",
+      "especificaciones": "MARCA\tBIWIN\r\nMODELO\tBLACK OPAL HX100\r\nNUMERO DE PARTE\tBXH53260HX1-D36DB\r\nCOLOR NEGRO\r\nDESCRIPCION\tCAPACIDAD\t32 GB\r\nTIPO\tDDR5\r\nVOLTAJE\t1.35V\r\nFRECUENCIA\t6000 MHz\r\nESTANDAR\tPC5-48000\r\nNUMERO DE MODULOS\t2\r\n(2 x 16GB)\r\nCONFIGURACION\tFORMATO\tUDIMM\r\nNUMERO DE PINES\t288 pines\r\nLATENCIA\tCL36\r\nTECNOLOGIA\tDRAM\r\nINFORMACION ADICIONAL\tSOPORTA INTEL XMP 3.0 & AMD EXPO"
+    },
+    {
+      "id": 64,
+      "categoria": "CAMARAS",
+      "nombre": "Webcam TEROS TE-9073N, 4K, micrófono incorporado, USB 2.0",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 40.50598802,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mm/te/mmte9073n.jpg",
+      "especificaciones": "Descubre la cámara web TEROS TE-9073N con resolución 4K Ultra HD (3840 x 2160) a 30 fps, ideal para videollamadas y grabaciones con alta definición. Cuenta con lente de 80.53° de ángulo de visión, micrófono omnidireccional integrado y conexión USB 2.0 para fácil instalación. Compatible con Windows 7, 8.1, 10 y 11. Captura fotos en formato JPG y video en MP4. Incluye cable de 1.5 m y presentación en caja."
+    },
+    {
+      "id": 65,
+      "categoria": "MEMORIAS",
+      "nombre": "Memoria Kingston Fury Beast 32GB DDR4-3200MHz PC4-25600, CL16, 1.35V, 288-Pin, RGB, DIMM",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 122.1197605,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/me/32/me32kf432c16bb2.jpg",
+      "especificaciones": "MODELO        FURY BEAST\nNUMERO DE PARTE        KF432C16BB2A/32\nDESCRIPCION        CAPACIDAD        32 GB\nTIPO        DDR4\nVOLTAJE        1.35V\nFRECUENCIA        3200 MHZ\nESTANDAR        PC4-25600\nNUMERO DE MODULOS        (1 x 32GB)\nCONFIGURACION        FORMATO        DIMM\nNUMERO DE PINES        288-Pin\nLATENCIA        CL16\nTIMING        16-20-20"
+    },
+    {
+      "id": 66,
+      "categoria": "PARLANTES",
+      "nombre": "Parlante TEROS TE-6045N, color negro, 60 W",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 59.66167665,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mm/sp/mmspte6045n.jpg",
+      "especificaciones": "Potencia tu música con el Parlante Bluetooth TEROS TE-6045N. Ofrece 60 W de sonido envolvente, luces LED y resistencia al agua IPX5, perfecto para cualquier ambiente. Disfruta de radio FM, reproducción USB, tarjeta TF, entrada auxiliar y conectividad TWS para sincronización con otro dispositivo. Incluye batería integrada de 3600 mAh para largas horas de uso. Su diseño elegante en negro y audio dual lo hacen imprescindible. Incluye cable USB y guía."
+    },
+    {
+      "id": 67,
+      "categoria": "PARLANTES",
+      "nombre": "Parlante/audífono TEROS TE-6033N, bluetooth, 5 W, 1200 mAh, negro",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 22.17365269,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mm/sp/mmspte6033n.jpg",
+      "especificaciones": "El dispositivo TEROS TE-6033N combina parlante y audífono inalámbrico con Bluetooth 5.0, radio FM, y reproducción a través de USB o micro SD. Ofrece una salida de 5 W y soporta TWS para una experiencia de sonido envolvente. Con una batería de 1200 mAh, brinda hasta 1.5 horas de uso continuo. Compacto y versátil, tiene entradas auxiliares y un diseño en negro y azul. Perfecto para disfrutar de música en cualquier lugar."
+    },
+    {
+      "id": 68,
+      "categoria": "ADAPTADORES",
+      "nombre": "Tarjeta Wireless D-Link DWA-582 AC1200 Dual Band, 2.4 / 5 GHz, 802.11 b/g/n/ac, PCI-E x1.",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 28.60778443,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/nw/dl/nwdldwa582.jpg",
+      "especificaciones": "MARCA        D-LINK\nMODELO        DWA-582\nINTERFAZ        PCI-E X1\nESTANDAR        802.11ac/b/g/n\nTIPO DE ANTENA        2 ANTENAS EXTERNAS DIPOLO\nRANGO DE FRECUENCIA        2.4 / 5 GHz\nCOMENTARIO        SEGURIDAD: WPA / WPA2, WEP (64/128 BIT), WPS (PBC/PIN)"
+    },
+    {
+      "id": 69,
+      "categoria": "COMPUTADORAS",
+      "nombre": "Mini PC Advance NUC N100 hasta 3.4GHz, 4C/4T, Intel UHD, HDMI, DP, USB 2.0/3.0, BT",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 183.7634731,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/bb/ad/bbadvmp3160.jpg",
+      "especificaciones": "💻 Mini PC compacta (12.8 x 12.8 x 4.5 cm) con procesador Intel N100 de 4 núcleos/4 hilos, hasta 3.40GHz ⚡ y 6MB Smart Cache; gráficos Intel UHD 🎮 con soporte hasta 8K HDMI 2.1 (7680x4320 @120Hz) y 4K DP (4096x2160 @60Hz) 📺. Soporta 16GB DDR4 🧠 y SSD M.2 NVMe/SATA hasta 2TB 💾, ideal para trabajo y entretenimiento. Conectividad de última generación: WiFi 6 📡, Bluetooth 5.2 🔗, y Ethernet Gigabit 🌐. Cuenta con múltiples puertos: USB 3.0 x4 + USB 2.0 x2, HDMI, DP y RJ45 🔌. Compatible con Windows 11 y Linux 🖥️, eficiente con solo 15W de consumo 🔋, y diseñado para funcionar en temperaturas de 0~40°C 🌡️."
+    },
+    {
+      "id": 70,
+      "categoria": "COMPUTADORAS",
+      "nombre": "Mini PC Advance MP3160 INTEL CEL N100 hasta 3.4GHz 8GB RAM DDR4 500GB SSD M.2",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 216.9580838,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/bb/ad/bbadvmp3160.jpg",
+      "especificaciones": "💻 Mini PC Advance MP1360 ultracompacta (12.8 x 12.8 x 4.5 cm, montaje VESA incluido 🧩), equipada con procesador Intel Celeron N100 hasta 3.40GHz ⚡, 8GB DDR4 3200MHz ampliable a 16GB 🧠 y SSD M.2 de 500GB 💾 para máxima velocidad. Gráficos Intel UHD 🎮 con salidas HDMI y DisplayPort soportando hasta 4K/8K 📺. Conectividad total: Wi-Fi 6 (2.4/5GHz) 📡, Bluetooth 5.2 🔗 y LAN Gigabit 🌐. Dispone de 4 USB 3.0 + 2 USB 2.0, jack combo de audio 🎧 y RJ-45 🔌. Diseño eficiente y silencioso, bajo consumo, ideal para oficina, estudio o entretenimiento en casa 🏠⚙️."
+    },
+    {
+      "id": 71,
+      "categoria": "AUDIFONOS",
+      "nombre": "Audífono inalámbricos TEROS TE-8038N, USB-C, Negro Titanium",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 30.28143713,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mm/hw/mmhwte8038n.jpg",
+      "especificaciones": "AUDÍFONOS ANC INALÁMBRICOS\r\nMARCA\tTEROS\r\nMODELO\tTE-8038N\r\nNUMERO DE PARTE\tTE8038\r\nCARACTERISTICAS\tALTAVOZ:\r\nTAMAÑO DE 40 MM\r\nRESPUESTA DE FRECUENCIA DE 20 HZ A 20 KHZ Y SENSIBILIDAD DE 100 DB ± 3 DB\r\nMICRÓFONOS: INCLUYE 4 MICRÓFONOS (2 INTERNOS, 1 EXTERNO Y 1 HÍBRIDO) PARA LLAMADAS Y USO EXTERIOR\r\nBATERÍA: POLÍMERO DE LITIO DE 600 MAH CON ENTRADA USB-C.\r\nCANCELACIÓN DE RUIDO: HÍBRIDA DIGITAL (30 - 35 DB) CON MODOS ANC ACTIVADO, DESACTIVADO Y TRANSPARENCIA\r\nFUNCIONES ESPECIALES:\r\nTECNOLOGÍA CON 4 MICRÓFONOS\r\nPAUSA AUTOMÁTICA POR DETECCIÓN EN LA OREJA Y MODO DE BAJA LATENCIA\r\nRANGO INALÁMBRICO: 15 METROS\r\nBLUETOOTH 5.4\r\nPESO (GR)\t282"
+    },
+    {
+      "id": 72,
+      "categoria": "AUDIFONOS",
+      "nombre": "Case gamer TEROS TE-1321G, Mid Tower, USB 3.0 / USB 2.0, audio, ventilador ARGB, negro",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 40.02994012,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/cs/a0/csa00bkte1321g.jpg",
+      "especificaciones": "El case gamer TEROS TE-1321G, está diseñado para builds versátiles con soporte para placas mini ITX, micro ATX y ATX. Esta Mid Tower ofrece espacio para tarjetas gráficas de hasta 33 cm y coolers de CPU de hasta 15.5 cm. Incluye 3 ventiladores preinstalados (1 trasero, 2 superiores) y soporte para radiadores de hasta 240 mm. Con paneles de vidrio templado, filtro de polvo superior y puertos USB 3.0 / 2.0 / Tipo-C, arma tu setup con estilo y flujo óptimo."
+    },
+    {
+      "id": 73,
+      "categoria": "AUDIFONOS",
+      "nombre": "Case gamer TEROS TE-1322G, Mid Tower, USB 3.0 / USB 2.0, audio, ventilador ARGB, blanco",
+      "descripcion": "Procesador de alta performance dadwqd",
+      "precio": 42.66467066,
+      "stock": 12,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/cs/a0/csa00whte1322g.jpg",
+      "especificaciones": "El case gamer TEROS TE-1322G, está diseñado para builds versátiles con soporte para placas mini ITX, micro ATX y ATX. Esta Mid Tower ofrece espacio para tarjetas gráficas de hasta 33 cm y coolers de CPU de hasta 15.5 cm. Incluye 3 ventiladores preinstalados (1 trasero, 2 superiores) y soporte para radiadores de hasta 240 mm. Con paneles de vidrio templado, filtro de polvo superior y puertos USB 3.0 / 2.0 / Tipo-C, arma tu setup con estilo y flujo óptimo."
+    },
+    {
+      "id": 74,
+      "categoria": "PORTATILES",
+      "nombre": "Notebook ASUS Vivobook 16, 16\" WUXGA IPS, Core i7 13620H 2.4/4.9GHz, 16GB DDR4, 512GB",
+      "descripcion": "Gama Oficina",
+      "precio": 772.51,
+      "stock": 100,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/carrusel/NBASX1605VA1440/NBASX1605VA1440_1769792879.jpg",
+      "especificaciones": "El ASUS VivoBook 16 combina potencia y estilo en un diseño compacto. Equipado con un Intel Core i7 13620H de 10 núcleos y 16 hilos que alcanza hasta 4.9 GHz, es ideal para multitarea y tareas exigentes. Con 16 GB de RAM DDR4 y 512 GB de almacenamiento SSD PCIe 4.0, ofrece un rendimiento rápido y fluido. Su pantalla WUXGA de 16\" (1920x1200) y Wi-Fi 6E garantizan una experiencia visual nítida y conectividad estable.\nNo incluye Sistema Operativo."
+    },
+    {
+      "id": 75,
+      "categoria": "PORTATILES",
+      "nombre": "NB ASUS TUF FX607VJB-RL209 F16 16\" WUXGA IPS, Core 5 210H hasta 4.8G/8GB DDR5/RTX 3050 6GB",
+      "descripcion": "Gama Gamer",
+      "precio": 951.11,
+      "stock": 5,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/carrusel/NBASFX607RL209/NBASFX607RL209_1770832242.jpg",
+      "especificaciones": "Descubre el poder del ASUS TUF GAMING F16. Con su pantalla de 16\" WUXGA IPS y su procesador Intel Core 5 210H de hasta 4.8GHz, te haran vivir una experiencia fluida para tus juegos y tareas más exigentes. Equipado con una memoria de 8GB de RAM DDR5-6000 y almacenamiento de 512GB PCIe 4.0 NVMe M.2 SSD, que te garantizan velocidad y espacio suficiente. Disfruta de gráficos impresionantes con la NVIDIA GeForce RTX 3050 de 6GB GDDR6 y de su conectividad ya sea con LAN GbE (RJ-45) o Inalambrica, asi como de su batería de 56WHrs, haran que esta notebook sea todo lo que requieras para rendir al máximo. Ideal para gamers avanzados."
+    },
+    {
+      "id": 76,
+      "categoria": "CASES",
+      "nombre": "Case sin fuente gamer TEROS TE-1323G, ITX, M-ATX, ATX, 3.5\" y 2.5\", negro",
+      "descripcion": "GAMER PROM",
+      "precio": 43.21,
+      "stock": 20,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/cs/a0/csa00bkte1323g.jpg",
+      "especificaciones": "Potencia tu sistema con el case gamer TEROS TE-1323G. Compatible con placas base ITX, Micro-ATX y ATX, este case ofrece espacio optimizado con 3 bahías internas para discos de 3.5 y 2.5. Cuenta con 7 ranuras de expansión, ventiladores (3 frontales, 1 trasero y 2 en la parte superior) para un flujo de aire excelente. Además, incluye soporte para radiadores y filtros de polvo en la parte superior y inferior. Dimensiones: 39 x 22 x 45 cm. Color: Negro.\nNo incluye fuente."
+    },
+    {
+      "id": 77,
+      "categoria": "PROCESADORES",
+      "nombre": "Procesador Intel Core i5-12400F, 2.50/4.40GHz, 18MB Caché L3, LGA1700, 117W, Intel 7(10nm)",
+      "descripcion": "GAMER PROM",
+      "precio": 254.06,
+      "stock": 20,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/cp/il/cpili512400f.jpg",
+      "especificaciones": "PROC INT CORE I5-12400F 2.50GZ\r\nIncluye Fan Cooler / No Incluye Controlador Grafico de Video."
+    },
+    {
+      "id": 78,
+      "categoria": "TARJETAS DE VIDEO",
+      "nombre": "Tarjeta de video Gigabyte Radeon RX 7600 GAMING OC 8G, 8 GB GDDR6, PCI-e 4.0",
+      "descripcion": "GAMER PROM",
+      "precio": 421.86,
+      "stock": 20,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/vd/8g/vd8ggbrx7600gmo.jpg",
+      "especificaciones": "La Gigabyte Radeon RX 7600 GAMING OC 8G es una tarjeta de video de alto rendimiento equipada con la GPU AMD Radeon RX 7600, que cuenta con 2048 Stream Processors y alcanza una velocidad de Boost Clock de hasta 2755 MHz. Su memoria de 8 GB GDDR6 opera a 18 Gbps sobre un bus de 128 bits, utilizando una interfaz PCIe 4.0 para garantizar fluidez en juegos modernos bajo DirectX 12 Ultimate y OpenGL 4.6. En cuanto a conectividad, ofrece dos puertos HDMI y dos DisplayPort, permitiendo una resolución máxima de 7680 x 4320 en hasta cuatro monitores simultáneos. Con un diseño de triple ventilador y dimensiones de 282 x 115 x 50 mm, requiere una fuente de poder recomendada de 550W y un conector de energía de 8 pines."
+    },
+    {
+      "id": 79,
+      "categoria": "PLACAS",
+      "nombre": "Motherboard Gigabyte B760M GAMING PLUS WIFI DDR4, Chipset Intel B760, LGA1700, mATX",
+      "descripcion": "GAMER PROM",
+      "precio": 128.82,
+      "stock": 20,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/mb/gb/mbgbb760mgpd4.jpg",
+      "especificaciones": "La Gigabyte B760M GAMING PLUS WIFI DDR4 (rev. 1.0) es una placa base de formato Micro-ATX diseñada para el socket LGA1700, siendo compatible con procesadores Intel Core de 12ª, 13ª y 14ª generación, así como Celeron y Pentium. Cuenta con 4 slots DIMM que admiten hasta 128 GB de memoria DDR4 con soporte para tecnología Dual Channel e Intel XMP. En cuanto a expansión y almacenamiento, ofrece un slot principal PCIe 4.0 x16 y dos zócalos M.2 PCIe 4.0 x4, además de 4 puertos SATA III con soporte RAID. Destaca por su conectividad avanzada, que incluye Wi-Fi 6, Bluetooth 5.3 y Ethernet Gigabit, complementada con un panel posterior versátil con salidas HDMI, DisplayPort, puertos USB 3.2 Gen 1 y audio de 7.1 canales. Su robusto sistema de energía se alimenta mediante conectores de 24 y 8 pines, asegurando estabilidad para configuraciones modernas de alto rendimiento."
+    },
+    {
+      "id": 80,
+      "categoria": "MEMORIAS",
+      "nombre": "Memoria Kingston 8GB DDR4-3200 MT/s, PC4-25600, CL22, 1.2V, 288-Pin, Non-ECC",
+      "descripcion": "GAMER PROM",
+      "precio": 103.3,
+      "stock": 20,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/me/8g/me8gkvr32n22s6.jpg",
+      "especificaciones": "Esta memoria RAM Kingston ValueRAM (modelo KVR32N22S6/8) es un módulo de tipo DDR4 SDRAM con una capacidad de 8 GB, diseñado bajo el estándar PC4-25600. Opera a una frecuencia de 3200 MHz con un voltaje eficiente de 1.2V y una latencia CL22 (tiempos 22-22-22). Presentada en formato UDIMM de 288 pines, es una solución Non-ECC basada en los estándares JEDEC, ideal para quienes buscan estabilidad y compatibilidad garantizada en sistemas de escritorio."
+    },
+    {
+      "id": 81,
+      "categoria": "ALMACENAMIENTO",
+      "nombre": "Unidad de estado solido Hiksemi Future Lite, 512 GB, M.2 2280, GEN 4.0 x 4, 6320 MB/S",
+      "descripcion": "GAMER PROM",
+      "precio": 117.02,
+      "stock": 20,
+      "imagen_url": "https://imagenes.deltron.com.pe/images/productos/carrusel/SSDHSFUTLIT512/SSDHSFUTLIT512_1772550720.jpg",
+      "especificaciones": "El SSD Hiksemi Future Lite de 512 GB es una unidad de almacenamiento de alto rendimiento en formato M.2 2280, que utiliza la interfaz PCIe 4.0 x4 y tecnología 3D NAND. Destaca por ofrecer velocidades de lectura secuencial de hasta 6320 MB/s y escritura de 3111 MB/s, con un rendimiento aleatorio de hasta 583K/525K IOPS. Diseñado para la durabilidad, cuenta con un MTBF de 2 millones de horas y una resistencia de 375 TBW, manteniendo un consumo energético eficiente de apenas 3.1W y un peso ultra ligero inferior a los 7 gramos."
+    },
+    {
+      "id": 82,
+      "categoria": "FUENTES",
+      "nombre": "Fuente de alimentación Gigabyte P550SS ICE , 550W, 80 PLUS Silver, Formato ATX.",
+      "descripcion": "GAMER PROM",
+      "precio": 50.05,
+      "stock": 20,
+      "imagen_url": "https://imagenes.deltron.com.pe//images/productos/on-line/items/large/ps/gb/psgbp550ssice.jpg",
+      "especificaciones": "La fuente de poder Gigabyte GP-P550SS ICE es una unidad de formato ATX que ofrece una potencia de 550W con certificación de eficiencia 80 PLUS Silver. Diseñada para brindar estabilidad, cuenta con PFC Activo, un MTBF superior a 100,000 horas y un conjunto integral de protecciones de seguridad (OVP, OPP, SCP, entre otras). Su sistema de enfriamiento integra un silencioso ventilador de 12 cm con rodamiento dinámico fluido (FDB). En cuanto a conectividad, dispone de conectores para placa base de 24 y 8 pines, un conector PCIe de 8 pines, 5 puertos SATA y 3 periféricos, todo contenido en un chasis compacto de 150 mm de largo."
+    },
+    {
+      "id": 1775265733860,
+      "categoria": "MOCHILAS",
+      "nombre": "poposito",
+      "descripcion": "DWDA DQWDD  QDWQWDWQD DQDQWDQD DQWDQWWDWQD DQWDWQD",
+      "precio": 10,
+      "stock": 2,
+      "imagen_url": "https://http2.mlstatic.com/D_NQ_NP_779696-MLM47097286620_082021-O.webp",
+      "especificaciones": "13A GENERACION"
+    }
+  ]
+}

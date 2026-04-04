@@ -7,8 +7,17 @@ export const useCartStore = defineStore('cart', () => {
   // Cargar desde localStorage
   function initCart() {
     const saved = localStorage.getItem('cartItems')
-    if (saved) {
-      items.value = JSON.parse(saved)
+    if (!saved) {
+      return
+    }
+
+    try {
+      const parsed = JSON.parse(saved)
+      items.value = Array.isArray(parsed) ? parsed : []
+    } catch (error) {
+      console.error('Error restoring cart:', error)
+      items.value = []
+      localStorage.removeItem('cartItems')
     }
   }
 
@@ -16,15 +25,18 @@ export const useCartStore = defineStore('cart', () => {
     localStorage.setItem('cartItems', JSON.stringify(items.value))
   }
 
-  function addItem(product) {
+  function addItem(product, quantity = Number(product?.quantity ?? 1)) {
+    const normalizedQuantity = Number.isFinite(quantity) && quantity > 0
+      ? Math.floor(quantity)
+      : 1
     const existingItem = items.value.find(item => item.id === product.id)
 
     if (existingItem) {
-      existingItem.quantity += 1
+      existingItem.quantity += normalizedQuantity
     } else {
       items.value.push({
         ...product,
-        quantity: 1
+        quantity: normalizedQuantity
       })
     }
 

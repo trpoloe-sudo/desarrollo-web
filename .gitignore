@@ -26,3 +26,8 @@ yarn-error.log*
 # OS
 Thumbs.db
 .DS_Store
+dev-all.out.txt
+dev-all.err.txt
+server-start.out.txt
+server-start.err.txt
+.dev-all-pids.json

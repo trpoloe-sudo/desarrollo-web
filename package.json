@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "server:dev": "npm --prefix server run dev",
+    "dev:all": "node scripts/dev-all.mjs",
+    "stop:all": "node scripts/stop-all.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",

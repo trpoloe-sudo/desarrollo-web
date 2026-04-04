@@ -6,12 +6,12 @@
       <section class="cart-summary">
         <h2>Resumen de Compra</h2>
 
-        <div v-if="cartStore.items.length === 0" class="empty-cart">
+        <div v-if="!paymentProcessed && cartStore.items.length === 0" class="empty-cart">
           <p>Tu carrito está vacío</p>
           <RouterLink to="/products" class="btn-primary">Continuar Comprando</RouterLink>
         </div>
 
-        <div v-else>
+        <div v-else-if="!paymentProcessed">
           <div class="cart-items">
             <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
               <div class="item-image">
@@ -60,10 +60,43 @@
             </button>
           </div>
         </div>
+
+        <div v-else-if="completedOrder" class="completed-cart">
+          <div class="completed-order-header">
+            <p class="completed-order-label">Orden confirmada</p>
+            <strong>#{{ completedOrder.id }}</strong>
+          </div>
+
+          <div class="completed-items">
+            <div v-for="item in completedOrder.items" :key="item.id" class="completed-item">
+              <span>{{ item.nombre }} x{{ item.quantity }}</span>
+              <strong>${{ (item.precio * item.quantity).toFixed(2) }}</strong>
+            </div>
+          </div>
+
+          <div class="order-totals">
+            <div class="total-row">
+              <span>Subtotal:</span>
+              <span>${{ completedOrder.subtotal.toFixed(2) }}</span>
+            </div>
+            <div class="total-row">
+              <span>Envío:</span>
+              <span>Gratis</span>
+            </div>
+            <div class="total-row">
+              <span>IGV (18%):</span>
+              <span>${{ completedOrder.tax.toFixed(2) }}</span>
+            </div>
+            <div class="total-row grand-total">
+              <span>Total Pagado:</span>
+              <span>${{ completedOrder.total.toFixed(2) }}</span>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <section v-if="cartStore.items.length > 0" class="payment-section">
-        <h2>Información de Pago</h2>
+      <section v-if="cartStore.items.length > 0 || paymentProcessed" class="payment-section">
+        <h2>{{ paymentProcessed ? 'Compra Confirmada' : 'Información de Pago' }}</h2>
 
         <div v-if="!paymentProcessed" class="payment-form">
           <div class="form-group">
@@ -156,13 +189,13 @@
           <h3>¡Pago Exitoso!</h3>
           <p>Tu orden ha sido procesada correctamente</p>
           <div class="order-confirmation">
-            <p><strong>Número de Orden:</strong> {{ orderNumber }}</p>
-            <p><strong>Cantidad:</strong> {{ cartStore.items.length }} producto(s)</p>
-            <p><strong>Total:</strong> ${{ cartStore.total.toFixed(2) }}</p>
-            <p><strong>Método:</strong> {{ paymentMethodLabel }}</p>
+            <p><strong>Número de Orden:</strong> {{ completedOrder?.id }}</p>
+            <p><strong>Cantidad:</strong> {{ completedOrder?.items.length }} producto(s)</p>
+            <p><strong>Total:</strong> ${{ completedOrder?.total.toFixed(2) }}</p>
+            <p><strong>Método:</strong> {{ completedOrder?.paymentMethod }}</p>
           </div>
           <p class="confirmation-message">
-            Se ha enviado un correo de confirmación a {{ userStore.user?.email }}
+            Se ha enviado un correo de confirmación a {{ completedOrder?.userEmail || userStore.user?.email }}
           </p>
           <RouterLink to="/dashboard" class="btn-primary">Ver Mi Dashboard</RouterLink>
         </div>
@@ -173,18 +206,19 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useRouter, RouterLink } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
 import { useUserStore } from '@/stores/user'
+import { useUiStore } from '@/stores/ui'
 import { ShoppingCart } from 'lucide-vue-next'
 
-const router = useRouter()
 const cartStore = useCartStore()
 const userStore = useUserStore()
+const uiStore = useUiStore()
 
 const isProcessing = ref(false)
 const paymentProcessed = ref(false)
-const orderNumber = ref('')
+const completedOrder = ref(null)
 const paymentMethod = ref('card')
 const paymentMethodLabel = computed(() => {
   const labels = { card: 'Tarjeta de Crédito', paypal: 'PayPal', transfer: 'Transferencia Bancaria' }
@@ -221,19 +255,19 @@ function decreaseQuantity(itemId) {
 
 async function proceedToPayment() {
   if (cartStore.items.length === 0) {
-    alert('El carrito está vacío')
+    uiStore.warning('El carrito está vacío.')
     return
   }
 
   if (paymentMethod.value === 'card') {
     if (!cardDetails.value.cardNumber || !cardDetails.value.cardName || !cardDetails.value.expiry || !cardDetails.value.cvv) {
-      alert('Por favor completa todos los datos de la tarjeta')
+      uiStore.warning('Completa todos los datos de la tarjeta.')
       return
     }
   }
 
   if (!billingAddress.value.address || !billingAddress.value.city || !billingAddress.value.zip) {
-    alert('Por favor completa la dirección de facturación')
+    uiStore.warning('Completa la dirección de facturación.')
     return
   }
 
@@ -252,16 +286,21 @@ async function proceedToPayment() {
       total: cartStore.total,
       paymentMethod: paymentMethodLabel.value,
       billingAddress: billingAddress.value,
+      userEmail: userStore.user?.email || '',
       status: 'completed'
     }
 
-    const savedOrder = userStore.addOrder(order)
-    orderNumber.value = savedOrder.id
+    const savedOrder = await userStore.addOrder(order)
+    if (!savedOrder) {
+      throw new Error('No se pudo guardar la orden')
+    }
 
+    completedOrder.value = savedOrder
     cartStore.clearCart()
     paymentProcessed.value = true
+    uiStore.success('Pago procesado correctamente.')
   } catch (error) {
-    alert('Error procesando el pago: ' + error.message)
+    uiStore.error(`Error procesando el pago: ${error.message}`)
   } finally {
     isProcessing.value = false
   }
@@ -471,6 +510,43 @@ h2 {
 
 .btn-secondary:hover {
   background: #e9edf5;
+}
+
+.completed-cart {
+  display: grid;
+  gap: 16px;
+}
+
+.completed-order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  background: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+}
+
+.completed-order-label {
+  margin: 0;
+  color: var(--color-text-light);
+  font-weight: 600;
+}
+
+.completed-items {
+  display: grid;
+  gap: 10px;
+}
+
+.completed-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--color-bg-light);
+  color: var(--color-text);
 }
 
 .payment-form {

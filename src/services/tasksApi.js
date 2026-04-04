@@ -1,7 +1,12 @@
 import axios from "axios";
 
+const apiBaseURL = import.meta.env.DEV
+  ? "/api"
+  : (import.meta.env.VITE_API_URL || "/api");
+
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: apiBaseURL,
+  timeout: 4000,
 });
 
 export const listTasks = async ({

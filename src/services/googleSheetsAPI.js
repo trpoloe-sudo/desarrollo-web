@@ -1,56 +1,100 @@
 import axios from 'axios'
 
-// Reemplaza estos valores con los tuyos
-const SHEET_ID = '1HI0uajmoDquzkUovmVM-M9k1YE1H6QhBNuxdUduIeRA'
-const API_KEY = 'AIzaSyCBiFrpTNh4WYx97nxczwhMq4ULVLK0UCM'
+const apiBaseURL = import.meta.env.DEV
+  ? '/api'
+  : (import.meta.env.VITE_API_URL || '/api')
 
-// Configuración de hojas de Google Sheets
-const PRODUCTS_RANGE = 'Productos!A1:G100'
-const SETTINGS_RANGE = 'Configuracion!A1:B100'
+const api = axios.create({
+  baseURL: apiBaseURL,
+  timeout: 4000,
+  withCredentials: true
+})
+
+const toNumber = (value, fallback = 0) => {
+  const parsedValue = Number(value)
+  return Number.isFinite(parsedValue) ? parsedValue : fallback
+}
+
+function normalizeProduct(product, index = 0) {
+  const fallbackId = Date.now() + index
+  const rawId = product?.id ?? fallbackId
+  const parsedId = Number(rawId)
+
+  return {
+    id: Number.isFinite(parsedId) ? parsedId : String(rawId),
+    categoria: String(product?.categoria || 'General').trim(),
+    nombre: String(product?.nombre || 'Producto sin nombre').trim(),
+    descripcion: String(product?.descripcion || '').trim(),
+    precio: toNumber(product?.precio, 0),
+    stock: Math.max(0, Math.trunc(toNumber(product?.stock, 0))),
+    imagen_url: String(product?.imagen_url || 'https://via.placeholder.com/300x300?text=Producto').trim(),
+    especificaciones: String(product?.especificaciones || '').trim()
+  }
+}
+
+function normalizeProducts(products) {
+  return (Array.isArray(products) ? products : []).map((product, index) => normalizeProduct(product, index))
+}
+
+function normalizeCatalogResponse(data) {
+  if (Array.isArray(data)) {
+    return {
+      items: normalizeProducts(data),
+      source: 'legacy',
+      warning: null
+    }
+  }
+
+  return {
+    items: normalizeProducts(data?.items),
+    source: String(data?.source || 'unknown'),
+    warning: data?.warning ? String(data.warning) : null
+  }
+}
+
+function getFallbackCatalogResponse(errorMessage = null) {
+  return {
+    items: getDefaultProducts(),
+    source: 'fallback',
+    warning: errorMessage || 'No se pudo cargar el catalogo remoto. Se muestran productos de respaldo.'
+  }
+}
 
 export const googleSheetsAPI = {
-  async getProducts() {
+  async getCatalogSnapshot() {
     try {
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${PRODUCTS_RANGE}?key=${API_KEY}`
-      const response = await axios.get(url)
+      const { data } = await api.get('/catalog/products')
+      const snapshot = normalizeCatalogResponse(data)
 
-      if (!response.data.values || response.data.values.length < 2) {
-        return getDefaultProducts()
-      }
-
-      const [headers, ...rows] = response.data.values
-      void headers
-
-      const products = rows.map((row, index) => ({
-        id: index + 1,
-        categoria: row[0] || '',
-        nombre: row[1] || '',
-        descripcion: row[2] || '',
-        precio: parseFloat(row[3]) || 0,
-        stock: parseInt(row[4]) || 0,
-        imagen_url: row[5] || 'https://via.placeholder.com/300x300',
-        especificaciones: row[6] || ''
-      })).filter(product => product.nombre)
-
-      return products.length ? products : getDefaultProducts()
+      return snapshot.items.length ? snapshot : getFallbackCatalogResponse('El catalogo remoto no devolvio productos.')
     } catch (error) {
       console.error('Error fetching products:', error)
-      return getDefaultProducts()
+      return getFallbackCatalogResponse(error?.message)
     }
+  },
+
+  async getProducts() {
+    const snapshot = await this.getCatalogSnapshot()
+    return snapshot.items
+  },
+
+  async saveManagedProducts(products) {
+    const { data } = await api.put('/catalog/products', {
+      products: normalizeProducts(products)
+    })
+
+    return normalizeCatalogResponse(data)
+  },
+
+  async clearManagedProducts() {
+    const { data } = await api.delete('/catalog/products')
+    return normalizeCatalogResponse(data)
   },
 
   async getSettings() {
     try {
-      const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SETTINGS_RANGE}?key=${API_KEY}`
-      const response = await axios.get(url)
-
-      if (!response.data.values) return {}
-
-      const settings = {}
-      response.data.values.forEach(row => {
-        settings[row[0]] = row[1]
-      })
-      return settings
+      const { data } = await api.get('/catalog/settings')
+      return data && typeof data === 'object' ? data : {}
     } catch (error) {
       console.error('Error fetching settings:', error)
       return getDefaultSettings()
@@ -58,7 +102,6 @@ export const googleSheetsAPI = {
   }
 }
 
-// Datos por defecto para desarrollo/demo
 function getDefaultProducts() {
   return [
     {
@@ -69,7 +112,7 @@ function getDefaultProducts() {
       precio: 450,
       stock: 15,
       imagen_url: 'https://via.placeholder.com/300x300?text=Intel+i7',
-      especificaciones: '13ª generación, 16 núcleos, 24 threads'
+      especificaciones: '13A generacion, 16 nucleos, 24 threads'
     },
     {
       id: 2,
@@ -79,13 +122,13 @@ function getDefaultProducts() {
       precio: 380,
       stock: 10,
       imagen_url: 'https://via.placeholder.com/300x300?text=AMD+Ryzen',
-      especificaciones: '7ª generación, 8 núcleos, 16 threads'
+      especificaciones: '7A generacion, 8 nucleos, 16 threads'
     },
     {
       id: 3,
-      categoria: 'Tarjetas Gráficas',
+      categoria: 'Tarjetas Graficas',
       nombre: 'NVIDIA RTX 4080',
-      descripcion: 'Tarjeta gráfica de última generación',
+      descripcion: 'Tarjeta grafica de ultima generacion',
       precio: 1200,
       stock: 8,
       imagen_url: 'https://via.placeholder.com/300x300?text=RTX+4080',
@@ -93,9 +136,9 @@ function getDefaultProducts() {
     },
     {
       id: 4,
-      categoria: 'Tarjetas Gráficas',
+      categoria: 'Tarjetas Graficas',
       nombre: 'AMD Radeon RX 7900 XTX',
-      descripcion: 'GPU AMD de alto desempeño',
+      descripcion: 'GPU AMD de alto desempeno',
       precio: 899,
       stock: 12,
       imagen_url: 'https://via.placeholder.com/300x300?text=AMD+GPU',
@@ -115,7 +158,7 @@ function getDefaultProducts() {
       id: 6,
       categoria: 'Almacenamiento',
       nombre: 'Samsung 990 Pro NVMe 2TB',
-      descripcion: 'SSD NVMe de última generación',
+      descripcion: 'SSD NVMe de ultima generacion',
       precio: 220,
       stock: 30,
       imagen_url: 'https://via.placeholder.com/300x300?text=Samsung+SSD',
@@ -130,6 +173,6 @@ function getDefaultSettings() {
     descripcion: 'Distribuidor de computadoras y partes de calidad',
     email: 'contacto@techdistributor.com',
     telefono: '+34 900 123 456',
-    logo: 'https://via.placeholder.com/200x80?text=Logo'
+    logo: '/brand-logo-transparent.png'
   }
 }

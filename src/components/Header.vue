@@ -3,7 +3,9 @@
     <div class="container">
       <div class="header-content">
         <div class="logo">
-          <img :src="logoImage" alt="ZTAR TECH" class="logo-img" />
+          <span class="logo-wrap">
+            <img :src="logoImage" alt="ZTAR TECH" class="logo-img" />
+          </span>
         </div>
         <div class="header-info">
           <p class="tagline"></p>
@@ -14,7 +16,7 @@
 </template>
 
 <script setup>
-import logoImage from '@/img/ztartech3.png'
+const logoImage = '/brand-logo-transparent.png'
 </script>
 
 <style scoped>
@@ -43,12 +45,34 @@ import logoImage from '@/img/ztartech3.png'
   cursor: pointer;
 }
 
+.logo-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.logo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  z-index: -1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.62) 0%, rgba(225, 244, 255, 0.34) 44%, rgba(225, 244, 255, 0) 74%);
+  filter: blur(18px);
+}
+
 .logo-img {
   height: 120px;
   width: auto;
   object-fit: contain;
   transition: transform 0.3s ease;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  filter:
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 12px rgba(241, 249, 255, 0.82))
+    drop-shadow(0 0 26px rgba(204, 233, 255, 0.48))
+    drop-shadow(0 2px 6px rgba(0, 0, 0, 0.14));
 }
 
 .logo:hover .logo-img {

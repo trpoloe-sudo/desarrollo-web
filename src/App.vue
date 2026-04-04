@@ -7,6 +7,8 @@
     <Footer />
     <WhatsAppButton />
     <CartFloatingButton />
+    <ToastStack />
+    <ConfirmDialog />
   </div>
 </template>
 
@@ -17,16 +19,19 @@ import NavBar from './components/NavBar.vue'
 import Footer from './components/Footer.vue'
 import WhatsAppButton from './components/WhatsAppButton.vue'
 import CartFloatingButton from './components/CartFloatingButton.vue'
+import ToastStack from './components/ToastStack.vue'
+import ConfirmDialog from './components/ConfirmDialog.vue'
 
 // Inyectar Schema Markup JSON-LD en el head
 onMounted(() => {
+  const brandImage = new URL('/brand-logo-transparent.png', window.location.origin).href
   const schemaMarkup = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Ztar Tech",
     "description": "Servicio técnico, reparación y venta de computadoras en Perú",
     "url": "https://ztartech.webcindario.com",
-    "image": "https://ztartech.webcindario.com/img/ztartech-logo.png",
+    "image": brandImage,
     "telephone": "+51978418809",
     "email": "cotizaciones@ztartech.com",
     "address": {

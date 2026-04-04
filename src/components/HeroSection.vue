@@ -117,10 +117,12 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { Monitor, Zap, Shield, Check, ShoppingCart, MessageCircle } from 'lucide-vue-next'
 import { useCartStore } from '@/stores/cartStore'
+import { useUiStore } from '@/stores/ui'
 import { googleSheetsAPI } from '@/services/googleSheetsAPI'
 
 const router = useRouter()
-const cartStore = useCartStore()
+const cartStore = useCartStore()
+const uiStore = useUiStore()
 const products = ref([])
 const currentProduct = ref(null)
 const productInterval = ref(null)
@@ -129,6 +131,14 @@ const loadingProducts = ref(true)
 
 const goToProducts = () => {
   router.push('/products')
+}
+
+const openWhatsApp = () => {
+  const phoneNumber = '51978418809'
+  const message = encodeURIComponent(
+    'Hola, me gustaría recibir asesoría sobre equipos y servicios de Ztar Tech.'
+  )
+  window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank')
 }
 
 const loadProducts = async () => {
@@ -164,11 +174,10 @@ const addProductToCart = () => {
       stock: currentProduct.value.stock
     })
     
-    // Mostrar notificación
-    alert(`Producto añadido al carrito: ${currentProduct.value.nombre}`)
+    uiStore.success(`Producto añadido al carrito: ${currentProduct.value.nombre}`)
     
     // Redireccionar a productos
-    router.push('/productos')
+    router.push('/products')
   }
 }
 

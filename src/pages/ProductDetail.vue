@@ -1,7 +1,7 @@
 ﻿<template>
   <div class="product-detail-page">
     <div class="breadcrumb">
-      <RouterLink to="/productos">Productos</RouterLink>
+      <RouterLink to="/products">Productos</RouterLink>
       <span>/</span>
       <span v-if="product">{{ product.nombre }}</span>
       <span v-else>Cargando...</span>
@@ -67,29 +67,29 @@
 
     <div v-else class="not-found">
       <p>Producto no encontrado</p>
-      <RouterLink to="/productos" class="back-btn">Volver a productos</RouterLink>
+      <RouterLink to="/products" class="back-btn">Volver a productos</RouterLink>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import { useRouter, useRoute, RouterLink } from 'vue-router'
+import { useRoute, RouterLink } from 'vue-router'
 import ProductDetails from '../components/ProductDetails.vue'
 import ProductCard from '../components/ProductCard.vue'
 import { googleSheetsAPI } from '../services/googleSheetsAPI'
 import { useCartStore } from '../stores/cartStore'
+import { useUiStore } from '@/stores/ui'
 import { pixelTracking } from '../services/pixelTracking'
 
-const router = useRouter()
 const route = useRoute()
 const cartStore = useCartStore()
+const uiStore = useUiStore()
 
 const products = ref([])
 const loading = ref(true)
 const product = computed(() => {
-  const id = parseInt(route.params.id)
-  return products.value.find(p => p.id === id)
+  return products.value.find(p => String(p.id) === String(route.params.id))
 })
 
 const relatedProducts = computed(() => {
@@ -105,10 +105,11 @@ const relatedProducts = computed(() => {
 const handleAddToCart = (data) => {
   if (data.quantity) {
     pixelTracking.trackAddToCart(data.product, data.quantity)
-    alert(`Producto añadido al carrito: ${data.product.nombre} (x${data.quantity})`)
-  } else {
-    pixelTracking.trackAddToCart(data.nombre)
-    alert(`Producto añadido al carrito: ${data.nombre}`)
+    uiStore.success(`Producto añadido al carrito: ${data.product.nombre} (x${data.quantity})`)
+  } else if (data) {
+    cartStore.addItem(data)
+    pixelTracking.trackAddToCart(data, 1)
+    uiStore.success(`Producto añadido al carrito: ${data.nombre}`)
   }
 }
 
@@ -201,11 +202,13 @@ onMounted(async () => {
 }
 
 .related-products-section {
-  background: rgba(255, 255, 255, 0.9);
-  padding: 40px 20px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(247, 250, 255, 0.94) 100%);
+  padding: 40px 24px;
   margin-top: 16px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-sm);
+  border-radius: 18px;
+  border: 1px solid rgba(77, 184, 255, 0.14);
+  box-shadow: 0 18px 40px rgba(12, 28, 52, 0.08);
 }
 
 .related-products-section h2 {
@@ -218,8 +221,8 @@ onMounted(async () => {
 
 .related-products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
 }
 
 .reviews-section {
@@ -301,7 +304,8 @@ onMounted(async () => {
   }
 
   .related-products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 18px;
   }
 
   .reviews-container {

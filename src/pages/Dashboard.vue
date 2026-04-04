@@ -126,8 +126,8 @@ function toggleOrderDetails(orderId) {
   expandedOrderId.value = expandedOrderId.value === orderId ? null : orderId
 }
 
-function logout() {
-  userStore.logout()
+async function logout() {
+  await userStore.logout()
   router.push('/')
 }
 </script>

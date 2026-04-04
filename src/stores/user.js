@@ -1,111 +1,164 @@
 import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
+import { authApi } from '@/services/authApi'
 
 export const useUserStore = defineStore('user', () => {
   const user = ref(null)
-  const isLoggedIn = computed(() => user.value !== null)
-  const token = ref(localStorage.getItem('authToken') || null)
+  const allUsers = ref([])
+  const isRestoring = ref(false)
+  const isLoggedIn = computed(() => Boolean(user.value))
 
-  function login(email, password) {
-    // Validación básica
-    if (!email || !password) {
-      throw new Error('Email y contraseña son requeridos')
+  function normalizeUser(userData) {
+    if (!userData) {
+      return null
     }
 
-    // Simular autenticación (en producción usar un backend real)
-    const userData = {
-      id: Math.random().toString(36).substr(2, 9),
-      email,
-      name: email.split('@')[0],
-      createdAt: new Date().toISOString(),
-      orders: [],
-      provider: 'email'
+    return {
+      ...userData,
+      orders: Array.isArray(userData.orders) ? userData.orders : []
     }
-
-    // Generar token simulado
-    const newToken = btoa(JSON.stringify(userData) + Date.now())
-    
-    user.value = userData
-    token.value = newToken
-    localStorage.setItem('authToken', newToken)
-    localStorage.setItem('userData', JSON.stringify(userData))
-
-    return userData
   }
 
-  function loginWithGoogle(email, name, picture = null) {
-    // Validación básica
+  function setCurrentUser(nextUser) {
+    user.value = normalizeUser(nextUser)
+    return user.value
+  }
+
+  function clearSession() {
+    user.value = null
+    allUsers.value = []
+  }
+
+  function syncUpdatedUser(updatedUser) {
+    const normalizedUser = normalizeUser(updatedUser)
+
+    if (!normalizedUser) {
+      return null
+    }
+
+    if (user.value?.email === normalizedUser.email) {
+      setCurrentUser(normalizedUser)
+    }
+
+    if (allUsers.value.some(existingUser => existingUser.email === normalizedUser.email)) {
+      allUsers.value = allUsers.value.map(existingUser => {
+        return existingUser.email === normalizedUser.email ? normalizedUser : existingUser
+      })
+    } else {
+      allUsers.value = [...allUsers.value, normalizedUser]
+    }
+
+    return normalizedUser
+  }
+
+  async function login(email, password) {
+    if (!email || !password) {
+      throw new Error('Email y contrasena son requeridos')
+    }
+
+    const session = await authApi.login({
+      email: email.trim(),
+      password
+    })
+
+    return setCurrentUser(session?.user ?? session)
+  }
+
+  async function loginWithGoogle(email, name, picture = null) {
     if (!email || !name) {
       throw new Error('Email y nombre son requeridos para Google Sign-In')
     }
 
-    // Crear datos de usuario desde Google
-    const userData = {
-      id: Math.random().toString(36).substr(2, 9),
-      email,
-      name,
-      picture,
-      createdAt: new Date().toISOString(),
-      orders: [],
-      provider: 'google'
-    }
+    const session = await authApi.loginWithGoogle({
+      email: email.trim(),
+      name: name.trim(),
+      picture
+    })
 
-    // Generar token simulado
-    const newToken = btoa(JSON.stringify(userData) + Date.now())
-    
-    user.value = userData
-    token.value = newToken
-    localStorage.setItem('authToken', newToken)
-    localStorage.setItem('userData', JSON.stringify(userData))
-
-    return userData
+    return setCurrentUser(session?.user ?? session)
   }
 
-  function register(email, password, name) {
+  async function register(email, password, name) {
     if (!email || !password || !name) {
       throw new Error('Todos los campos son requeridos')
     }
 
-    // Simular registro
-    return login(email, password)
+    const session = await authApi.register({
+      email: email.trim(),
+      password,
+      name: name.trim()
+    })
+
+    return setCurrentUser(session?.user ?? session)
   }
 
-  function logout() {
-    user.value = null
-    token.value = null
-    localStorage.removeItem('authToken')
-    localStorage.removeItem('userData')
-  }
-
-  function restoreSession() {
-    const savedToken = localStorage.getItem('authToken')
-    const savedUser = localStorage.getItem('userData')
-
-    if (savedToken && savedUser) {
-      try {
-        user.value = JSON.parse(savedUser)
-        token.value = savedToken
-        return true
-      } catch (error) {
-        console.error('Error restoring session:', error)
-        logout()
-        return false
-      }
+  async function logout() {
+    try {
+      await authApi.logout()
+    } catch (error) {
+      console.error('Error logging out:', error)
+    } finally {
+      clearSession()
     }
-    return false
   }
 
-  function addOrder(order) {
-    if (user.value) {
-      user.value.orders = user.value.orders || []
-      user.value.orders.push({
-        ...order,
-        id: Math.random().toString(36).substr(2, 9),
-        createdAt: new Date().toISOString()
-      })
-      localStorage.setItem('userData', JSON.stringify(user.value))
-      return user.value.orders[user.value.orders.length - 1]
+  async function restoreSession() {
+    if (isRestoring.value) {
+      return false
     }
+
+    isRestoring.value = true
+
+    try {
+      const restoredUser = await authApi.getSession()
+      setCurrentUser(restoredUser?.user ?? restoredUser)
+      return true
+    } catch (error) {
+      console.error('Error restoring session:', error)
+      clearSession()
+      return false
+    } finally {
+      isRestoring.value = false
+    }
+  }
+
+  async function addOrder(order) {
+    if (!isLoggedIn.value) {
+      throw new Error('Debes iniciar sesion para continuar')
+    }
+
+    const createdOrder = await authApi.addOrder(order)
+
+    if (createdOrder?.user) {
+      setCurrentUser(createdOrder.user)
+    }
+
+    return createdOrder?.order || null
+  }
+
+  async function fetchAllUsers() {
+    const users = await authApi.listUsers()
+    allUsers.value = Array.isArray(users) ? users.map(normalizeUser) : []
+    return allUsers.value
+  }
+
+  function getAllUsers() {
+    return allUsers.value
+  }
+
+  async function updateUserRole(email, role) {
+    const updatedUser = await authApi.updateUserRole(email, role)
+    return syncUpdatedUser(updatedUser)
+  }
+
+  async function updateOrderStatus(orderId, status) {
+    const updatedOrder = await authApi.updateOrderStatus(orderId, status)
+
+    if (updatedOrder?.user) {
+      syncUpdatedUser(updatedOrder.user)
+    }
+
+    return updatedOrder?.order || null
   }
 
   function getOrders() {
@@ -115,13 +168,18 @@ export const useUserStore = defineStore('user', () => {
   return {
     user,
     isLoggedIn,
-    token,
+    allUsers,
+    isRestoring,
     login,
     loginWithGoogle,
     register,
     logout,
     restoreSession,
     addOrder,
-    getOrders
+    fetchAllUsers,
+    getOrders,
+    getAllUsers,
+    updateUserRole,
+    updateOrderStatus
   }
 })

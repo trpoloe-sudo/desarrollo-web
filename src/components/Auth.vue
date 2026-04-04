@@ -83,6 +83,7 @@
 import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
+import { useUiStore } from '@/stores/ui'
 import {
   initializeGoogleSignIn,
   renderGoogleButton,
@@ -92,6 +93,7 @@ import {
 
 const router = useRouter()
 const userStore = useUserStore()
+const uiStore = useUiStore()
 
 const isLogin = ref(true)
 const isLoading = ref(false)
@@ -156,25 +158,25 @@ function handleGoogleLogin() {
   }
 }
 
-function handleGoogleSignInSuccess(googleData) {
+async function handleGoogleSignInSuccess(googleData) {
   try {
     isLoading.value = true
     error.value = ''
 
-    userStore.loginWithGoogle(
+    await userStore.loginWithGoogle(
       googleData.email,
       googleData.name,
       googleData.picture || null
     )
 
-    showNotification('Sesión iniciada con Google', 'success')
+    uiStore.success('Sesión iniciada con Google.')
 
     setTimeout(() => {
       router.push('/')
     }, 1000)
   } catch (err) {
     error.value = err.message || 'Error al iniciar sesión con Google'
-    showNotification(error.value, 'error')
+    uiStore.error(error.value)
     console.error('Google sign-in error:', err)
   } finally {
     isLoading.value = false
@@ -209,30 +211,26 @@ async function handleSubmit() {
     }
 
     if (isLogin.value) {
-      userStore.login(emailValue, passwordValue)
+      await userStore.login(emailValue, passwordValue)
     } else {
-      userStore.register(emailValue, passwordValue, nameValue)
+      await userStore.register(emailValue, passwordValue, nameValue)
     }
 
-    showNotification(isLogin.value ? 'Sesión iniciada' : 'Cuenta creada', 'success')
+    uiStore.success(isLogin.value ? 'Sesión iniciada.' : 'Cuenta creada.')
 
     setTimeout(() => {
       router.push('/')
     }, 1000)
   } catch (err) {
     error.value = err.message
-    showNotification(error.value, 'error')
+    uiStore.error(error.value)
   } finally {
     isLoading.value = false
   }
 }
 
-function showNotification(message, type) {
-  console.log(`[${type.toUpperCase()}] ${message}`)
-}
-
-function logout() {
-  userStore.logout()
+async function logout() {
+  await userStore.logout()
   router.push('/')
 }
 </script>

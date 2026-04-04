@@ -3,9 +3,13 @@
     <div class="container nav-shell">
       <div class="brand">
         <RouterLink to="/" class="brand-link">
-          <img :src="logoImage" alt="Ztar Tech" class="brand-logo" />
+          <span class="brand-logo-wrap">
+            <img :src="logoImage" alt="Ztar Tech" class="brand-logo" />
+          </span>
           <div class="brand-text">
-            <span class="brand-title">Ztar Tech</span>
+            <span class="brand-title">
+              <span class="brand-title-main">Ztar</span><span class="brand-title-accent">Tech</span>
+            </span>
             <span class="brand-subtitle">PC Building, venta y reparación</span>
           </div>
         </RouterLink>
@@ -100,13 +104,13 @@ import { useCartStore } from '../stores/cartStore'
 import { useFavoritesStore } from '../stores/favorites'
 import { useUserStore } from '../stores/user'
 import { ShoppingCart, Heart, User, LayoutDashboard, Settings, LogOut } from 'lucide-vue-next'
-import logoImage from '@/img/brand-logo.svg'
 
 const router = useRouter()
 const route = useRoute()
 const cartStore = useCartStore()
 const favoritesStore = useFavoritesStore()
 const userStore = useUserStore()
+const logoImage = '/brand-logo-transparent.png'
 
 const isMobile = ref(false)
 const mobileMenuOpen = ref(false)
@@ -160,8 +164,8 @@ const closeDropdown = () => {
   dropdownOpen.value = false
 }
 
-function logout() {
-  userStore.logout()
+async function logout() {
+  await userStore.logout()
   closeDropdown()
   closeMobileMenu()
   router.push('/')
@@ -169,6 +173,8 @@ function logout() {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&display=swap');
+
 .navbar {
   background:
     linear-gradient(rgba(9, 24, 42, 0.68), rgba(9, 24, 42, 0.68)),
@@ -204,39 +210,84 @@ function logout() {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 14px;
   text-decoration: none;
   color: white;
-  text-align: center;
+  text-align: left;
+}
+
+.brand-logo-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  isolation: isolate;
+}
+
+.brand-logo-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 10%;
+  z-index: -1;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.55) 0%, rgba(214, 239, 255, 0.3) 42%, rgba(214, 239, 255, 0) 74%);
+  filter: blur(14px);
+  transform: scale(0.95);
+  opacity: 0.95;
 }
 
 .brand-logo {
   width: 64px;
   height: 64px;
   object-fit: contain;
-  border-radius: 14px;
-  background: rgba(77, 184, 255, 0.12);
-  padding: 6px;
-  box-shadow: 0 10px 22px rgba(10, 28, 54, 0.55);
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  filter:
+    drop-shadow(0 0 4px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 12px rgba(241, 249, 255, 0.78))
+    drop-shadow(0 0 22px rgba(198, 230, 255, 0.45))
+    drop-shadow(0 10px 22px rgba(10, 28, 54, 0.4));
 }
 
 .brand-text {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: center;
   gap: 2px;
-  text-align:   center;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
 }
 
 .brand-title {
-  font-weight: 700;
-  font-size: 24px;
-  letter-spacing: 0.3px;
+  display: inline-flex;
+  align-items: baseline;
+  color: #ffffff;
+  font-size: 35px;
+  line-height: 0.95;
+  letter-spacing: -0.4px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.brand-title-main {
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.brand-title-accent {
+  margin-left: 1px;
+  color: #d6dce2;
+  font-weight: 300;
 }
 
 .brand-subtitle {
-  font-size: 12px;
-  color: rgba(214, 233, 255, 0.7);
+  color: #d1e1f0;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0;
+  white-space: nowrap;
 }
 
 .nav-list {
@@ -503,6 +554,20 @@ function logout() {
   .brand-logo {
     width: 60px;
     height: 60px;
+  }
+
+  .brand-text {
+    gap: 1px;
+  }
+
+  .brand-title {
+    font-size: 25px;
+    letter-spacing: -0.3px;
+  }
+
+  .brand-subtitle {
+    font-size: 9px;
+    white-space: normal;
   }
 }
 </style>

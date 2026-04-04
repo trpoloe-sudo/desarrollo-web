@@ -109,11 +109,13 @@ import { ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useCartStore } from '../stores/cartStore'
 import { useUserStore } from '../stores/user'
+import { useUiStore } from '@/stores/ui'
 import { ShoppingCart } from 'lucide-vue-next'
 
 const router = useRouter()
 const cartStore = useCartStore()
 const userStore = useUserStore()
+const uiStore = useUiStore()
 
 const showWhatsAppModal = ref(false)
 const waPhone = ref('')
@@ -133,20 +135,31 @@ const decreaseQuantity = (productId) => {
   }
 }
 
-const clearCart = () => {
-  if (confirm('¿Estás seguro de que deseas vaciar el carrito?')) {
-    cartStore.clearCart()
+const clearCart = async () => {
+  const confirmed = await uiStore.confirm({
+    title: 'Vaciar carrito',
+    message: 'Se eliminarán todos los productos del carrito actual.',
+    confirmText: 'Vaciar',
+    cancelText: 'Cancelar',
+    danger: true
+  })
+
+  if (!confirmed) {
+    return
   }
+
+  cartStore.clearCart()
+  uiStore.info('El carrito fue vaciado.')
 }
 
 const goToCheckout = () => {
   if (cartStore.items.length === 0) {
-    alert('Tu carrito está vacío')
+    uiStore.warning('Tu carrito está vacío.')
     return
   }
 
   if (!userStore.isLoggedIn) {
-    alert('Debes iniciar sesión para proceder al pago')
+    uiStore.warning('Debes iniciar sesión para proceder al pago.')
     router.push('/auth')
     return
   }
@@ -188,6 +201,7 @@ const sendToWhatsApp = () => {
   const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
   window.open(url, '_blank')
   showWhatsAppModal.value = false
+  uiStore.success('Pedido preparado para WhatsApp.')
 }
 </script>
 
