@@ -38,7 +38,6 @@ services:
     name: desarrollo-web-4ec5-static
     runtime: static
     plan: free
-    region: oregon
     autoDeployTrigger: commit
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
