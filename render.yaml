@@ -37,7 +37,6 @@ services:
   - type: web
     name: desarrollo-web-4ec5-static
     runtime: static
-    plan: free
     autoDeployTrigger: commit
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
