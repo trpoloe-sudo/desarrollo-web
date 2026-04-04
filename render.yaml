@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: ztartech-app
+    runtime: node
+    plan: free
+    region: oregon
+    autoDeployTrigger: commit
+    buildCommand: npm install && npm --prefix server install && npm run build
+    startCommand: npm --prefix server start
+    healthCheckPath: /api/health
+    envVars:
+      - key: GOOGLE_SHEETS_ID
+        sync: false
+      - key: GOOGLE_SHEETS_API_KEY
+        sync: false
+      - key: VITE_GOOGLE_CLIENT_ID
+        sync: false
+      - key: SESSION_COOKIE_NAME
+        value: ztar_session
+      - key: SESSION_COOKIE_SECURE
+        value: "true"
+      - key: SESSION_COOKIE_SAME_SITE
+        value: lax
+      - key: SESSION_TTL_HOURS
+        value: "168"
+
+# If you later want users, orders, and admin-managed products to persist
+# across restarts, switch the service to a paid plan and attach a disk:
+#
+#    disk:
+#      name: data
+#      mountPath: /opt/render/project/src/server/data
+#      sizeGB: 1

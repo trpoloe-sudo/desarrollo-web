@@ -1,4 +1,5 @@
 import axios from 'axios'
+import bundledCatalogData from '../../server/data/catalog.json'
 
 const apiBaseURL = import.meta.env.DEV
   ? '/api'
@@ -9,6 +10,8 @@ const api = axios.create({
   timeout: 4000,
   withCredentials: true
 })
+
+let remoteCatalogUnavailable = false
 
 const toNumber = (value, fallback = 0) => {
   const parsedValue = Number(value)
@@ -36,6 +39,16 @@ function normalizeProducts(products) {
   return (Array.isArray(products) ? products : []).map((product, index) => normalizeProduct(product, index))
 }
 
+const bundledCatalogProducts = normalizeProducts(
+  Array.isArray(bundledCatalogData?.managedProducts)
+    ? bundledCatalogData.managedProducts
+    : Array.isArray(bundledCatalogData?.items)
+      ? bundledCatalogData.items
+      : Array.isArray(bundledCatalogData)
+        ? bundledCatalogData
+        : []
+)
+
 function normalizeCatalogResponse(data) {
   if (Array.isArray(data)) {
     return {
@@ -54,20 +67,25 @@ function normalizeCatalogResponse(data) {
 
 function getFallbackCatalogResponse(errorMessage = null) {
   return {
-    items: getDefaultProducts(),
+    items: bundledCatalogProducts.length ? bundledCatalogProducts : getDefaultProducts(),
     source: 'fallback',
-    warning: errorMessage || 'No se pudo cargar el catalogo remoto. Se muestran productos de respaldo.'
+    warning: errorMessage || 'No se pudo cargar el catalogo remoto. Se muestran productos incluidos en el sitio.'
   }
 }
 
 export const googleSheetsAPI = {
   async getCatalogSnapshot() {
+    if (remoteCatalogUnavailable) {
+      return getFallbackCatalogResponse('El catalogo remoto no esta disponible en este hosting. Se muestran productos incluidos en el sitio.')
+    }
+
     try {
       const { data } = await api.get('/catalog/products')
       const snapshot = normalizeCatalogResponse(data)
 
       return snapshot.items.length ? snapshot : getFallbackCatalogResponse('El catalogo remoto no devolvio productos.')
     } catch (error) {
+      remoteCatalogUnavailable = true
       console.error('Error fetching products:', error)
       return getFallbackCatalogResponse(error?.message)
     }
