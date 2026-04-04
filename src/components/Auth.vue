@@ -84,6 +84,7 @@ import { ref, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { useUiStore } from '@/stores/ui'
+import { getGoogleClientId } from '@/config/google'
 import {
   initializeGoogleSignIn,
   renderGoogleButton
@@ -109,10 +110,10 @@ const fieldErrors = reactive({
 })
 
 onMounted(async () => {
-  const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
+  const clientId = getGoogleClientId()
 
   if (!clientId) {
-    console.warn('Google Client ID no configurado en .env')
+    console.warn('Google Client ID no configurado')
     return
   }
 

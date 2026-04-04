@@ -9,12 +9,14 @@ services:
     startCommand: npm --prefix server start
     healthCheckPath: /api/health
     envVars:
+      - key: GOOGLE_CLIENT_ID
+        value: 830570310646-ogjq785e6i3skd9hnv13mm3f797lj4gi.apps.googleusercontent.com
       - key: GOOGLE_SHEETS_ID
         sync: false
       - key: GOOGLE_SHEETS_API_KEY
         sync: false
       - key: VITE_GOOGLE_CLIENT_ID
-        sync: false
+        value: 830570310646-ogjq785e6i3skd9hnv13mm3f797lj4gi.apps.googleusercontent.com
       - key: VITE_SITE_URL
         value: https://desarrollo-web-4ec5.onrender.com
       - key: SESSION_COOKIE_NAME

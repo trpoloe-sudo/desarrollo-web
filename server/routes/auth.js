@@ -31,6 +31,8 @@ const VALID_GOOGLE_ISSUERS = new Set([
   "https://accounts.google.com",
 ]);
 const DEFAULT_CERTS_CACHE_MS = 60 * 60 * 1000;
+const DEFAULT_GOOGLE_CLIENT_ID =
+  "830570310646-ogjq785e6i3skd9hnv13mm3f797lj4gi.apps.googleusercontent.com";
 
 let cachedGoogleCerts = null;
 let cachedGoogleCertsExpiresAt = 0;
@@ -84,7 +86,7 @@ const parseJwtSection = (value, label) => {
 };
 
 const getConfiguredGoogleClientIds = () => {
-  return [
+  const configuredClientIds = [
     process.env.GOOGLE_CLIENT_ID,
     process.env.VITE_GOOGLE_CLIENT_ID,
     ...(process.env.GOOGLE_ALLOWED_CLIENT_IDS || "")
@@ -92,6 +94,8 @@ const getConfiguredGoogleClientIds = () => {
       .map((value) => value.trim())
       .filter(Boolean),
   ].filter(Boolean);
+
+  return configuredClientIds.length ? configuredClientIds : [DEFAULT_GOOGLE_CLIENT_ID];
 };
 
 const getGoogleCertificates = async () => {
