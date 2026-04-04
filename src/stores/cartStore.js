@@ -74,13 +74,13 @@ export const useCartStore = defineStore('cart', () => {
   })
 
   const tax = computed(() => {
-    return subtotal.value * 0.18 // IGV 18% (Impuesto General a las Ventas - Perú)
+    return 0
   })
 
-  const shipping = computed(() => 0) // Envío gratis
+  const shipping = computed(() => 0) // Envio gratis
 
   const total = computed(() => {
-    return subtotal.value + tax.value + shipping.value
+    return subtotal.value + shipping.value
   })
 
   return {

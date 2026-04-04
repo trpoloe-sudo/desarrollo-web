@@ -87,7 +87,7 @@
               </div>
               <div class="order-summary">
                 <p><strong>Subtotal:</strong> ${{ order.subtotal.toFixed(2) }}</p>
-                <p><strong>IGV (18%):</strong> ${{ order.tax.toFixed(2) }}</p>
+                <p><strong>IGV:</strong> {{ orderTaxLabel(order) }}</p>
                 <p><strong>Total:</strong> ${{ order.total.toFixed(2) }}</p>
               </div>
             </div>
@@ -124,6 +124,11 @@ function formatDate(dateString) {
 
 function toggleOrderDetails(orderId) {
   expandedOrderId.value = expandedOrderId.value === orderId ? null : orderId
+}
+
+function orderTaxLabel(order) {
+  const tax = Number(order?.tax ?? 0)
+  return tax > 0 ? `$${tax.toFixed(2)}` : 'Incluido en el precio'
 }
 
 async function logout() {

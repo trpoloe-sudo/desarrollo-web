@@ -55,8 +55,8 @@
               <span>Gratis</span>
             </div>
             <div class="summary-row">
-              <span>IGV (18%):</span>
-              <span>${{ cartStore.tax.toFixed(2) }}</span>
+              <span>IGV:</span>
+              <span>Incluido en el precio</span>
             </div>
             <div class="summary-total">
               <span>Total:</span>
@@ -188,7 +188,7 @@ const sendToWhatsApp = () => {
     ...lines,
     '',
     `Subtotal: $${cartStore.subtotal.toFixed(2)}`,
-    `IGV (18%): $${cartStore.tax.toFixed(2)}`,
+    'IGV: incluido en el precio',
     `Total: $${cartStore.total.toFixed(2)}`,
     '',
     `Cliente: ${userStore.user?.name || userStore.user?.email}`,

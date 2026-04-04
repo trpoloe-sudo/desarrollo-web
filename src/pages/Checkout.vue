@@ -43,8 +43,8 @@
               <span>Gratis</span>
             </div>
             <div class="total-row">
-              <span>IGV (18%):</span>
-              <span>${{ cartStore.tax.toFixed(2) }}</span>
+              <span>IGV:</span>
+              <span>Incluido en el precio</span>
             </div>
             <div class="total-row grand-total">
               <span>Total a Pagar:</span>
@@ -84,8 +84,8 @@
               <span>Gratis</span>
             </div>
             <div class="total-row">
-              <span>IGV (18%):</span>
-              <span>${{ completedOrder.tax.toFixed(2) }}</span>
+              <span>IGV:</span>
+              <span>{{ orderTaxLabel(completedOrder) }}</span>
             </div>
             <div class="total-row grand-total">
               <span>Total Pagado:</span>
@@ -251,6 +251,11 @@ function decreaseQuantity(itemId) {
   if (item && item.quantity > 1) {
     cartStore.updateQuantity(itemId, item.quantity - 1)
   }
+}
+
+function orderTaxLabel(order) {
+  const tax = Number(order?.tax ?? 0)
+  return tax > 0 ? `$${tax.toFixed(2)}` : 'Incluido en el precio'
 }
 
 async function proceedToPayment() {
