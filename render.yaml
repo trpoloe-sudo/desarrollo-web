@@ -44,7 +44,7 @@ services:
       - key: VITE_GOOGLE_CLIENT_ID
         value: 830570310646-ogjq785e6i3skd9hnv13mm3f797lj4gi.apps.googleusercontent.com
       - key: VITE_API_URL
-        value: https://desarrollo-web-4ec5.onrender.com/api
+        value: https://desarrollo-web-4ec5-0ppe.onrender.com/api
       - key: VITE_SITE_URL
         value: https://desarrollo-web-4ec5-static.onrender.com
     headers:

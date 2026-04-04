@@ -21,7 +21,7 @@ Render no permite convertir un web service existente a `runtime: static` dentro 
 
 Por eso el blueprint mantiene `desarrollo-web-4ec5` como backend y crea un nuevo static site:
 
-- Backend actual: `https://desarrollo-web-4ec5.onrender.com`
+- Backend actual: `https://desarrollo-web-4ec5-0ppe.onrender.com`
 - Frontend nuevo: `https://desarrollo-web-4ec5-static.onrender.com`
 
 Si luego quieres que el dominio principal apunte al frontend, mueve tu custom domain al static site despues de validar el flujo.
@@ -29,7 +29,7 @@ Si luego quieres que el dominio principal apunte al frontend, mueve tu custom do
 ## Variables del frontend
 
 ```env
-VITE_API_URL=https://desarrollo-web-4ec5.onrender.com/api
+VITE_API_URL=https://desarrollo-web-4ec5-0ppe.onrender.com/api
 VITE_SITE_URL=https://desarrollo-web-4ec5-static.onrender.com
 VITE_GOOGLE_CLIENT_ID=tu_google_client_id
 ```
@@ -60,7 +60,7 @@ SESSION_COOKIE_SECURE=true
 ## Orden recomendado de despliegue
 
 1. Despliega el backend `desarrollo-web-4ec5`.
-2. Verifica `https://desarrollo-web-4ec5.onrender.com/api/health`.
+2. Verifica `https://desarrollo-web-4ec5-0ppe.onrender.com/api/health`.
 3. Despliega el static site `desarrollo-web-4ec5-static`.
 4. Abre el frontend y valida catalogo, login y panel admin.
 5. Si usas dominio propio, apunta el dominio publico al static site.
