@@ -6,4 +6,4 @@ Disallow: /auth
 Disallow: /checkout
 Disallow: /cart
 
-Sitemap: https://ztartech-app.onrender.com/sitemap.xml
+Sitemap: https://desarrollo-web-4ec5.onrender.com/sitemap.xml

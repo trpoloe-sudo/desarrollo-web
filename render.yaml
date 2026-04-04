@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: ztartech-app
+    name: desarrollo-web-4ec5
     runtime: node
     plan: free
     region: oregon
@@ -16,7 +16,7 @@ services:
       - key: VITE_GOOGLE_CLIENT_ID
         sync: false
       - key: VITE_SITE_URL
-        value: https://ztartech-app.onrender.com
+        value: https://desarrollo-web-4ec5.onrender.com
       - key: SESSION_COOKIE_NAME
         value: ztar_session
       - key: SESSION_COOKIE_SECURE
