@@ -17,23 +17,58 @@ const distIndexPath = path.join(distDir, "index.html");
 const hasStaticBuild = existsSync(distIndexPath);
 
 const normalizeOrigin = (origin) => String(origin || "").trim().replace(/\/$/, "");
+const buildOriginFromHostname = (hostname) => {
+  const normalizedHostname = String(hostname || "").trim().toLowerCase();
+
+  if (!normalizedHostname) {
+    return "";
+  }
+
+  return normalizeOrigin(`https://${normalizedHostname}`);
+};
+const deriveStaticOrigin = (origin) => {
+  try {
+    const url = new URL(origin);
+
+    if (url.hostname.endsWith("-static.onrender.com")) {
+      return url.origin;
+    }
+
+    if (!url.hostname.endsWith(".onrender.com")) {
+      return "";
+    }
+
+    const serviceName = url.hostname.slice(0, -".onrender.com".length);
+
+    if (!serviceName) {
+      return "";
+    }
+
+    return `https://${serviceName}-static.onrender.com`;
+  } catch {
+    return "";
+  }
+};
 
 loadProjectEnv();
 app.set("trust proxy", 1);
 
 const frontendOrigin = normalizeOrigin(process.env.FRONTEND_ORIGIN);
+const renderExternalOrigin =
+  normalizeOrigin(process.env.RENDER_EXTERNAL_URL) ||
+  buildOriginFromHostname(process.env.RENDER_EXTERNAL_HOSTNAME);
+const derivedStaticOrigin = deriveStaticOrigin(renderExternalOrigin);
+const preferredFrontendOrigin = frontendOrigin || derivedStaticOrigin;
 
 const allowedOrigins = new Set(
   [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     frontendOrigin,
+    derivedStaticOrigin,
     process.env.CLIENT_ORIGIN,
     process.env.CORS_ORIGIN,
-    process.env.RENDER_EXTERNAL_URL,
-    process.env.RENDER_EXTERNAL_HOSTNAME
-      ? `https://${process.env.RENDER_EXTERNAL_HOSTNAME}`
-      : "",
+    renderExternalOrigin,
     ...(process.env.ALLOWED_ORIGINS || "")
       .split(",")
       .map((origin) => origin.trim())
@@ -69,7 +104,16 @@ app.use("/api/auth", authRouter);
 app.use("/api/catalog", catalogRouter);
 app.use("/api/tasks", tasksRouter);
 
-if (hasStaticBuild) {
+if (preferredFrontendOrigin) {
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api/")) {
+      return next();
+    }
+
+    const targetUrl = new URL(req.originalUrl || req.url || "/", `${preferredFrontendOrigin}/`);
+    return res.redirect(302, targetUrl.toString());
+  });
+} else if (hasStaticBuild) {
   app.use(express.static(distDir));
 
   app.get("*", (req, res, next) => {
@@ -78,10 +122,6 @@ if (hasStaticBuild) {
     }
 
     return res.sendFile(distIndexPath);
-  });
-} else if (frontendOrigin) {
-  app.get("/", (req, res) => {
-    return res.redirect(302, frontendOrigin);
   });
 }
 
