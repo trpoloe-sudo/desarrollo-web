@@ -21,10 +21,13 @@ const normalizeOrigin = (origin) => String(origin || "").trim().replace(/\/$/, "
 loadProjectEnv();
 app.set("trust proxy", 1);
 
+const frontendOrigin = normalizeOrigin(process.env.FRONTEND_ORIGIN);
+
 const allowedOrigins = new Set(
   [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    frontendOrigin,
     process.env.CLIENT_ORIGIN,
     process.env.CORS_ORIGIN,
     process.env.RENDER_EXTERNAL_URL,
@@ -75,6 +78,10 @@ if (hasStaticBuild) {
     }
 
     return res.sendFile(distIndexPath);
+  });
+} else if (frontendOrigin) {
+  app.get("/", (req, res) => {
+    return res.redirect(302, frontendOrigin);
   });
 }
 

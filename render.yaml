@@ -1,11 +1,13 @@
 services:
+  # Keep the current service name as the API so the existing onrender.com
+  # hostname continues to work as the backend base URL.
   - type: web
     name: desarrollo-web-4ec5
     runtime: node
     plan: free
     region: oregon
     autoDeployTrigger: commit
-    buildCommand: npm install && npm --prefix server install && npm run build
+    buildCommand: npm install && npm --prefix server install
     startCommand: npm --prefix server start
     healthCheckPath: /api/health
     envVars:
@@ -15,10 +17,14 @@ services:
         sync: false
       - key: GOOGLE_SHEETS_API_KEY
         sync: false
-      - key: VITE_GOOGLE_CLIENT_ID
-        value: 830570310646-ogjq785e6i3skd9hnv13mm3f797lj4gi.apps.googleusercontent.com
-      - key: VITE_SITE_URL
-        value: https://desarrollo-web-4ec5.onrender.com
+      - key: CLIENT_ORIGIN
+        value: https://desarrollo-web-4ec5-static.onrender.com
+      - key: CORS_ORIGIN
+        value: https://desarrollo-web-4ec5-static.onrender.com
+      - key: FRONTEND_ORIGIN
+        value: https://desarrollo-web-4ec5-static.onrender.com
+      - key: ALLOWED_ORIGINS
+        value: https://desarrollo-web-4ec5-static.onrender.com
       - key: SESSION_COOKIE_NAME
         value: ztar_session
       - key: SESSION_COOKIE_SECURE
@@ -28,8 +34,44 @@ services:
       - key: SESSION_TTL_HOURS
         value: "168"
 
+  - type: web
+    name: desarrollo-web-4ec5-static
+    runtime: static
+    plan: free
+    region: oregon
+    autoDeployTrigger: commit
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_GOOGLE_CLIENT_ID
+        value: 830570310646-ogjq785e6i3skd9hnv13mm3f797lj4gi.apps.googleusercontent.com
+      - key: VITE_API_URL
+        value: https://desarrollo-web-4ec5.onrender.com/api
+      - key: VITE_SITE_URL
+        value: https://desarrollo-web-4ec5-static.onrender.com
+    headers:
+      - path: /assets/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      - path: /img/*
+        name: Cache-Control
+        value: public, max-age=604800, stale-while-revalidate=86400
+      - path: /brand-logo-transparent.png
+        name: Cache-Control
+        value: public, max-age=604800, stale-while-revalidate=86400
+      - path: /brand-logo.png
+        name: Cache-Control
+        value: public, max-age=604800, stale-while-revalidate=86400
+      - path: /brand-logo-tight.png
+        name: Cache-Control
+        value: public, max-age=604800, stale-while-revalidate=86400
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
+
 # If you later want users, orders, and admin-managed products to persist
-# across restarts, switch the service to a paid plan and attach a disk:
+# across restarts, switch the API service to a paid plan and attach a disk:
 #
 #    disk:
 #      name: data
