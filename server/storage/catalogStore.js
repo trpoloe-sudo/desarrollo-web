@@ -9,10 +9,12 @@ const dataFile = path.join(dataDir, "catalog.json");
 
 let state = {
   managedProducts: [],
+  hiddenProductIds: [],
 };
 
 const normalizeState = (parsed) => ({
   managedProducts: Array.isArray(parsed?.managedProducts) ? parsed.managedProducts : [],
+  hiddenProductIds: Array.isArray(parsed?.hiddenProductIds) ? parsed.hiddenProductIds : [],
 });
 
 const ensureDataFile = async () => {
@@ -62,21 +64,52 @@ const normalizeProducts = (products) =>
     .map((product, index) => normalizeProduct(product, index))
     .filter((product) => product.nombre);
 
+const normalizeHiddenProductIds = (productIds) =>
+  [...new Set((Array.isArray(productIds) ? productIds : []).map((productId) => {
+    const parsedId = Number(productId);
+    return Number.isFinite(parsedId) ? parsedId : String(productId ?? "").trim();
+  }).filter(Boolean))];
+
 export const listManagedProducts = async () => {
   await ready;
   return normalizeProducts(state.managedProducts);
 };
 
+export const listManagedCatalogState = async () => {
+  await ready;
+  return {
+    managedProducts: normalizeProducts(state.managedProducts),
+    hiddenProductIds: normalizeHiddenProductIds(state.hiddenProductIds),
+  };
+};
+
 export const replaceManagedProducts = async (products) => {
   await ready;
   state.managedProducts = normalizeProducts(products);
+  state.hiddenProductIds = [];
   await persist();
   return state.managedProducts;
+};
+
+export const replaceManagedCatalogState = async ({
+  managedProducts = [],
+  hiddenProductIds = [],
+}) => {
+  await ready;
+  state.managedProducts = normalizeProducts(managedProducts);
+  state.hiddenProductIds = normalizeHiddenProductIds(hiddenProductIds);
+  await persist();
+
+  return {
+    managedProducts: state.managedProducts,
+    hiddenProductIds: state.hiddenProductIds,
+  };
 };
 
 export const clearManagedProducts = async () => {
   await ready;
   state.managedProducts = [];
+  state.hiddenProductIds = [];
   await persist();
   return [];
 };

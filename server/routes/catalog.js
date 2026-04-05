@@ -6,10 +6,16 @@ import {
 } from "../services/googleSheets.js";
 import {
   clearManagedProducts,
-  listManagedProducts,
+  listManagedCatalogState,
+  replaceManagedCatalogState,
   replaceManagedProducts,
 } from "../storage/catalogStore.js";
 import { requireAdmin, requireAuth } from "../middleware/auth.js";
+import {
+  createManagedCatalogState,
+  hasManagedCatalogLayer,
+  mergeCatalogProducts,
+} from "./catalog.helpers.js";
 
 const router = Router();
 
@@ -17,24 +23,33 @@ const isPlainObject = (value) =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
 const buildCatalogPayload = async () => {
-  const managedProducts = await listManagedProducts();
-
-  if (managedProducts.length > 0) {
-    return {
-      items: managedProducts,
-      source: "managed",
-      warning: null,
-    };
-  }
+  const { managedProducts, hiddenProductIds } = await listManagedCatalogState();
+  const hasManagedLayer = hasManagedCatalogLayer(managedProducts, hiddenProductIds);
 
   try {
-    const products = await listCatalogProducts();
+    const remoteProducts = await listCatalogProducts();
 
-    if (products.length > 0) {
+    if (remoteProducts.length > 0) {
+      if (hasManagedLayer) {
+        return {
+          items: mergeCatalogProducts(remoteProducts, managedProducts, hiddenProductIds),
+          source: "managed_remote",
+          warning: null,
+        };
+      }
+
       return {
-        items: products,
+        items: remoteProducts,
         source: "google_sheets",
         warning: null,
+      };
+    }
+
+    if (hasManagedLayer) {
+      return {
+        items: mergeCatalogProducts([], managedProducts, hiddenProductIds),
+        source: "managed",
+        warning: "Google Sheets no devolvio productos. Se muestran los productos del panel.",
       };
     }
 
@@ -44,6 +59,15 @@ const buildCatalogPayload = async () => {
       warning: "Google Sheets no devolvio productos. Se muestran productos de respaldo.",
     };
   } catch (error) {
+    if (hasManagedLayer) {
+      return {
+        items: mergeCatalogProducts([], managedProducts, hiddenProductIds),
+        source: "managed",
+        warning:
+          error.message || "No se pudo cargar Google Sheets. Se muestran los productos del panel.",
+      };
+    }
+
     return {
       items: getDefaultCatalogProducts(),
       source: "fallback",
@@ -81,13 +105,21 @@ router.put("/products", requireAuth, requireAdmin, async (req, res) => {
     return res.json(await buildCatalogPayload());
   }
 
-  const savedProducts = await replaceManagedProducts(products);
+  try {
+    const remoteProducts = await listCatalogProducts();
+    const nextManagedState = createManagedCatalogState(products, remoteProducts);
+    await replaceManagedCatalogState(nextManagedState);
+    return res.json(await buildCatalogPayload());
+  } catch (error) {
+    const savedProducts = await replaceManagedProducts(products);
 
-  return res.json({
-    items: savedProducts,
-    source: "managed",
-    warning: null,
-  });
+    return res.json({
+      items: savedProducts,
+      source: "managed",
+      warning:
+        error.message || "No se pudo sincronizar Google Sheets. Se guardo una copia administrada del catalogo.",
+    });
+  }
 });
 
 router.delete("/products", requireAuth, requireAdmin, async (req, res) => {

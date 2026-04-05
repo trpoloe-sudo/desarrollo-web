@@ -182,4 +182,34 @@ describe('googleSheetsAPI', () => {
     expect(snapshot.items.length).toBeGreaterThan(0)
     expect(snapshot.warning).toContain('network down')
   })
+
+  it('retries the remote catalog after a previous failure', async () => {
+    apiGetMock.mockRejectedValueOnce(new Error('cold start'))
+    apiGetMock.mockResolvedValueOnce({
+      data: {
+        items: [
+          {
+            id: '808',
+            nombre: 'Producto Recuperado',
+            categoria: 'Demo',
+            descripcion: 'Vuelve al remoto',
+            precio: 80,
+            stock: 3,
+            especificaciones: 'Specs',
+            imagen_url: 'https://example.com/recovered.png'
+          }
+        ],
+        source: 'google_sheets',
+        warning: null
+      }
+    })
+
+    const firstSnapshot = await googleSheetsAPI.getCatalogSnapshot()
+    const secondSnapshot = await googleSheetsAPI.getCatalogSnapshot()
+
+    expect(firstSnapshot.source).toBe('fallback')
+    expect(secondSnapshot.source).toBe('google_sheets')
+    expect(secondSnapshot.items[0].id).toBe(808)
+    expect(apiGetMock).toHaveBeenCalledTimes(2)
+  })
 })

@@ -11,8 +11,6 @@ const api = axios.create({
   withCredentials: true
 })
 
-let remoteCatalogUnavailable = false
-
 const toNumber = (value, fallback = 0) => {
   const parsedValue = Number(value)
   return Number.isFinite(parsedValue) ? parsedValue : fallback
@@ -75,17 +73,12 @@ function getFallbackCatalogResponse(errorMessage = null) {
 
 export const googleSheetsAPI = {
   async getCatalogSnapshot() {
-    if (remoteCatalogUnavailable) {
-      return getFallbackCatalogResponse('El catalogo remoto no esta disponible en este hosting. Se muestran productos incluidos en el sitio.')
-    }
-
     try {
       const { data } = await api.get('/catalog/products')
       const snapshot = normalizeCatalogResponse(data)
 
       return snapshot.items.length ? snapshot : getFallbackCatalogResponse('El catalogo remoto no devolvio productos.')
     } catch (error) {
-      remoteCatalogUnavailable = true
       console.error('Error fetching products:', error)
       return getFallbackCatalogResponse(error?.message)
     }

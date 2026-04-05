@@ -22,7 +22,7 @@
           <p v-if="catalogStatus.warning" class="catalog-warning">{{ catalogStatus.warning }}</p>
         </div>
         <button
-          v-if="catalogStatus.source === 'managed'"
+          v-if="['managed', 'managed_remote'].includes(catalogStatus.source)"
           class="btn-secondary"
           :disabled="savingProducts"
           @click="restoreRemoteCatalog"
@@ -518,6 +518,7 @@ function getRoleLabel(role) {
 function getCatalogSourceLabel(source) {
   const labels = {
     managed: 'Catálogo administrado desde el panel',
+    managed_remote: 'Google Sheets con ajustes del panel',
     google_sheets: 'Google Sheets',
     fallback: 'Respaldo del servidor',
     legacy: 'Respuesta heredada',
@@ -656,6 +657,10 @@ onMounted(() => {
 }
 
 .catalog-status--managed {
+  border-color: rgba(77, 184, 255, 0.35);
+}
+
+.catalog-status--managed_remote {
   border-color: rgba(77, 184, 255, 0.35);
 }
 
