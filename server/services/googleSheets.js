@@ -1,4 +1,4 @@
-﻿const PRODUCTS_RANGE = "Productos!A1:G100";
+const PRODUCTS_RANGE = "Productos!A:G";
 const SETTINGS_RANGE = "Configuracion!A1:B100";
 
 const defaultProducts = [

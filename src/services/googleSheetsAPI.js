@@ -72,9 +72,15 @@ function getFallbackCatalogResponse(errorMessage = null) {
 }
 
 export const googleSheetsAPI = {
-  async getCatalogSnapshot() {
+  async getCatalogSnapshot(options = {}) {
+    const requestConfig = options?.preferRemote
+      ? { params: { preferRemote: true } }
+      : undefined
+
     try {
-      const { data } = await api.get('/catalog/products')
+      const { data } = requestConfig
+        ? await api.get('/catalog/products', requestConfig)
+        : await api.get('/catalog/products')
       const snapshot = normalizeCatalogResponse(data)
 
       return snapshot.items.length ? snapshot : getFallbackCatalogResponse('El catalogo remoto no devolvio productos.')
@@ -84,8 +90,8 @@ export const googleSheetsAPI = {
     }
   },
 
-  async getProducts() {
-    const snapshot = await this.getCatalogSnapshot()
+  async getProducts(options = {}) {
+    const snapshot = await this.getCatalogSnapshot(options)
     return snapshot.items
   },
 

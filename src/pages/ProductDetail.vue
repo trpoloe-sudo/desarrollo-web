@@ -271,7 +271,7 @@ watch(
 
 onMounted(async () => {
   try {
-    products.value = await googleSheetsAPI.getProducts()
+    products.value = await googleSheetsAPI.getProducts({ preferRemote: true })
   } catch (error) {
     console.error('Error loading products:', error)
   } finally {

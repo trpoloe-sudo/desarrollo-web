@@ -144,7 +144,7 @@ const openWhatsApp = () => {
 const loadProducts = async () => {
   try {
     loadingProducts.value = true
-    products.value = await googleSheetsAPI.getProducts()
+    products.value = await googleSheetsAPI.getProducts({ preferRemote: true })
     if (products.value.length > 0) {
       selectRandomProduct()
     }

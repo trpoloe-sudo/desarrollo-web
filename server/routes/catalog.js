@@ -22,7 +22,10 @@ const router = Router();
 const isPlainObject = (value) =>
   typeof value === "object" && value !== null && !Array.isArray(value);
 
-const buildCatalogPayload = async () => {
+const isTruthyQueryValue = (value) =>
+  ["1", "true", "yes", "on"].includes(String(value || "").trim().toLowerCase());
+
+const buildCatalogPayload = async ({ preferRemote = false } = {}) => {
   const { managedProducts, hiddenProductIds } = await listManagedCatalogState();
   const hasManagedLayer = hasManagedCatalogLayer(managedProducts, hiddenProductIds);
 
@@ -30,6 +33,16 @@ const buildCatalogPayload = async () => {
     const remoteProducts = await listCatalogProducts();
 
     if (remoteProducts.length > 0) {
+      if (preferRemote) {
+        return {
+          items: remoteProducts,
+          source: "google_sheets",
+          warning: hasManagedLayer
+            ? "La vista publica prioriza Google Sheets y omite ajustes locales del panel."
+            : null,
+        };
+      }
+
       if (hasManagedLayer) {
         return {
           items: mergeCatalogProducts(remoteProducts, managedProducts, hiddenProductIds),
@@ -78,7 +91,11 @@ const buildCatalogPayload = async () => {
 };
 
 router.get("/products", async (req, res) => {
-  return res.json(await buildCatalogPayload());
+  return res.json(
+    await buildCatalogPayload({
+      preferRemote: isTruthyQueryValue(req.query?.preferRemote),
+    })
+  );
 });
 
 router.put("/products", requireAuth, requireAdmin, async (req, res) => {

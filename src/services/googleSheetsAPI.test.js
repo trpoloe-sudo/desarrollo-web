@@ -69,6 +69,37 @@ describe('googleSheetsAPI', () => {
     expect(snapshot.items[0].stock).toBe(8)
   })
 
+  it('can request a spreadsheet-first snapshot for public views', async () => {
+    apiGetMock.mockResolvedValue({
+      data: {
+        items: [
+          {
+            id: '303',
+            nombre: 'Producto Remoto',
+            categoria: 'Monitores',
+            descripcion: 'Siempre desde Sheets',
+            precio: '120',
+            stock: '5',
+            especificaciones: 'Specs',
+            imagen_url: 'https://example.com/remote-only.png'
+          }
+        ],
+        source: 'google_sheets',
+        warning: null
+      }
+    })
+
+    const snapshot = await googleSheetsAPI.getCatalogSnapshot({ preferRemote: true })
+
+    expect(apiGetMock).toHaveBeenCalledWith('/catalog/products', {
+      params: {
+        preferRemote: true
+      }
+    })
+    expect(snapshot.source).toBe('google_sheets')
+    expect(snapshot.items[0].id).toBe(303)
+  })
+
   it('returns normalized items when reading products directly', async () => {
     apiGetMock.mockResolvedValue({
       data: {
