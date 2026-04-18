@@ -119,39 +119,52 @@ const fetchSheetValues = async (range) => {
 };
 
 export const listCatalogProducts = async () => {
-  const values = await fetchSheetValues(PRODUCTS_RANGE);
+  try {
+    const values = await fetchSheetValues(PRODUCTS_RANGE);
 
-  if (values.length < 2) {
+    if (values.length < 2) {
+      return [];
+    }
+
+    const [, ...rows] = values;
+
+    return rows
+      .map((row, index) => ({
+        id: index + 1,
+        categoria: getValue(row, 0),
+        nombre: getValue(row, 1),
+        descripcion: getValue(row, 2),
+        precio: Number.parseFloat(getValue(row, 3)) || 0,
+        stock: Number.parseInt(getValue(row, 4), 10) || 0,
+        imagen_url: getValue(row, 5) || "https://via.placeholder.com/300x300",
+        especificaciones: getValue(row, 6),
+      }))
+      .filter((product) => product.nombre);
+  } catch (error) {
+    // If Google Sheets is not configured or request fails, return empty array
+    // This triggers the fallback to default products in buildCatalogPayload()
+    console.warn("Failed to fetch from Google Sheets:", error.message);
     return [];
   }
-
-  const [, ...rows] = values;
-
-  return rows
-    .map((row, index) => ({
-      id: index + 1,
-      categoria: getValue(row, 0),
-      nombre: getValue(row, 1),
-      descripcion: getValue(row, 2),
-      precio: Number.parseFloat(getValue(row, 3)) || 0,
-      stock: Number.parseInt(getValue(row, 4), 10) || 0,
-      imagen_url: getValue(row, 5) || "https://via.placeholder.com/300x300",
-      especificaciones: getValue(row, 6),
-    }))
-    .filter((product) => product.nombre);
 };
 
 export const getDefaultCatalogProducts = () =>
   defaultProducts.map((product) => ({ ...product }));
 
 export const getCatalogSettings = async () => {
-  const values = await fetchSheetValues(SETTINGS_RANGE);
+  try {
+    const values = await fetchSheetValues(SETTINGS_RANGE);
 
-  return values.reduce((settings, row) => {
-    const key = getValue(row, 0);
-    if (!key) return settings;
+    return values.reduce((settings, row) => {
+      const key = getValue(row, 0);
+      if (!key) return settings;
 
-    settings[key] = getValue(row, 1);
-    return settings;
-  }, {});
+      settings[key] = getValue(row, 1);
+      return settings;
+    }, {});
+  } catch (error) {
+    // If Google Sheets is not configured, return empty settings
+    console.warn("Failed to fetch catalog settings from Google Sheets:", error.message);
+    return {};
+  }
 };
