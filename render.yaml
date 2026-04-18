@@ -12,19 +12,21 @@ services:
     healthCheckPath: /api/health
     envVars:
       - key: GOOGLE_CLIENT_ID
-        value: 830570310646-ogjq785e6i3skd9hnv13mm3f797lj4gi.apps.googleusercontent.com
+        sync: false
+      - key: GOOGLE_ALLOWED_CLIENT_IDS
+        sync: false
       - key: GOOGLE_SHEETS_ID
         sync: false
       - key: GOOGLE_SHEETS_API_KEY
         sync: false
       - key: CLIENT_ORIGIN
-        value: https://desarrollo-web-4ec5-static.onrender.com
+        value: https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
       - key: CORS_ORIGIN
-        value: https://desarrollo-web-4ec5-static.onrender.com
+        value: https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
       - key: FRONTEND_ORIGIN
-        value: https://desarrollo-web-4ec5-static.onrender.com
+        value: https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
       - key: ALLOWED_ORIGINS
-        value: https://desarrollo-web-4ec5-static.onrender.com
+        value: https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
       - key: SESSION_COOKIE_NAME
         value: ztar_session
       - key: SESSION_COOKIE_SECURE
@@ -33,6 +35,28 @@ services:
         value: lax
       - key: SESSION_TTL_HOURS
         value: "168"
+      - key: ALERT_APP_NAME
+        value: Ztar Tech
+      - key: ALERT_WEBHOOK_URL
+        sync: false
+      - key: ORDER_ALERT_WEBHOOK_URL
+        sync: false
+      - key: LEAD_ALERT_WEBHOOK_URL
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: RESEND_FROM_EMAIL
+        sync: false
+      - key: RESEND_TO_EMAIL
+        sync: false
+      - key: WHATSAPP_ACCESS_TOKEN
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      - key: WHATSAPP_ALERT_TO
+        sync: false
+      - key: WHATSAPP_API_VERSION
+        value: v22.0
 
   - type: web
     name: desarrollo-web-4ec5-static
@@ -42,11 +66,21 @@ services:
     staticPublishPath: ./dist
     envVars:
       - key: VITE_GOOGLE_CLIENT_ID
-        value: 830570310646-ogjq785e6i3skd9hnv13mm3f797lj4gi.apps.googleusercontent.com
+        sync: false
       - key: VITE_API_URL
-        value: https://desarrollo-web-4ec5-0ppe.onrender.com/api
+        value: https://desarrollo-web-4ec5.onrender.com/api
       - key: VITE_SITE_URL
         value: https://desarrollo-web-4ec5-static.onrender.com
+      - key: VITE_HUBSPOT_PORTAL_ID
+        sync: false
+      - key: VITE_GOOGLE_ADS_SEND_TO
+        sync: false
+      - key: VITE_GA_MEASUREMENT_ID
+        sync: false
+      - key: VITE_FACEBOOK_PIXEL_ID
+        sync: false
+      - key: VITE_TIKTOK_PIXEL_ID
+        sync: false
     headers:
       - path: /assets/*
         name: Cache-Control
