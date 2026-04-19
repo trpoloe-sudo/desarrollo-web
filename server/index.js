@@ -17,6 +17,16 @@ const distIndexPath = path.join(distDir, "index.html");
 const hasStaticBuild = existsSync(distIndexPath);
 
 const normalizeOrigin = (origin) => String(origin || "").trim().replace(/\/$/, "");
+const splitOrigins = (value) =>
+  String(value || "")
+    .split(",")
+    .map((origin) => normalizeOrigin(origin))
+    .filter(Boolean);
+const DEFAULT_FRONTEND_ORIGINS = [
+  "https://ansemenu.webcindario.com",
+  "https://ztartech.webcindario.com",
+  "https://desarrollo-web-4ec5-static.onrender.com",
+];
 const buildOriginFromHostname = (hostname) => {
   const normalizedHostname = String(hostname || "").trim().toLowerCase();
 
@@ -53,26 +63,28 @@ const deriveStaticOrigin = (origin) => {
 loadProjectEnv();
 app.set("trust proxy", 1);
 
-const frontendOrigin = normalizeOrigin(process.env.FRONTEND_ORIGIN);
+const frontendOrigins = splitOrigins(process.env.FRONTEND_ORIGIN);
+const clientOrigins = splitOrigins(process.env.CLIENT_ORIGIN);
+const corsOrigins = splitOrigins(process.env.CORS_ORIGIN);
+const explicitAllowedOrigins = splitOrigins(process.env.ALLOWED_ORIGINS);
 const renderExternalOrigin =
   normalizeOrigin(process.env.RENDER_EXTERNAL_URL) ||
   buildOriginFromHostname(process.env.RENDER_EXTERNAL_HOSTNAME);
 const derivedStaticOrigin = deriveStaticOrigin(renderExternalOrigin);
-const preferredFrontendOrigin = frontendOrigin || derivedStaticOrigin;
+const preferredFrontendOrigin =
+  frontendOrigins[0] || DEFAULT_FRONTEND_ORIGINS[0] || derivedStaticOrigin;
 
 const allowedOrigins = new Set(
   [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    frontendOrigin,
+    ...DEFAULT_FRONTEND_ORIGINS,
+    ...frontendOrigins,
     derivedStaticOrigin,
-    process.env.CLIENT_ORIGIN,
-    process.env.CORS_ORIGIN,
+    ...clientOrigins,
+    ...corsOrigins,
     renderExternalOrigin,
-    ...(process.env.ALLOWED_ORIGINS || "")
-      .split(",")
-      .map((origin) => origin.trim())
-      .filter(Boolean),
+    ...explicitAllowedOrigins,
   ]
     .map(normalizeOrigin)
     .filter(Boolean)

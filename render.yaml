@@ -20,13 +20,13 @@ services:
       - key: GOOGLE_SHEETS_API_KEY
         sync: false
       - key: CLIENT_ORIGIN
-        value: https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
+        value: https://ansemenu.webcindario.com,https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
       - key: CORS_ORIGIN
-        value: https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
+        value: https://ansemenu.webcindario.com,https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
       - key: FRONTEND_ORIGIN
-        value: https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
+        value: https://ansemenu.webcindario.com,https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
       - key: ALLOWED_ORIGINS
-        value: https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
+        value: https://ansemenu.webcindario.com,https://ztartech.webcindario.com,https://desarrollo-web-4ec5-static.onrender.com
       - key: SESSION_COOKIE_NAME
         value: ztar_session
       - key: SESSION_COOKIE_SECURE
