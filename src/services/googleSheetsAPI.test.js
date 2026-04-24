@@ -69,6 +69,37 @@ describe('googleSheetsAPI', () => {
     expect(snapshot.items[0].stock).toBe(8)
   })
 
+  it('can request a spreadsheet-first snapshot for public views', async () => {
+    apiGetMock.mockResolvedValue({
+      data: {
+        items: [
+          {
+            id: '303',
+            nombre: 'Producto Remoto',
+            categoria: 'Monitores',
+            descripcion: 'Siempre desde Sheets',
+            precio: '120',
+            stock: '5',
+            especificaciones: 'Specs',
+            imagen_url: 'https://example.com/remote-only.png'
+          }
+        ],
+        source: 'google_sheets',
+        warning: null
+      }
+    })
+
+    const snapshot = await googleSheetsAPI.getCatalogSnapshot({ preferRemote: true })
+
+    expect(apiGetMock).toHaveBeenCalledWith('/catalog/products', {
+      params: {
+        preferRemote: true
+      }
+    })
+    expect(snapshot.source).toBe('google_sheets')
+    expect(snapshot.items[0].id).toBe(303)
+  })
+
   it('returns normalized items when reading products directly', async () => {
     apiGetMock.mockResolvedValue({
       data: {
@@ -181,5 +212,35 @@ describe('googleSheetsAPI', () => {
     expect(snapshot.source).toBe('fallback')
     expect(snapshot.items.length).toBeGreaterThan(0)
     expect(snapshot.warning).toContain('network down')
+  })
+
+  it('retries the remote catalog after a previous failure', async () => {
+    apiGetMock.mockRejectedValueOnce(new Error('cold start'))
+    apiGetMock.mockResolvedValueOnce({
+      data: {
+        items: [
+          {
+            id: '808',
+            nombre: 'Producto Recuperado',
+            categoria: 'Demo',
+            descripcion: 'Vuelve al remoto',
+            precio: 80,
+            stock: 3,
+            especificaciones: 'Specs',
+            imagen_url: 'https://example.com/recovered.png'
+          }
+        ],
+        source: 'google_sheets',
+        warning: null
+      }
+    })
+
+    const firstSnapshot = await googleSheetsAPI.getCatalogSnapshot()
+    const secondSnapshot = await googleSheetsAPI.getCatalogSnapshot()
+
+    expect(firstSnapshot.source).toBe('fallback')
+    expect(secondSnapshot.source).toBe('google_sheets')
+    expect(secondSnapshot.items[0].id).toBe(808)
+    expect(apiGetMock).toHaveBeenCalledTimes(2)
   })
 })

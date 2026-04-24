@@ -28,6 +28,12 @@ Thumbs.db
 .DS_Store
 dev-all.out.txt
 dev-all.err.txt
+dev.out.txt
+dev.err.txt
+server-dev.out.txt
+server-dev.err.txt
 server-start.out.txt
 server-start.err.txt
 .dev-all-pids.json
+server/data/*.sqlite
+server/data/*.sqlite-*

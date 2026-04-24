@@ -87,7 +87,7 @@ describe('CartStore', () => {
     expect(cartStore.subtotal).toBe(200)
   })
 
-  it('calculates tax correctly', () => {
+  it('does not add extra tax when prices already include IGV', () => {
     const cartStore = useCartStore()
     const product = {
       id: '1',
@@ -102,7 +102,8 @@ describe('CartStore', () => {
     }
 
     cartStore.addItem(product)
-    expect(cartStore.tax).toBe(18) // 18% of 100 (IGV Perú)
+    expect(cartStore.tax).toBe(0)
+    expect(cartStore.total).toBe(100)
   })
 
   it('clears cart', () => {

@@ -127,6 +127,36 @@ server {
 sudo systemctl restart nginx
 ```
 
+### Con Apache / hosting compartido como Webcindario:
+
+Si usas `vue-router` con `createWebHistory()`, rutas como `/product/1` no existen como archivos reales en el hosting. Por eso, al abrirlas directamente, Apache responde `404` si no reescribe la solicitud a `index.html`.
+
+Este proyecto ya incluye [public/.htaccess](</c:/DISCO D/Desarrollo web/public/.htaccess>) con la regla necesaria. Asegurate de que el archivo oculto `.htaccess` tambien se suba al servidor junto con el contenido de `dist/`.
+
+Regla incluida:
+
+```apache
+<IfModule mod_negotiation.c>
+  Options -MultiViews
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+```
+
+Despues del deploy, estas URLs deben abrir correctamente:
+
+- `/`
+- `/products`
+- `/product/1`
+- `/cart`
+
 ---
 
 ## Checklist de Deploy

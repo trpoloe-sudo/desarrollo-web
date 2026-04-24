@@ -35,10 +35,10 @@
     </div>
 
     <section class="dashboard-section orders">
-      <h2><ShoppingBag class="title-icon" size="18" /> Historial de Compras</h2>
+      <h2><ShoppingBag class="title-icon" size="18" /> Historial de Pedidos</h2>
 
       <div v-if="userStore.getOrders().length === 0" class="empty-state">
-        <p>Aún no has realizado ninguna compra</p>
+        <p>Aun no has realizado ningun pedido</p>
         <RouterLink to="/products" class="btn-primary">Explorar Productos</RouterLink>
       </div>
 
@@ -59,7 +59,7 @@
               <td>{{ formatDate(order.createdAt) }}</td>
               <td>${{ order.total.toFixed(2) }}</td>
               <td>
-                <span class="status" :class="order.status">{{ order.status }}</span>
+                <span class="status" :class="order.status">{{ getOrderStatusLabel(order.status) }}</span>
               </td>
               <td>
                 <button @click="toggleOrderDetails(order.id)" class="btn-details">
@@ -87,8 +87,12 @@
               </div>
               <div class="order-summary">
                 <p><strong>Subtotal:</strong> ${{ order.subtotal.toFixed(2) }}</p>
-                <p><strong>IGV (18%):</strong> ${{ order.tax.toFixed(2) }}</p>
+                <p><strong>IGV:</strong> {{ orderTaxLabel(order) }}</p>
                 <p><strong>Total:</strong> ${{ order.total.toFixed(2) }}</p>
+                <p><strong>Estado:</strong> {{ getOrderStatusLabel(order.status) }}</p>
+                <p><strong>Metodo:</strong> {{ order.paymentMethod || 'No definido' }}</p>
+                <p v-if="order.billingAddress?.paymentReference"><strong>Referencia:</strong> {{ order.billingAddress.paymentReference }}</p>
+                <p><strong>Siguiente paso:</strong> {{ getOrderStatusDescription(order.status) }}</p>
               </div>
             </div>
           </div>
@@ -104,6 +108,7 @@ import { useRouter, RouterLink } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { useFavoritesStore } from '@/stores/favorites'
 import { BarChart3, LayoutDashboard, ShoppingBag, User } from 'lucide-vue-next'
+import { getOrderStatusDescription, getOrderStatusLabel } from '@/utils/orderStatus'
 
 const router = useRouter()
 const userStore = useUserStore()
@@ -124,6 +129,11 @@ function formatDate(dateString) {
 
 function toggleOrderDetails(orderId) {
   expandedOrderId.value = expandedOrderId.value === orderId ? null : orderId
+}
+
+function orderTaxLabel(order) {
+  const tax = Number(order?.tax ?? 0)
+  return tax > 0 ? `$${tax.toFixed(2)}` : 'Incluido en el precio'
 }
 
 async function logout() {
@@ -315,6 +325,16 @@ tr:hover {
 .status.pending {
   background: #fff3cd;
   color: #856404;
+}
+
+.status.payment_review {
+  background: #ffe8cc;
+  color: #9a3412;
+}
+
+.status.paid {
+  background: #dbeafe;
+  color: #1d4ed8;
 }
 
 .status.cancelled {

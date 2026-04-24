@@ -6,6 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import authRouter from "./routes/auth.js";
 import catalogRouter from "./routes/catalog.js";
+import contactRouter from "./routes/contact.js";
 import tasksRouter from "./routes/tasks.js";
 import { loadProjectEnv } from "./utils/loadProjectEnv.js";
 
@@ -17,24 +18,74 @@ const distIndexPath = path.join(distDir, "index.html");
 const hasStaticBuild = existsSync(distIndexPath);
 
 const normalizeOrigin = (origin) => String(origin || "").trim().replace(/\/$/, "");
+const splitOrigins = (value) =>
+  String(value || "")
+    .split(",")
+    .map((origin) => normalizeOrigin(origin))
+    .filter(Boolean);
+const DEFAULT_FRONTEND_ORIGINS = [
+  "https://ansemenu.webcindario.com",
+  "https://ztartech.webcindario.com",
+  "https://desarrollo-web-4ec5-static.onrender.com",
+];
+const buildOriginFromHostname = (hostname) => {
+  const normalizedHostname = String(hostname || "").trim().toLowerCase();
+
+  if (!normalizedHostname) {
+    return "";
+  }
+
+  return normalizeOrigin(`https://${normalizedHostname}`);
+};
+const deriveStaticOrigin = (origin) => {
+  try {
+    const url = new URL(origin);
+
+    if (url.hostname.endsWith("-static.onrender.com")) {
+      return url.origin;
+    }
+
+    if (!url.hostname.endsWith(".onrender.com")) {
+      return "";
+    }
+
+    const serviceName = url.hostname.slice(0, -".onrender.com".length);
+
+    if (!serviceName) {
+      return "";
+    }
+
+    return `https://${serviceName}-static.onrender.com`;
+  } catch {
+    return "";
+  }
+};
 
 loadProjectEnv();
 app.set("trust proxy", 1);
+
+const frontendOrigins = splitOrigins(process.env.FRONTEND_ORIGIN);
+const clientOrigins = splitOrigins(process.env.CLIENT_ORIGIN);
+const corsOrigins = splitOrigins(process.env.CORS_ORIGIN);
+const explicitAllowedOrigins = splitOrigins(process.env.ALLOWED_ORIGINS);
+const renderExternalOrigin =
+  normalizeOrigin(process.env.RENDER_EXTERNAL_URL) ||
+  buildOriginFromHostname(process.env.RENDER_EXTERNAL_HOSTNAME);
+const derivedStaticOrigin = deriveStaticOrigin(renderExternalOrigin);
+const preferredFrontendOrigin =
+  frontendOrigins[0] || DEFAULT_FRONTEND_ORIGINS[0] || derivedStaticOrigin;
 
 const allowedOrigins = new Set(
   [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    process.env.CLIENT_ORIGIN,
-    process.env.CORS_ORIGIN,
-    process.env.RENDER_EXTERNAL_URL,
-    process.env.RENDER_EXTERNAL_HOSTNAME
-      ? `https://${process.env.RENDER_EXTERNAL_HOSTNAME}`
-      : "",
-    ...(process.env.ALLOWED_ORIGINS || "")
-      .split(",")
-      .map((origin) => origin.trim())
-      .filter(Boolean),
+    ...DEFAULT_FRONTEND_ORIGINS,
+    ...frontendOrigins,
+    derivedStaticOrigin,
+    ...clientOrigins,
+    ...corsOrigins,
+    renderExternalOrigin,
+    ...explicitAllowedOrigins,
   ]
     .map(normalizeOrigin)
     .filter(Boolean)
@@ -64,9 +115,19 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/catalog", catalogRouter);
+app.use("/api/contact", contactRouter);
 app.use("/api/tasks", tasksRouter);
 
-if (hasStaticBuild) {
+if (preferredFrontendOrigin) {
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api/")) {
+      return next();
+    }
+
+    const targetUrl = new URL(req.originalUrl || req.url || "/", `${preferredFrontendOrigin}/`);
+    return res.redirect(302, targetUrl.toString());
+  });
+} else if (hasStaticBuild) {
   app.use(express.static(distDir));
 
   app.get("*", (req, res, next) => {

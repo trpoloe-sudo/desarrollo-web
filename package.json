@@ -9,12 +9,13 @@
     "dev:all": "node scripts/dev-all.mjs",
     "stop:all": "node scripts/stop-all.mjs",
     "postinstall": "npm --prefix server install",
+    "prebuild": "node scripts/generate-sitemap.mjs",
     "start": "npm run build && npm --prefix server start",
     "build": "vite build",
     "preview": "vite preview",
     "test": "vitest",
     "test:ui": "vitest --ui",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "node scripts/lint.mjs"
   },
   "dependencies": {
     "@vitest/ui": "^4.0.16",

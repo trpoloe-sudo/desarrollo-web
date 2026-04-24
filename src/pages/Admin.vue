@@ -4,7 +4,7 @@
 
     <div class="admin-tabs">
       <button
-        v-for="tab in ['products', 'orders', 'users']"
+        v-for="tab in ['products', 'orders', 'users', 'contacts']"
         :key="tab"
         :class="['tab-btn', { active: activeTab === tab }]"
         @click="activeTab = tab"
@@ -22,7 +22,7 @@
           <p v-if="catalogStatus.warning" class="catalog-warning">{{ catalogStatus.warning }}</p>
         </div>
         <button
-          v-if="catalogStatus.source === 'managed'"
+          v-if="['managed', 'managed_remote'].includes(catalogStatus.source)"
           class="btn-secondary"
           :disabled="savingProducts"
           @click="restoreRemoteCatalog"
@@ -133,9 +133,13 @@
             <td>${{ order.total.toFixed(2) }}</td>
             <td>
               <select @change="updateOrderStatus(order.id, $event.target.value)" :value="order.status">
-                <option value="pending">Pendiente</option>
-                <option value="completed">Completada</option>
-                <option value="cancelled">Cancelada</option>
+                <option
+                  v-for="statusOption in ORDER_STATUS_OPTIONS"
+                  :key="statusOption.value"
+                  :value="statusOption.value"
+                >
+                  {{ statusOption.label }}
+                </option>
               </select>
             </td>
             <td>{{ formatDate(order.createdAt) }}</td>
@@ -188,6 +192,49 @@
       </table>
     </section>
 
+    <section v-if="activeTab === 'contacts'" class="admin-section">
+      <h2><ClipboardList class="title-icon" size="18" /> Consultas de Contacto</h2>
+
+      <div v-if="loadingLeads" class="empty-state">
+        Cargando consultas...
+      </div>
+
+      <div v-else-if="leads.length === 0" class="empty-state">
+        No hay consultas registradas aún
+      </div>
+
+      <table v-else>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Teléfono</th>
+            <th>Consulta</th>
+            <th>Estado</th>
+            <th>Fecha</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="lead in leads" :key="lead.id">
+            <td>{{ lead.name }}</td>
+            <td>{{ lead.phone }}</td>
+            <td>{{ lead.subject }}</td>
+            <td>
+              <select @change="updateLeadStatus(lead.id, $event.target.value)" :value="lead.status">
+                <option value="new">Nueva</option>
+                <option value="contacted">Contactada</option>
+                <option value="closed">Cerrada</option>
+              </select>
+            </td>
+            <td>{{ formatDate(lead.createdAt) }}</td>
+            <td>
+              <button @click="viewLeadDetails(lead)" class="btn-details">Ver</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
     <div v-if="showModal" class="modal-overlay" @click="closeModal">
       <div class="modal" @click.stop>
         <button class="modal-close" @click="closeModal">×</button>
@@ -227,7 +274,13 @@ import { ref, computed, onMounted } from 'vue'
 import { useUserStore } from '@/stores/user'
 import { useUiStore } from '@/stores/ui'
 import { googleSheetsAPI } from '@/services/googleSheetsAPI'
+import { contactApi } from '@/services/contactApi'
 import { ClipboardList, Package, ShieldCheck, Users } from 'lucide-vue-next'
+import {
+  ORDER_STATUS_OPTIONS,
+  getOrderStatusDescription,
+  getOrderStatusLabel
+} from '@/utils/orderStatus'
 
 const userStore = useUserStore()
 const uiStore = useUiStore()
@@ -236,6 +289,7 @@ const showModal = ref(false)
 const editingProduct = ref(null)
 const loadingProducts = ref(true)
 const savingProducts = ref(false)
+const loadingLeads = ref(false)
 const catalogStatus = ref({
   source: 'unknown',
   warning: null
@@ -247,6 +301,7 @@ const modalData = ref({
 })
 
 const products = ref([])
+const leads = ref([])
 
 const productForm = ref({
   nombre: '',
@@ -261,7 +316,8 @@ const productForm = ref({
 const tabLabels = {
   products: 'Productos',
   orders: 'Órdenes',
-  users: 'Usuarios'
+  users: 'Usuarios',
+  contacts: 'Contactos'
 }
 
 const users = computed(() => {
@@ -409,6 +465,12 @@ async function updateOrderStatus(orderId, status) {
     }
 
     uiStore.success(`Estado actualizado a ${getOrderStatusLabel(status)}.`)
+
+    const selectedOrder = allOrders.value.find((order) => order.id === orderId)
+
+    if (showModal.value && modalData.value.title.includes(orderId) && selectedOrder) {
+      viewOrderDetails(selectedOrder)
+    }
   } catch (error) {
     uiStore.error(error.message || 'No se pudo actualizar el estado de la orden.')
   }
@@ -422,7 +484,11 @@ function viewOrderDetails(order) {
       { label: 'Correo', value: order.userEmail || 'No disponible' },
       { label: 'Total', value: `$${formatCurrency(order.total)}` },
       { label: 'Estado', value: getOrderStatusLabel(order.status) },
+      { label: 'Siguiente paso', value: getOrderStatusDescription(order.status) },
       { label: 'Pago', value: order.paymentMethod || 'No disponible' },
+      { label: 'Telefono', value: order.billingAddress?.phone || 'No disponible' },
+      { label: 'Referencia', value: order.billingAddress?.paymentReference || 'No enviada' },
+      { label: 'Notas del pago', value: order.billingAddress?.paymentNotes || 'Sin notas' },
       { label: 'Fecha', value: formatDate(order.createdAt) },
       { label: 'Dirección', value: formatBillingAddress(order.billingAddress) }
     ],
@@ -443,6 +509,24 @@ function viewUserDetails(user) {
       { label: 'Registrado', value: formatDate(user.createdAt) },
       { label: 'Órdenes', value: String(user.orders?.length || 0) },
       { label: 'Total gastado', value: `$${formatCurrency(totalSpent)}` }
+    ],
+    items: []
+  }
+  showModal.value = true
+}
+
+function viewLeadDetails(lead) {
+  modalData.value = {
+    title: 'Consulta de contacto',
+    details: [
+      { label: 'Nombre', value: lead.name || 'Sin nombre' },
+      { label: 'Teléfono', value: lead.phone || 'Sin teléfono' },
+      { label: 'Empresa', value: lead.company || 'No indicada' },
+      { label: 'Consulta', value: lead.subject || 'Sin asunto' },
+      { label: 'Estado', value: getLeadStatusLabel(lead.status) },
+      { label: 'Canal', value: lead.source || 'web' },
+      { label: 'Fecha', value: formatDate(lead.createdAt) },
+      { label: 'Mensaje', value: lead.message || 'Sin mensaje' }
     ],
     items: []
   }
@@ -474,6 +558,39 @@ async function toggleUserRole(selectedUser) {
   }
 }
 
+async function loadLeads() {
+  try {
+    loadingLeads.value = true
+    leads.value = await contactApi.listLeads()
+  } catch (error) {
+    uiStore.error(error.message || 'No se pudieron cargar las consultas.')
+  } finally {
+    loadingLeads.value = false
+  }
+}
+
+async function updateLeadStatus(leadId, status) {
+  try {
+    const updatedLead = await contactApi.updateLeadStatus(leadId, status)
+
+    leads.value = leads.value.map((lead) => {
+      return lead.id === updatedLead.id ? updatedLead : lead
+    })
+
+    if (showModal.value && modalData.value.details.some((detail) => detail.label === 'Mensaje')) {
+      const selectedLead = leads.value.find((lead) => lead.id === updatedLead.id)
+
+      if (selectedLead) {
+        viewLeadDetails(selectedLead)
+      }
+    }
+
+    uiStore.success(`Consulta marcada como ${getLeadStatusLabel(status).toLowerCase()}.`)
+  } catch (error) {
+    uiStore.error(error.message || 'No se pudo actualizar el estado del contacto.')
+  }
+}
+
 function formatCurrency(value) {
   return Number(value || 0).toFixed(2)
 }
@@ -496,16 +613,6 @@ function formatBillingAddress(address) {
     .join(', ') || 'No registrada'
 }
 
-function getOrderStatusLabel(status) {
-  const labels = {
-    pending: 'Pendiente',
-    completed: 'Completada',
-    cancelled: 'Cancelada'
-  }
-
-  return labels[status] || status || 'Sin estado'
-}
-
 function getRoleLabel(role) {
   const labels = {
     admin: 'Administrador',
@@ -518,6 +625,7 @@ function getRoleLabel(role) {
 function getCatalogSourceLabel(source) {
   const labels = {
     managed: 'Catálogo administrado desde el panel',
+    managed_remote: 'Google Sheets con ajustes del panel',
     google_sheets: 'Google Sheets',
     fallback: 'Respaldo del servidor',
     legacy: 'Respuesta heredada',
@@ -525,6 +633,16 @@ function getCatalogSourceLabel(source) {
   }
 
   return labels[source] || source || 'No disponible'
+}
+
+function getLeadStatusLabel(status) {
+  const labels = {
+    new: 'Nueva',
+    contacted: 'Contactada',
+    closed: 'Cerrada'
+  }
+
+  return labels[status] || status || 'Nueva'
 }
 
 function closeModal() {
@@ -551,6 +669,7 @@ async function loadProducts() {
 
 onMounted(() => {
   loadProducts()
+  loadLeads()
   userStore.fetchAllUsers().catch((error) => {
     console.error('Error loading admin users:', error)
     uiStore.error(error.message || 'No se pudieron cargar los usuarios.')
@@ -656,6 +775,10 @@ onMounted(() => {
 }
 
 .catalog-status--managed {
+  border-color: rgba(77, 184, 255, 0.35);
+}
+
+.catalog-status--managed_remote {
   border-color: rgba(77, 184, 255, 0.35);
 }
 

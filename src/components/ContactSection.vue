@@ -116,6 +116,12 @@
               </div>
             </transition>
 
+            <transition name="fade">
+              <div v-if="submitError" class="error-box">
+                {{ submitError }}
+              </div>
+            </transition>
+
             <div class="contact-divider">
               O contacta directamente
             </div>
@@ -229,6 +235,11 @@ import {
   Users,
   Zap
 } from 'lucide-vue-next'
+import { useUiStore } from '@/stores/ui'
+import { contactApi } from '@/services/contactApi'
+import { pixelTracking } from '@/services/pixelTracking'
+
+const uiStore = useUiStore()
 
 const form = reactive({
   name: '',
@@ -250,6 +261,7 @@ const errors = reactive({
 
 const isSubmitting = ref(false)
 const successMessage = ref('')
+const submitError = ref('')
 
 const validateField = (fieldName) => {
   switch (fieldName) {
@@ -319,22 +331,31 @@ const handleSubmit = async () => {
   }
 
   isSubmitting.value = true
+  submitError.value = ''
 
   try {
-    await new Promise(resolve => setTimeout(resolve, 1500))
+    const lead = await contactApi.submitLead({
+      ...form,
+      source: 'contact_section'
+    })
 
-    successMessage.value = '¡Gracias! En breve nos pondremos en contacto.'
+    pixelTracking.trackLead('contacto_web')
+    successMessage.value = `Recibimos tu consulta. Te contactaremos pronto para continuar con la solicitud ${lead.id.slice(0, 8)}.`
+    uiStore.success('Consulta registrada correctamente.')
 
     setTimeout(() => {
       form.name = ''
       form.phone = ''
+      form.company = ''
       form.subject = ''
       form.message = ''
       form.privacy = false
       successMessage.value = ''
-    }, 3000)
+      submitError.value = ''
+    }, 4000)
   } catch (error) {
-    console.error('Error al enviar:', error)
+    submitError.value = error.message || 'No se pudo registrar tu consulta.'
+    uiStore.error(submitError.value)
   } finally {
     isSubmitting.value = false
   }
@@ -727,6 +748,16 @@ const callDirect = () => {
   font-weight: 500;
 }
 
+.error-box {
+  background: linear-gradient(135deg, #fde3e3 0%, #f9d0d0 100%);
+  color: #8f1f1f;
+  padding: 15px;
+  border-radius: var(--radius);
+  border-left: 4px solid #d74c4c;
+  text-align: center;
+  font-weight: 500;
+}
+
 .contact-divider {
   text-align: center;
   padding: 20px 0;
@@ -933,7 +964,6 @@ const callDirect = () => {
   }
 }
 </style>
-
 
 
 

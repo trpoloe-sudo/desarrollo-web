@@ -109,7 +109,7 @@ onMounted(async () => {
   window.addEventListener('resize', updateCompactMobile)
 
   try {
-    products.value = await googleSheetsAPI.getProducts()
+    products.value = await googleSheetsAPI.getProducts({ preferRemote: true })
     pixelTracking.trackPageView('Productos')
   } catch (error) {
     console.error('Error loading products:', error)
