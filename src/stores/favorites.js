@@ -7,8 +7,18 @@ export const useFavoritesStore = defineStore('favorites', () => {
   // Cargar desde localStorage
   function initFavorites() {
     const saved = localStorage.getItem('favorites')
-    if (saved) {
-      favoriteIds.value = JSON.parse(saved)
+
+    if (!saved) {
+      return
+    }
+
+    try {
+      const parsed = JSON.parse(saved)
+      favoriteIds.value = Array.isArray(parsed) ? parsed : []
+    } catch (error) {
+      console.error('Error restoring favorites:', error)
+      favoriteIds.value = []
+      localStorage.removeItem('favorites')
     }
   }
 

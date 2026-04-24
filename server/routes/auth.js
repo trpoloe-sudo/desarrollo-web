@@ -19,20 +19,28 @@ import {
   setSessionCookie,
 } from "../utils/sessionCookie.js";
 import { createPublicKey, verify as verifySignature } from "crypto";
+import {
+  notifyNewOrder,
+  notifyOrderStatusChanged,
+} from "../services/notifications.js";
 
 const router = Router();
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const VALID_ROLES = new Set(["admin", "customer"]);
-const VALID_ORDER_STATUSES = new Set(["pending", "completed", "cancelled"]);
+const VALID_ORDER_STATUSES = new Set([
+  "pending",
+  "payment_review",
+  "paid",
+  "completed",
+  "cancelled",
+]);
 const GOOGLE_CERTS_URL = "https://www.googleapis.com/oauth2/v1/certs";
 const VALID_GOOGLE_ISSUERS = new Set([
   "accounts.google.com",
   "https://accounts.google.com",
 ]);
 const DEFAULT_CERTS_CACHE_MS = 60 * 60 * 1000;
-const DEFAULT_GOOGLE_CLIENT_ID =
-  "830570310646-ogjq785e6i3skd9hnv13mm3f797lj4gi.apps.googleusercontent.com";
 
 let cachedGoogleCerts = null;
 let cachedGoogleCertsExpiresAt = 0;
@@ -88,14 +96,13 @@ const parseJwtSection = (value, label) => {
 const getConfiguredGoogleClientIds = () => {
   const configuredClientIds = [
     process.env.GOOGLE_CLIENT_ID,
-    process.env.VITE_GOOGLE_CLIENT_ID,
     ...(process.env.GOOGLE_ALLOWED_CLIENT_IDS || "")
       .split(",")
       .map((value) => value.trim())
       .filter(Boolean),
   ].filter(Boolean);
 
-  return configuredClientIds.length ? configuredClientIds : [DEFAULT_GOOGLE_CLIENT_ID];
+  return configuredClientIds;
 };
 
 const getGoogleCertificates = async () => {
@@ -281,7 +288,7 @@ const validateOrderBody = (body) => {
   }
 
   if ("status" in body && !VALID_ORDER_STATUSES.has(body.status)) {
-    errors.push("status must be one of pending, completed, cancelled");
+    errors.push("status must be one of pending, payment_review, paid, completed, cancelled");
   }
 
   return errors;
@@ -402,6 +409,7 @@ router.post("/orders", requireAuth, async (req, res) => {
     return res.status(404).json({ error: "Usuario no encontrado" });
   }
 
+  await notifyNewOrder(createdOrder.order, createdOrder.user);
   return res.status(201).json(createdOrder);
 });
 
@@ -413,7 +421,7 @@ router.patch("/orders/:orderId/status", requireAuth, requireAdmin, async (req, r
   const status = req.body?.status;
 
   if (!VALID_ORDER_STATUSES.has(status)) {
-    return res.status(400).json({ error: "status must be one of pending, completed, cancelled" });
+    return res.status(400).json({ error: "status must be one of pending, payment_review, paid, completed, cancelled" });
   }
 
   const updated = await updateOrderStatus(req.params.orderId, status);
@@ -422,6 +430,7 @@ router.patch("/orders/:orderId/status", requireAuth, requireAdmin, async (req, r
     return res.status(404).json({ error: "Orden no encontrada" });
   }
 
+  await notifyOrderStatusChanged(updated.order, updated.user, updated.previousStatus);
   return res.json(updated);
 });
 

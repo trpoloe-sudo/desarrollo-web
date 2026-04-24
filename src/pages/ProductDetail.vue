@@ -131,7 +131,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { ArrowLeft, BadgeCheck, Boxes, ShieldCheck } from 'lucide-vue-next'
 import ProductDetails from '../components/ProductDetails.vue'
@@ -140,6 +140,7 @@ import { googleSheetsAPI } from '../services/googleSheetsAPI'
 import { useCartStore } from '../stores/cartStore'
 import { useUiStore } from '@/stores/ui'
 import { pixelTracking } from '../services/pixelTracking'
+import { buildCanonicalUrl, clearStructuredData, setSeoMeta, setStructuredData } from '@/services/seo'
 
 const route = useRoute()
 const cartStore = useCartStore()
@@ -258,10 +259,36 @@ watch(
   () => product.value,
   (nextProduct, previousProduct) => {
     if (!nextProduct) {
+      clearStructuredData('product')
       return
     }
 
     pixelTracking.trackViewProduct(nextProduct)
+    setSeoMeta({
+      title: nextProduct.nombre,
+      description: String(nextProduct.descripcion || nextProduct.especificaciones || 'Detalle técnico del producto.').slice(0, 160),
+      canonical: buildCanonicalUrl(`/product/${nextProduct.id}`),
+      image: nextProduct.imagen_url,
+      type: 'product'
+    })
+    setStructuredData('product', {
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: nextProduct.nombre,
+      description: nextProduct.descripcion || nextProduct.especificaciones || 'Producto disponible en Ztar Tech',
+      image: nextProduct.imagen_url ? [nextProduct.imagen_url] : [],
+      category: nextProduct.categoria,
+      sku: String(nextProduct.id),
+      offers: {
+        '@type': 'Offer',
+        priceCurrency: 'PEN',
+        price: Number(nextProduct.precio || 0).toFixed(2),
+        availability: Number(nextProduct.stock || 0) > 0
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/OutOfStock',
+        url: buildCanonicalUrl(`/product/${nextProduct.id}`)
+      }
+    })
 
     if (previousProduct && nextProduct.id !== previousProduct.id) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -277,6 +304,10 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+})
+
+onBeforeUnmount(() => {
+  clearStructuredData('product')
 })
 </script>
 

@@ -1,5 +1,6 @@
 import axios from 'axios'
-import bundledCatalogData from '../../server/data/catalog.json'
+
+const DEFAULT_PRODUCT_IMAGE = '/brand-logo-transparent.png'
 
 const apiBaseURL = import.meta.env.DEV
   ? '/api'
@@ -28,7 +29,7 @@ function normalizeProduct(product, index = 0) {
     descripcion: String(product?.descripcion || '').trim(),
     precio: toNumber(product?.precio, 0),
     stock: Math.max(0, Math.trunc(toNumber(product?.stock, 0))),
-    imagen_url: String(product?.imagen_url || 'https://via.placeholder.com/300x300?text=Producto').trim(),
+    imagen_url: String(product?.imagen_url || DEFAULT_PRODUCT_IMAGE).trim(),
     especificaciones: String(product?.especificaciones || '').trim()
   }
 }
@@ -37,15 +38,7 @@ function normalizeProducts(products) {
   return (Array.isArray(products) ? products : []).map((product, index) => normalizeProduct(product, index))
 }
 
-const bundledCatalogProducts = normalizeProducts(
-  Array.isArray(bundledCatalogData?.managedProducts)
-    ? bundledCatalogData.managedProducts
-    : Array.isArray(bundledCatalogData?.items)
-      ? bundledCatalogData.items
-      : Array.isArray(bundledCatalogData)
-        ? bundledCatalogData
-        : []
-)
+const bundledCatalogProducts = normalizeProducts(getDefaultProducts())
 
 function normalizeCatalogResponse(data) {
   if (Array.isArray(data)) {
@@ -128,7 +121,7 @@ function getDefaultProducts() {
       descripcion: 'Procesador de alta performance para gaming y productividad',
       precio: 450,
       stock: 15,
-      imagen_url: 'https://via.placeholder.com/300x300?text=Intel+i7',
+      imagen_url: DEFAULT_PRODUCT_IMAGE,
       especificaciones: '13A generacion, 16 nucleos, 24 threads'
     },
     {
@@ -138,7 +131,7 @@ function getDefaultProducts() {
       descripcion: 'Procesador RYZEN de alto rendimiento',
       precio: 380,
       stock: 10,
-      imagen_url: 'https://via.placeholder.com/300x300?text=AMD+Ryzen',
+      imagen_url: DEFAULT_PRODUCT_IMAGE,
       especificaciones: '7A generacion, 8 nucleos, 16 threads'
     },
     {
@@ -148,7 +141,7 @@ function getDefaultProducts() {
       descripcion: 'Tarjeta grafica de ultima generacion',
       precio: 1200,
       stock: 8,
-      imagen_url: 'https://via.placeholder.com/300x300?text=RTX+4080',
+      imagen_url: DEFAULT_PRODUCT_IMAGE,
       especificaciones: '16GB GDDR6X, CUDA cores: 9728'
     },
     {
@@ -158,7 +151,7 @@ function getDefaultProducts() {
       descripcion: 'GPU AMD de alto desempeno',
       precio: 899,
       stock: 12,
-      imagen_url: 'https://via.placeholder.com/300x300?text=AMD+GPU',
+      imagen_url: DEFAULT_PRODUCT_IMAGE,
       especificaciones: '24GB GDDR6, 6144 Stream Processors'
     },
     {
@@ -168,7 +161,7 @@ function getDefaultProducts() {
       descripcion: 'Memoria RAM DDR5 de alta velocidad',
       precio: 180,
       stock: 25,
-      imagen_url: 'https://via.placeholder.com/300x300?text=Corsair+RAM',
+      imagen_url: DEFAULT_PRODUCT_IMAGE,
       especificaciones: 'DDR5, 6000MHz, CAS 30'
     },
     {
@@ -178,7 +171,7 @@ function getDefaultProducts() {
       descripcion: 'SSD NVMe de ultima generacion',
       precio: 220,
       stock: 30,
-      imagen_url: 'https://via.placeholder.com/300x300?text=Samsung+SSD',
+      imagen_url: DEFAULT_PRODUCT_IMAGE,
       especificaciones: 'PCIe 4.0, Lectura: 7450MB/s'
     }
   ]

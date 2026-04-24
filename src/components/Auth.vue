@@ -85,6 +85,7 @@ import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/user'
 import { useUiStore } from '@/stores/ui'
 import { getGoogleClientId } from '@/config/google'
+import { pixelTracking } from '@/services/pixelTracking'
 import {
   initializeGoogleSignIn,
   renderGoogleButton
@@ -134,6 +135,7 @@ async function handleGoogleSignInSuccess(googleResponse) {
 
     await userStore.loginWithGoogle(googleResponse)
 
+    pixelTracking.trackLogin()
     uiStore.success('Sesión iniciada con Google.')
 
     setTimeout(() => {
@@ -177,8 +179,10 @@ async function handleSubmit() {
 
     if (isLogin.value) {
       await userStore.login(emailValue, passwordValue)
+      pixelTracking.trackLogin()
     } else {
       await userStore.register(emailValue, passwordValue, nameValue)
+      pixelTracking.trackSignUp()
     }
 
     uiStore.success(isLogin.value ? 'Sesión iniciada.' : 'Cuenta creada.')

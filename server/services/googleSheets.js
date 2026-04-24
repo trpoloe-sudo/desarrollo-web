@@ -1,5 +1,6 @@
 const PRODUCTS_RANGE = "Productos!A:G";
 const SETTINGS_RANGE = "Configuracion!A1:B100";
+const DEFAULT_PRODUCT_IMAGE = "/brand-logo-transparent.png";
 
 const defaultProducts = [
   {
@@ -9,7 +10,7 @@ const defaultProducts = [
     descripcion: "Procesador de alta performance para gaming y productividad",
     precio: 450,
     stock: 15,
-    imagen_url: "https://via.placeholder.com/300x300?text=Intel+i7",
+    imagen_url: DEFAULT_PRODUCT_IMAGE,
     especificaciones: "13A generacion, 16 nucleos, 24 threads",
   },
   {
@@ -19,7 +20,7 @@ const defaultProducts = [
     descripcion: "Procesador RYZEN de alto rendimiento",
     precio: 380,
     stock: 10,
-    imagen_url: "https://via.placeholder.com/300x300?text=AMD+Ryzen",
+    imagen_url: DEFAULT_PRODUCT_IMAGE,
     especificaciones: "7A generacion, 8 nucleos, 16 threads",
   },
   {
@@ -29,7 +30,7 @@ const defaultProducts = [
     descripcion: "Tarjeta grafica de ultima generacion",
     precio: 1200,
     stock: 8,
-    imagen_url: "https://via.placeholder.com/300x300?text=RTX+4080",
+    imagen_url: DEFAULT_PRODUCT_IMAGE,
     especificaciones: "16GB GDDR6X, CUDA cores: 9728",
   },
   {
@@ -39,7 +40,7 @@ const defaultProducts = [
     descripcion: "GPU AMD de alto desempeno",
     precio: 899,
     stock: 12,
-    imagen_url: "https://via.placeholder.com/300x300?text=AMD+GPU",
+    imagen_url: DEFAULT_PRODUCT_IMAGE,
     especificaciones: "24GB GDDR6, 6144 Stream Processors",
   },
   {
@@ -49,7 +50,7 @@ const defaultProducts = [
     descripcion: "Memoria RAM DDR5 de alta velocidad",
     precio: 180,
     stock: 25,
-    imagen_url: "https://via.placeholder.com/300x300?text=Corsair+RAM",
+    imagen_url: DEFAULT_PRODUCT_IMAGE,
     especificaciones: "DDR5, 6000MHz, CAS 30",
   },
   {
@@ -59,7 +60,7 @@ const defaultProducts = [
     descripcion: "SSD NVMe de ultima generacion",
     precio: 220,
     stock: 30,
-    imagen_url: "https://via.placeholder.com/300x300?text=Samsung+SSD",
+    imagen_url: DEFAULT_PRODUCT_IMAGE,
     especificaciones: "PCIe 4.0, Lectura: 7450MB/s",
   },
 ];
@@ -136,7 +137,7 @@ export const listCatalogProducts = async () => {
         descripcion: getValue(row, 2),
         precio: Number.parseFloat(getValue(row, 3)) || 0,
         stock: Number.parseInt(getValue(row, 4), 10) || 0,
-        imagen_url: getValue(row, 5) || "https://via.placeholder.com/300x300",
+        imagen_url: getValue(row, 5) || DEFAULT_PRODUCT_IMAGE,
         especificaciones: getValue(row, 6),
       }))
       .filter((product) => product.nombre);

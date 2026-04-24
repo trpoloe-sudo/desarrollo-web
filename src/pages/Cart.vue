@@ -62,7 +62,7 @@
               <span>Total:</span>
               <span>${{ cartStore.total.toFixed(2) }}</span>
             </div>
-            <button @click="goToCheckout" class="checkout-btn">Proceder al Pago</button>
+            <button @click="goToCheckout" class="checkout-btn">Continuar con el Pedido</button>
             <button @click="clearCart" class="clear-btn">Vaciar Carrito</button>
             <RouterLink to="/products" class="continue-shopping-btn">
               Continuar Comprando
@@ -75,7 +75,7 @@
     <div v-if="showWhatsAppModal" class="modal-overlay" @click="closeWhatsAppModal">
       <div class="modal" @click.stop>
         <div class="modal-header">
-          <h3>Datos para el Pedido</h3>
+          <h3>Datos para coordinar el pedido</h3>
           <button class="modal-close" @click="closeWhatsAppModal">×</button>
         </div>
         <p class="modal-subtitle">Estos datos son opcionales y se enviarán por WhatsApp.</p>
@@ -159,7 +159,7 @@ const goToCheckout = () => {
   }
 
   if (!userStore.isLoggedIn) {
-    uiStore.warning('Debes iniciar sesión para proceder al pago.')
+    uiStore.warning('Debes iniciar sesión para enviar el pedido.')
     router.push('/auth')
     return
   }

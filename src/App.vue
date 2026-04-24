@@ -21,8 +21,8 @@ import WhatsAppButton from './components/WhatsAppButton.vue'
 import CartFloatingButton from './components/CartFloatingButton.vue'
 import ToastStack from './components/ToastStack.vue'
 import ConfirmDialog from './components/ConfirmDialog.vue'
+import { setStructuredData } from '@/services/seo'
 
-// Inyectar Schema Markup JSON-LD en el head
 onMounted(() => {
   const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin
   const brandImage = new URL('/brand-logo-transparent.png', window.location.origin).href
@@ -67,11 +67,7 @@ onMounted(() => {
     ]
   }
 
-  // Crear elemento script y agregarlo al head
-  const script = document.createElement('script')
-  script.type = 'application/ld+json'
-  script.textContent = JSON.stringify(schemaMarkup)
-  document.head.appendChild(script)
+  setStructuredData('organization', schemaMarkup)
 })
 </script>
 

@@ -6,6 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import authRouter from "./routes/auth.js";
 import catalogRouter from "./routes/catalog.js";
+import contactRouter from "./routes/contact.js";
 import tasksRouter from "./routes/tasks.js";
 import { loadProjectEnv } from "./utils/loadProjectEnv.js";
 
@@ -114,6 +115,7 @@ app.get("/api/health", (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/catalog", catalogRouter);
+app.use("/api/contact", contactRouter);
 app.use("/api/tasks", tasksRouter);
 
 if (preferredFrontendOrigin) {

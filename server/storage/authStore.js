@@ -1,55 +1,54 @@
-﻿import { promises as fs } from "fs";
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from "crypto";
-import path from "path";
-import { fileURLToPath } from "url";
+import { db, runTransaction } from "./database.js";
 import { SESSION_TTL_MS } from "../utils/sessionCookie.js";
-
-const baseDir = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.resolve(baseDir, "..", "data");
-const dataFile = path.join(dataDir, "auth.json");
-
-let state = {
-  users: [],
-  sessions: [],
-};
-
-const normalizeState = (parsed) => ({
-  users: Array.isArray(parsed?.users) ? parsed.users : [],
-  sessions: Array.isArray(parsed?.sessions) ? parsed.sessions : [],
-});
-
-const ensureDataFile = async () => {
-  await fs.mkdir(dataDir, { recursive: true });
-
-  try {
-    const raw = await fs.readFile(dataFile, "utf8");
-    state = normalizeState(JSON.parse(raw));
-  } catch (error) {
-    if (error.code !== "ENOENT") {
-      throw error;
-    }
-
-    await fs.writeFile(dataFile, JSON.stringify(state, null, 2), "utf8");
-  }
-};
-
-const ready = ensureDataFile();
-
-const persist = async () => {
-  await fs.writeFile(dataFile, JSON.stringify(state, null, 2), "utf8");
-};
 
 const normalizeEmail = (email) => String(email || "").trim().toLowerCase();
 
-const sanitizeUser = (user) => {
-  if (!user) {
+const parseJson = (value, fallbackValue) => {
+  try {
+    return value ? JSON.parse(value) : fallbackValue;
+  } catch {
+    return fallbackValue;
+  }
+};
+
+const mapOrderRow = (row) => ({
+  id: row.id,
+  items: parseJson(row.items_json, []),
+  subtotal: Number(row.subtotal ?? 0),
+  tax: Number(row.tax ?? 0),
+  total: Number(row.total ?? 0),
+  paymentMethod: row.payment_method,
+  billingAddress: parseJson(row.billing_address_json, null),
+  userEmail: row.user_email,
+  status: row.status,
+  createdAt: row.created_at,
+});
+
+const listOrdersByUserId = (userId) => {
+  const rows = db.prepare(`
+    SELECT * FROM orders
+    WHERE user_id = ?
+    ORDER BY datetime(created_at) DESC
+  `).all(userId);
+
+  return rows.map(mapOrderRow);
+};
+
+const sanitizeUserRow = (userRow) => {
+  if (!userRow) {
     return null;
   }
 
-  const { passwordHash, passwordSalt, ...publicUser } = user;
   return {
-    ...publicUser,
-    orders: Array.isArray(publicUser.orders) ? publicUser.orders : [],
+    id: userRow.id,
+    email: userRow.email,
+    name: userRow.name,
+    picture: userRow.picture,
+    role: userRow.role,
+    createdAt: userRow.created_at,
+    orders: listOrdersByUserId(userRow.id),
+    provider: userRow.provider,
   };
 };
 
@@ -58,13 +57,13 @@ const hashPassword = (password, salt = randomBytes(16).toString("hex")) => ({
   passwordSalt: salt,
 });
 
-const verifyPassword = (user, password) => {
-  if (!user?.passwordHash || !user?.passwordSalt) {
+const verifyPassword = (userRow, password) => {
+  if (!userRow?.password_hash || !userRow?.password_salt) {
     return false;
   }
 
-  const derivedKey = scryptSync(password, user.passwordSalt, 64);
-  const storedKey = Buffer.from(user.passwordHash, "hex");
+  const derivedKey = scryptSync(password, userRow.password_salt, 64);
+  const storedKey = Buffer.from(userRow.password_hash, "hex");
 
   if (storedKey.length !== derivedKey.length) {
     return false;
@@ -73,44 +72,29 @@ const verifyPassword = (user, password) => {
   return timingSafeEqual(storedKey, derivedKey);
 };
 
-const isSessionExpired = (session) => {
-  if (!session?.expiresAt) {
-    return true;
-  }
-
-  const expiresAt = new Date(session.expiresAt).getTime();
-  return !Number.isFinite(expiresAt) || expiresAt <= Date.now();
-};
-
 const pruneExpiredSessions = () => {
-  const nextSessions = state.sessions.filter((session) => {
-    return session?.token && session?.userId && !isSessionExpired(session);
-  });
-
-  if (nextSessions.length === state.sessions.length) {
-    return false;
-  }
-
-  state.sessions = nextSessions;
-  return true;
+  db.prepare(`
+    DELETE FROM sessions
+    WHERE datetime(expires_at) <= datetime(?)
+  `).run(new Date().toISOString());
 };
 
-const ensureStateReady = async () => {
-  await ready;
-
-  if (pruneExpiredSessions()) {
-    await persist();
-  }
+const getUserCount = () => {
+  const row = db.prepare("SELECT COUNT(*) AS total FROM users").get();
+  return Number(row?.total ?? 0);
 };
 
-const getUserByEmail = (email) =>
-  state.users.find((user) => user.email === normalizeEmail(email)) ?? null;
+const getUserRowByEmail = (email) => {
+  return db.prepare("SELECT * FROM users WHERE email = ?").get(normalizeEmail(email)) ?? null;
+};
 
-const getUserById = (userId) =>
-  state.users.find((user) => user.id === userId) ?? null;
+const getUserRowById = (userId) => {
+  return db.prepare("SELECT * FROM users WHERE id = ?").get(userId) ?? null;
+};
 
-const findSessionByToken = (token) =>
-  state.sessions.find((session) => session.token === token) ?? null;
+const getSessionRowByToken = (token) => {
+  return db.prepare("SELECT * FROM sessions WHERE token = ?").get(token) ?? null;
+};
 
 const createSession = (userId) => {
   const now = new Date();
@@ -121,93 +105,112 @@ const createSession = (userId) => {
     expiresAt: new Date(now.getTime() + SESSION_TTL_MS).toISOString(),
   };
 
-  const existingIndex = state.sessions.findIndex((item) => item.userId === userId);
-
-  if (existingIndex >= 0) {
-    state.sessions[existingIndex] = session;
-  } else {
-    state.sessions.push(session);
-  }
+  runTransaction(() => {
+    db.prepare("DELETE FROM sessions WHERE user_id = ?").run(userId);
+    db.prepare(`
+      INSERT INTO sessions (token, user_id, created_at, expires_at)
+      VALUES (?, ?, ?, ?)
+    `).run(session.token, session.userId, session.createdAt, session.expiresAt);
+  });
 
   return session;
 };
 
-const buildAuthPayload = (user, session) => ({
-  user: sanitizeUser(user),
+const buildAuthPayload = (userRow, session) => ({
+  user: sanitizeUserRow(userRow),
   session,
 });
 
 export const registerUser = async ({ email, password, name, picture = null, provider = "email" }) => {
-  await ensureStateReady();
+  pruneExpiredSessions();
 
   const normalizedEmail = normalizeEmail(email);
 
-  if (getUserByEmail(normalizedEmail)) {
+  if (getUserRowByEmail(normalizedEmail)) {
     throw new Error("Ya existe una cuenta con ese email");
   }
 
   const now = new Date().toISOString();
+  const userId = randomUUID();
+  const nextRole = getUserCount() === 0 ? "admin" : "customer";
   const nextUser = {
-    id: randomUUID(),
+    id: userId,
     email: normalizedEmail,
     name: String(name || "").trim() || normalizedEmail.split("@")[0],
     picture,
-    role: state.users.length === 0 ? "admin" : "customer",
+    role: nextRole,
     createdAt: now,
-    orders: [],
     provider,
   };
 
-  if (provider === "email") {
-    Object.assign(nextUser, hashPassword(password));
-  }
+  const passwordData = provider === "email" ? hashPassword(password) : {
+    passwordHash: null,
+    passwordSalt: null,
+  };
 
-  state.users.push(nextUser);
+  db.prepare(`
+    INSERT INTO users (
+      id, email, name, picture, role, created_at, provider, password_hash, password_salt
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    nextUser.id,
+    nextUser.email,
+    nextUser.name,
+    nextUser.picture,
+    nextUser.role,
+    nextUser.createdAt,
+    nextUser.provider,
+    passwordData.passwordHash,
+    passwordData.passwordSalt
+  );
 
-  const session = createSession(nextUser.id);
-  await persist();
-
-  return buildAuthPayload(nextUser, session);
+  const userRow = getUserRowById(userId);
+  const session = createSession(userId);
+  return buildAuthPayload(userRow, session);
 };
 
 export const authenticateUser = async ({ email, password }) => {
-  await ensureStateReady();
+  pruneExpiredSessions();
 
-  const user = getUserByEmail(email);
+  const userRow = getUserRowByEmail(email);
 
-  if (!user) {
+  if (!userRow) {
     throw new Error("No existe una cuenta con ese email");
   }
 
-  if (!user.passwordHash || !user.passwordSalt) {
+  if (!userRow.password_hash || !userRow.password_salt) {
     throw new Error("Esta cuenta usa Google Sign-In");
   }
 
-  if (!verifyPassword(user, password)) {
+  if (!verifyPassword(userRow, password)) {
     throw new Error("Credenciales invalidas");
   }
 
-  const session = createSession(user.id);
-  await persist();
-
-  return buildAuthPayload(user, session);
+  const session = createSession(userRow.id);
+  return buildAuthPayload(userRow, session);
 };
 
 export const authenticateWithGoogle = async ({ email, name, picture = null }) => {
-  await ensureStateReady();
+  pruneExpiredSessions();
 
   const normalizedEmail = normalizeEmail(email);
-  const existingUser = getUserByEmail(normalizedEmail);
+  const existingUser = getUserRowByEmail(normalizedEmail);
 
   if (existingUser) {
-    existingUser.name = String(name || "").trim() || existingUser.name;
-    existingUser.picture = picture ?? existingUser.picture ?? null;
-    existingUser.provider = existingUser.passwordHash ? "email" : "google";
+    db.prepare(`
+      UPDATE users
+      SET name = ?, picture = ?, provider = ?
+      WHERE id = ?
+    `).run(
+      String(name || "").trim() || existingUser.name,
+      picture ?? existingUser.picture ?? null,
+      existingUser.password_hash ? "email" : "google",
+      existingUser.id
+    );
 
+    const refreshedUser = getUserRowById(existingUser.id);
     const session = createSession(existingUser.id);
-    await persist();
-
-    return buildAuthPayload(existingUser, session);
+    return buildAuthPayload(refreshedUser, session);
   }
 
   return registerUser({
@@ -220,31 +223,29 @@ export const authenticateWithGoogle = async ({ email, name, picture = null }) =>
 };
 
 export const getSessionRecord = async (token) => {
-  await ensureStateReady();
+  pruneExpiredSessions();
 
-  const session = findSessionByToken(token);
+  const session = getSessionRowByToken(token);
 
   if (!session) {
     return null;
   }
 
-  if (isSessionExpired(session)) {
-    state.sessions = state.sessions.filter((item) => item.token !== token);
-    await persist();
-    return null;
-  }
+  const userRow = getUserRowById(session.user_id);
 
-  const user = getUserById(session.userId);
-
-  if (!user) {
-    state.sessions = state.sessions.filter((item) => item.token !== token);
-    await persist();
+  if (!userRow) {
+    db.prepare("DELETE FROM sessions WHERE token = ?").run(token);
     return null;
   }
 
   return {
-    session,
-    user: sanitizeUser(user),
+    session: {
+      userId: session.user_id,
+      token: session.token,
+      createdAt: session.created_at,
+      expiresAt: session.expires_at,
+    },
+    user: sanitizeUserRow(userRow),
   };
 };
 
@@ -254,51 +255,43 @@ export const getSessionUser = async (token) => {
 };
 
 export const deleteSession = async (token) => {
-  await ensureStateReady();
-
-  const nextSessions = state.sessions.filter((item) => item.token !== token);
-
-  if (nextSessions.length === state.sessions.length) {
-    return false;
-  }
-
-  state.sessions = nextSessions;
-  await persist();
-  return true;
+  const result = db.prepare("DELETE FROM sessions WHERE token = ?").run(token);
+  return result.changes > 0;
 };
 
 export const listUsers = async () => {
-  await ensureStateReady();
-  return state.users.map((user) => sanitizeUser(user));
+  pruneExpiredSessions();
+  const rows = db.prepare("SELECT * FROM users ORDER BY datetime(created_at) DESC").all();
+  return rows.map(sanitizeUserRow);
 };
 
 export const updateUserRole = async (email, role) => {
-  await ensureStateReady();
+  const userRow = getUserRowByEmail(email);
 
-  const user = getUserByEmail(email);
-
-  if (!user) {
+  if (!userRow) {
     return null;
   }
 
-  if (user.role === "admin" && role !== "admin") {
-    const adminCount = state.users.filter((item) => item.role === "admin").length;
-    if (adminCount === 1) {
+  if (userRow.role === "admin" && role !== "admin") {
+    const row = db.prepare(`
+      SELECT COUNT(*) AS total
+      FROM users
+      WHERE role = 'admin'
+    `).get();
+
+    if (Number(row?.total ?? 0) === 1) {
       throw new Error("Debe existir al menos un administrador");
     }
   }
 
-  user.role = role;
-  await persist();
-  return sanitizeUser(user);
+  db.prepare("UPDATE users SET role = ? WHERE id = ?").run(role, userRow.id);
+  return sanitizeUserRow(getUserRowById(userRow.id));
 };
 
 export const addOrderToUser = async (userId, orderData) => {
-  await ensureStateReady();
+  const userRow = getUserRowById(userId);
 
-  const user = getUserById(userId);
-
-  if (!user) {
+  if (!userRow) {
     return null;
   }
 
@@ -310,39 +303,51 @@ export const addOrderToUser = async (userId, orderData) => {
     total: Number(orderData.total ?? 0),
     paymentMethod: orderData.paymentMethod ?? "No definido",
     billingAddress: orderData.billingAddress ?? null,
-    userEmail: user.email,
+    userEmail: userRow.email,
     status: orderData.status ?? "pending",
     createdAt: new Date().toISOString(),
   };
 
-  user.orders = Array.isArray(user.orders) ? user.orders : [];
-  user.orders.push(order);
-  await persist();
+  db.prepare(`
+    INSERT INTO orders (
+      id, user_id, items_json, subtotal, tax, total, payment_method,
+      billing_address_json, user_email, status, created_at
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `).run(
+    order.id,
+    userRow.id,
+    JSON.stringify(order.items),
+    order.subtotal,
+    order.tax,
+    order.total,
+    order.paymentMethod,
+    order.billingAddress ? JSON.stringify(order.billingAddress) : null,
+    order.userEmail,
+    order.status,
+    order.createdAt
+  );
 
   return {
     order,
-    user: sanitizeUser(user),
+    user: sanitizeUserRow(getUserRowById(userRow.id)),
   };
 };
 
 export const updateOrderStatus = async (orderId, status) => {
-  await ensureStateReady();
+  const orderRow = db.prepare("SELECT * FROM orders WHERE id = ?").get(orderId);
 
-  for (const user of state.users) {
-    const order = (user.orders || []).find((item) => item.id === orderId);
-
-    if (!order) {
-      continue;
-    }
-
-    order.status = status;
-    await persist();
-
-    return {
-      order: { ...order },
-      user: sanitizeUser(user),
-    };
+  if (!orderRow) {
+    return null;
   }
 
-  return null;
+  const previousOrder = mapOrderRow(orderRow);
+  db.prepare("UPDATE orders SET status = ? WHERE id = ?").run(status, orderId);
+
+  const updatedOrderRow = db.prepare("SELECT * FROM orders WHERE id = ?").get(orderId);
+
+  return {
+    previousStatus: previousOrder.status,
+    order: mapOrderRow(updatedOrderRow),
+    user: sanitizeUserRow(getUserRowById(updatedOrderRow.user_id)),
+  };
 };

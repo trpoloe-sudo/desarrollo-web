@@ -8,6 +8,8 @@ import { fileURLToPath } from "node:url";
 const rootDir = path.dirname(fileURLToPath(new URL("../package.json", import.meta.url)));
 const serverDir = path.join(rootDir, "server");
 const pidFile = path.join(rootDir, ".dev-all-pids.json");
+const npmExecPath = process.env.npm_execpath;
+const nodeExecPath = process.execPath;
 
 const children = [];
 let isShuttingDown = false;
@@ -77,12 +79,32 @@ const clearPidFile = () => {
   rmSync(pidFile, { force: true });
 };
 
-const spawnProcess = (label, command, cwd, port) => {
-  const child = spawn(command, {
+const createNpmRunner = (args) => {
+  if (!npmExecPath) {
+    return {
+      command: "npm",
+      args,
+      options: {
+        shell: true,
+      },
+    };
+  }
+
+  return {
+    command: nodeExecPath,
+    args: [npmExecPath, ...args],
+    options: {
+      shell: false,
+    },
+  };
+};
+
+const spawnProcess = (label, command, args, cwd, port, extraOptions = {}) => {
+  const child = spawn(command, args, {
     cwd,
-    shell: true,
     env: process.env,
     stdio: ["inherit", "pipe", "pipe"],
+    ...extraOptions,
   });
 
   forwardStream(child.stdout, process.stdout, label);
@@ -140,5 +162,22 @@ await ensurePortAvailable(5173, "frontend");
 await ensurePortAvailable(3001, "backend");
 await wait(100);
 
-spawnProcess("frontend", "npm run dev -- --strictPort", rootDir, 5173);
-spawnProcess("backend", "npm run dev", serverDir, 3001);
+const frontendRunner = createNpmRunner(["run", "dev", "--", "--strictPort"]);
+const backendRunner = createNpmRunner(["run", "dev"]);
+
+spawnProcess(
+  "frontend",
+  frontendRunner.command,
+  frontendRunner.args,
+  rootDir,
+  5173,
+  frontendRunner.options,
+);
+spawnProcess(
+  "backend",
+  backendRunner.command,
+  backendRunner.args,
+  serverDir,
+  3001,
+  backendRunner.options,
+);

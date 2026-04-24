@@ -5,6 +5,10 @@ import path from 'path'
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   const siteUrl = String(env.VITE_SITE_URL || 'http://localhost:5173').replace(/\/$/, '')
+  const hubspotPortalId = String(env.VITE_HUBSPOT_PORTAL_ID || '').trim()
+  const hubspotScript = hubspotPortalId
+    ? `<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/${hubspotPortalId}.js"></script>`
+    : ''
 
   return {
     plugins: [
@@ -12,7 +16,9 @@ export default defineConfig(({ mode }) => {
       {
         name: 'inject-site-url',
         transformIndexHtml(html) {
-          return html.replaceAll('__SITE_URL__', siteUrl)
+          return html
+            .replaceAll('__SITE_URL__', siteUrl)
+            .replace('__HUBSPOT_SCRIPT__', hubspotScript)
         }
       }
     ],
@@ -29,7 +35,16 @@ export default defineConfig(({ mode }) => {
       }
     },
     build: {
-      outDir: 'dist'
+      outDir: 'dist',
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            framework: ['vue', 'vue-router', 'pinia'],
+            ui: ['lucide-vue-next'],
+            http: ['axios']
+          }
+        }
+      }
     }
   }
 })

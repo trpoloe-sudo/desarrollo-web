@@ -1,383 +1,191 @@
-/**
- * Servicio de Pixel Tracking
- * Integra Facebook Pixel, Google Analytics, Google Ads y TikTok Pixel
- */
+const GOOGLE_ADS_SEND_TO = String(import.meta.env.VITE_GOOGLE_ADS_SEND_TO || '').trim()
+const GA_MEASUREMENT_ID = String(import.meta.env.VITE_GA_MEASUREMENT_ID || '').trim()
+const FACEBOOK_PIXEL_ID = String(import.meta.env.VITE_FACEBOOK_PIXEL_ID || '').trim()
+const TIKTOK_PIXEL_ID = String(import.meta.env.VITE_TIKTOK_PIXEL_ID || '').trim()
+
+const hasFunction = (value) => typeof value === 'function'
+
+const canTrackFacebook = () => FACEBOOK_PIXEL_ID && hasFunction(globalThis.fbq)
+const canTrackGoogle = () => GA_MEASUREMENT_ID && hasFunction(globalThis.gtag)
+const canTrackTikTok = () => TIKTOK_PIXEL_ID && globalThis.ttq && hasFunction(globalThis.ttq.track)
+
+const sanitizeItems = (items = []) => {
+  return items.map((item) => ({
+    item_id: item.id,
+    item_name: item.nombre,
+    item_category: item.categoria,
+    price: Number(item.precio || 0),
+    quantity: Number(item.quantity || 1)
+  }))
+}
 
 export const pixelTracking = {
-  /**
-   * Track event en Facebook Pixel
-   */
   facebookTrack(eventName, data = {}) {
-    if (typeof fbq !== 'undefined') {
-      fbq('track', eventName, data)
+    if (canTrackFacebook()) {
+      globalThis.fbq('track', eventName, data)
     }
   },
 
-  /**
-   * Track event en Google Analytics
-   */
   googleAnalyticsTrack(eventName, data = {}) {
-    if (typeof gtag !== 'undefined') {
-      gtag('event', eventName, data)
+    if (canTrackGoogle()) {
+      globalThis.gtag('event', eventName, data)
     }
   },
 
-  /**
-   * Track event en Google Ads
-   */
-  googleAdsTrack(conversionId, conversionLabel, value = 0) {
-    if (typeof gtag !== 'undefined') {
-      gtag('event', 'conversion', {
-        'send_to': `AW-YOUR_GOOGLE_ADS_ID/${conversionId}/${conversionLabel}`,
-        'value': value,
-        'currency': 'USD'
+  googleAdsTrack(value = 0, currency = 'PEN') {
+    if (GOOGLE_ADS_SEND_TO && canTrackGoogle()) {
+      globalThis.gtag('event', 'conversion', {
+        send_to: GOOGLE_ADS_SEND_TO,
+        value,
+        currency
       })
     }
   },
 
-  /**
-   * Track event en TikTok Pixel
-   */
   tiktokTrack(eventName, data = {}) {
-    if (typeof ttq !== 'undefined') {
-      ttq.track(eventName, data)
+    if (canTrackTikTok()) {
+      globalThis.ttq.track(eventName, data)
     }
   },
 
-  /**
-   * Track de Vista de Página
-   */
   trackPageView(pageName) {
     this.facebookTrack('PageView')
-    this.googleAnalyticsTrack('page_view', {
-      'page_title': pageName
-    })
+    this.googleAnalyticsTrack('page_view', { page_title: pageName })
     this.tiktokTrack('PageView')
   },
 
-  /**
-   * Track de Vista de Producto
-   */
   trackViewProduct(product) {
-    const data = {
-      content_name: product.nombre,
-      content_ids: [product.id],
-      content_type: 'product',
-      value: product.precio,
-      currency: 'USD'
-    }
+    const value = Number(product?.precio || 0)
+    const items = sanitizeItems([product])
 
-    this.facebookTrack('ViewContent', data)
+    this.facebookTrack('ViewContent', {
+      content_name: product?.nombre,
+      content_ids: [product?.id],
+      content_type: 'product',
+      value,
+      currency: 'PEN'
+    })
     this.googleAnalyticsTrack('view_item', {
-      items: [{
-        item_id: product.id,
-        item_name: product.nombre,
-        price: product.precio
-      }]
+      currency: 'PEN',
+      value,
+      items
     })
     this.tiktokTrack('ViewContent', {
-      content_id: product.id,
-      content_name: product.nombre,
-      content_type: 'product',
-      value: product.precio
+      content_id: product?.id,
+      content_name: product?.nombre,
+      value
     })
   },
 
-  /**
-   * Track de Añadir al Carrito
-   */
   trackAddToCart(product, quantity = 1) {
-    const totalValue = product.precio * quantity
+    const totalValue = Number(product?.precio || 0) * Number(quantity || 1)
+    const items = sanitizeItems([{ ...product, quantity }])
 
-    const data = {
-      content_name: product.nombre,
-      content_ids: [product.id],
+    this.facebookTrack('AddToCart', {
+      content_name: product?.nombre,
+      content_ids: [product?.id],
       content_type: 'product',
-      content_category: product.categoria,
       value: totalValue,
-      currency: 'USD',
-      quantity: quantity
-    }
-
-    this.facebookTrack('AddToCart', data)
+      currency: 'PEN',
+      quantity
+    })
     this.googleAnalyticsTrack('add_to_cart', {
-      items: [{
-        item_id: product.id,
-        item_name: product.nombre,
-        price: product.precio,
-        quantity: quantity
-      }]
+      currency: 'PEN',
+      value: totalValue,
+      items
     })
     this.tiktokTrack('AddToCart', {
-      content_id: product.id,
-      content_name: product.nombre,
-      quantity: quantity,
-      value: totalValue
-    })
-  },
-
-  /**
-   * Track de Eliminar del Carrito
-   */
-  trackRemoveFromCart(product, quantity = 1) {
-    const totalValue = product.precio * quantity
-
-    const data = {
-      content_name: product.nombre,
-      content_ids: [product.id],
-      content_type: 'product',
+      content_id: product?.id,
+      content_name: product?.nombre,
       value: totalValue,
-      currency: 'USD'
-    }
-
-    this.facebookTrack('RemoveFromCart', data)
-    this.googleAnalyticsTrack('remove_from_cart', {
-      items: [{
-        item_id: product.id,
-        item_name: product.nombre,
-        price: product.precio,
-        quantity: quantity
-      }]
+      quantity
     })
   },
 
-  /**
-   * Track de Vista del Carrito
-   */
-  trackViewCart(cartItems, cartTotal) {
-    const data = {
-      content_name: 'Cart',
-      content_type: 'product',
-      value: cartTotal,
-      currency: 'USD',
-      num_items: cartItems.length
-    }
-
-    this.facebookTrack('ViewCart', data)
-    this.googleAnalyticsTrack('view_cart', {
-      value: cartTotal,
-      currency: 'USD',
-      items: cartItems.map(item => ({
-        item_id: item.id,
-        item_name: item.nombre,
-        price: item.precio,
-        quantity: item.quantity || 1
-      }))
-    })
-    this.tiktokTrack('ViewCart', {
-      value: cartTotal,
-      currency: 'USD'
-    })
-  },
-
-  /**
-   * Track de Inicio de Checkout
-   */
   trackInitiateCheckout(cartItems, cartTotal) {
-    const data = {
-      content_name: 'Checkout',
+    const items = sanitizeItems(cartItems)
+
+    this.facebookTrack('InitiateCheckout', {
       content_type: 'product',
       value: cartTotal,
-      currency: 'USD',
+      currency: 'PEN',
       num_items: cartItems.length
-    }
-
-    this.facebookTrack('InitiateCheckout', data)
+    })
     this.googleAnalyticsTrack('begin_checkout', {
-      items: cartItems.map(item => ({
-        item_id: item.id,
-        item_name: item.nombre,
-        price: item.precio,
-        quantity: item.quantity || 1
-      })),
+      currency: 'PEN',
       value: cartTotal,
-      currency: 'USD'
+      items
     })
     this.tiktokTrack('InitiateCheckout', {
       value: cartTotal,
-      currency: 'USD'
+      currency: 'PEN'
     })
   },
 
-  /**
-   * Track de Información de Envío (Optional para Checkout)
-   */
-  trackAddPaymentInfo(cartTotal) {
-    const data = {
-      content_name: 'Payment Info',
-      value: cartTotal,
-      currency: 'USD'
-    }
-
-    this.facebookTrack('AddPaymentInfo', data)
-    this.googleAnalyticsTrack('add_payment_info', {
-      value: cartTotal,
-      currency: 'USD'
+  trackLead(label = 'lead', data = {}) {
+    this.facebookTrack('Lead', {
+      content_name: label,
+      ...data
+    })
+    this.googleAnalyticsTrack('generate_lead', {
+      lead_label: label,
+      ...data
+    })
+    this.googleAdsTrack(Number(data.value || 0), data.currency || 'PEN')
+    this.tiktokTrack('SubmitForm', {
+      form_name: label
     })
   },
 
-  /**
-   * Track de Compra (Conversión)
-   */
-  trackPurchase(orderId, cartItems, cartTotal, userEmail = null) {
-    const data = {
-      content_name: 'Purchase',
-      content_ids: cartItems.map(item => item.id),
-      content_type: 'product',
-      value: cartTotal,
-      currency: 'USD',
-      num_items: cartItems.length,
-      transaction_id: orderId
-    }
-
-    if (userEmail) {
-      data.em = this.hashEmail(userEmail)
-    }
-
-    this.facebookTrack('Purchase', data)
-    
-    this.googleAnalyticsTrack('purchase', {
-      transaction_id: orderId,
-      value: cartTotal,
-      currency: 'USD',
-      items: cartItems.map(item => ({
-        item_id: item.id,
-        item_name: item.nombre,
-        price: item.precio,
-        quantity: item.quantity || 1
-      }))
-    })
-
-    // Google Ads Conversion
-    this.googleAdsTrack('YOUR_CONVERSION_ID', 'YOUR_CONVERSION_LABEL', cartTotal)
-
-    this.tiktokTrack('PlaceAnOrder', {
-      value: cartTotal,
-      currency: 'USD'
-    })
-  },
-
-  /**
-   * Track de Búsqueda
-   */
   trackSearch(searchQuery) {
-    const data = {
-      search_string: searchQuery
-    }
-
-    this.facebookTrack('Search', data)
-    this.googleAnalyticsTrack('search', {
-      search_term: searchQuery
-    })
-    this.tiktokTrack('Search', {
-      query: searchQuery
-    })
+    this.facebookTrack('Search', { search_string: searchQuery })
+    this.googleAnalyticsTrack('search', { search_term: searchQuery })
+    this.tiktokTrack('Search', { query: searchQuery })
   },
 
-  /**
-   * Track de Filtro/Vista de Categoría
-   */
   trackViewCategory(category) {
-    const data = {
+    this.facebookTrack('ViewCategory', {
       content_name: category,
       content_type: 'product_group'
-    }
-
-    this.facebookTrack('ViewCategory', data)
+    })
     this.googleAnalyticsTrack('view_item_list', {
       item_category: category
     })
-    this.tiktokTrack('Browse', {
-      category: category
-    })
+    this.tiktokTrack('Browse', { category })
   },
 
-  /**
-   * Track de Inicio de Sesión
-   */
   trackLogin() {
     this.facebookTrack('Login')
     this.googleAnalyticsTrack('login')
   },
 
-  /**
-   * Track de Registro
-   */
   trackSignUp() {
     this.facebookTrack('CompleteRegistration')
     this.googleAnalyticsTrack('sign_up')
     this.tiktokTrack('CompleteRegistration')
   },
 
-  /**
-   * Track de Añadir a Favoritos
-   */
   trackAddToWishlist(product) {
-    const data = {
-      content_name: product.nombre,
-      content_ids: [product.id],
+    this.facebookTrack('AddToWishlist', {
+      content_name: product?.nombre,
+      content_ids: [product?.id],
       content_type: 'product',
-      value: product.precio,
-      currency: 'USD'
-    }
-
-    this.facebookTrack('AddToWishlist', data)
+      value: Number(product?.precio || 0),
+      currency: 'PEN'
+    })
     this.googleAnalyticsTrack('add_to_wishlist', {
-      items: [{
-        item_id: product.id,
-        item_name: product.nombre,
-        price: product.precio
-      }]
+      currency: 'PEN',
+      value: Number(product?.precio || 0),
+      items: sanitizeItems([product])
     })
   },
 
-  /**
-   * Identificar Usuario (Custom Audience)
-   */
-  identifyUser(userId, userData = {}) {
-    if (typeof fbq !== 'undefined') {
-      fbq('init', 'YOUR_FACEBOOK_PIXEL_ID', {
-        em: this.hashEmail(userData.email),
-        fn: userData.firstName,
-        ln: userData.lastName,
-        ph: userData.phone,
-        ct: userData.city,
-        st: userData.state,
-        zp: userData.zip,
-        country: userData.country
-      })
-    }
-
-    if (typeof gtag !== 'undefined') {
-      gtag('config', 'YOUR_GA_ID', {
-        'user_id': userId,
-        'user_properties': {
-          'email': userData.email,
-          'name': userData.firstName + ' ' + userData.lastName
-        }
-      })
-    }
-  },
-
-  /**
-   * Hash de Email SHA256 (para Facebook)
-   */
-  hashEmail(email) {
-    // Esta es una función simplificada
-    // En producción, usa una librería como crypto-js
-    if (!email) return ''
-    return email.toLowerCase().trim()
-  },
-
-  /**
-   * Track de Error
-   */
   trackError(errorMessage, errorCode) {
     this.googleAnalyticsTrack('exception', {
       description: errorMessage,
-      fatal: false
+      fatal: false,
+      error_code: errorCode || 'unknown'
     })
-
     console.error('[Tracking Error]', {
       message: errorMessage,
       code: errorCode,
@@ -385,9 +193,6 @@ export const pixelTracking = {
     })
   },
 
-  /**
-   * Track de Evento Personalizado
-   */
   trackCustomEvent(eventName, eventData = {}) {
     this.facebookTrack(eventName, eventData)
     this.googleAnalyticsTrack(eventName, eventData)
@@ -395,9 +200,6 @@ export const pixelTracking = {
   }
 }
 
-/**
- * Composable para usar en componentes Vue
- */
 export function usePixelTracking() {
   return {
     ...pixelTracking
