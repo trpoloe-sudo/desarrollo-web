@@ -12,7 +12,7 @@ const toIsoDate = (value = new Date()) => {
   return Number.isNaN(date.getTime()) ? new Date().toISOString().slice(0, 10) : date.toISOString().slice(0, 10)
 }
 
-const normalizeUrl = (value) => String(value || 'http://localhost:5173').trim().replace(/\/$/, '')
+const normalizeUrl = (value) => String(value || 'https://ztartech.webcindario.com').trim().replace(/\/$/, '')
 const normalizeRouterMode = (value) => String(value || 'hash').trim().toLowerCase()
 const isHashRouter = (routerMode) => routerMode !== 'history'
 

@@ -21,20 +21,30 @@ import WhatsAppButton from './components/WhatsAppButton.vue'
 import CartFloatingButton from './components/CartFloatingButton.vue'
 import ToastStack from './components/ToastStack.vue'
 import ConfirmDialog from './components/ConfirmDialog.vue'
+import { BRAND_LOGO_URL, getAbsoluteAssetUrl } from '@/config/assets'
 import { setStructuredData } from '@/services/seo'
 
 onMounted(() => {
-  const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin
-  const brandImage = new URL('/brand-logo-transparent.png', window.location.origin).href
+  const configuredSiteUrl = import.meta.env.VITE_SITE_URL || window.location.origin
+  const siteUrl = String(configuredSiteUrl).trim().replace(/\/$/, '')
+  const brandImage = getAbsoluteAssetUrl(BRAND_LOGO_URL)
   const schemaMarkup = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "ComputerStore",
     "name": "Ztar Tech",
     "description": "Servicio técnico, reparación y venta de computadoras en Perú",
     "url": siteUrl,
     "image": brandImage,
+    "logo": brandImage,
     "telephone": "+51978418809",
     "email": "cotizaciones@ztartech.com",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+51978418809",
+      "contactType": "customer support",
+      "areaServed": "PE",
+      "availableLanguage": ["Spanish"]
+    },
     "address": {
       "@type": "PostalAddress",
       "addressCountry": "PE",

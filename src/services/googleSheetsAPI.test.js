@@ -169,7 +169,7 @@ describe('googleSheetsAPI', () => {
           precio: 99.9,
           stock: 4,
           especificaciones: 'Demo',
-          imagen_url: 'https://via.placeholder.com/300x300?text=Producto'
+          imagen_url: '/brand-logo-transparent.png'
         }
       ]
     })

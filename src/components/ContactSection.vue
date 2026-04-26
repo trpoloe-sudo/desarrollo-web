@@ -378,8 +378,9 @@ const callDirect = () => {
 .contact-section {
   padding: 80px 20px;
   background:
-    linear-gradient(135deg, rgba(10, 24, 40, 0.82) 0%, rgba(14, 34, 58, 0.9) 100%),
-    url('/img/contact-bg.avif') center/cover no-repeat;
+    radial-gradient(circle at 16% 20%, rgba(77, 184, 255, 0.16), transparent 28%),
+    radial-gradient(circle at 88% 12%, rgba(89, 208, 255, 0.12), transparent 24%),
+    linear-gradient(135deg, #0a1828 0%, #0e223a 100%);
   position: relative;
   overflow: hidden;
 }

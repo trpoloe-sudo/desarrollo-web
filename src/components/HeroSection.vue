@@ -68,40 +68,12 @@
         </div>
       </div>
 
-      <!-- Elemento visual derecho - Producto aleatorio -->
+      <!-- Elemento visual derecho -->
       <div class="hero-visual">
         <div class="visual-placeholder">
-          <!-- Mostrar producto aleatorio o íconos por defecto -->
-          <div v-if="loadingProducts" class="loading-state">
-            <div class="spinner"></div>
-            <p>Cargando productos...</p>
-          </div>
-          <div v-else-if="currentProduct" class="featured-product" @click="addProductToCart">
-            <div class="product-display">
-              <img :src="currentProduct.imagen_url" :alt="currentProduct.nombre" class="product-image-featured" />
-              <div class="product-overlay">
-                <div class="product-details">
-                  <span class="product-category">{{ currentProduct.categoria }}</span>
-                  <h3 class="product-name-featured">{{ currentProduct.nombre }}</h3>
-                  <p class="product-price">${{ currentProduct.precio.toFixed(2) }}</p>
-                  <button class="add-to-cart-btn" @click.stop="addProductToCart">
-                    Añadir al Carrito
-                  </button>
-                </div>
-              </div>
-              <span class="featured-badge">⭐ DESTACADO</span>
-            </div>
-          </div>
-          <div v-else class="icon-grid">
-            <div class="icon-item">
-              <Monitor size="48" stroke-width="1.5" class="modern-icon" />
-            </div>
-            <div class="icon-item">
-              <Zap size="48" stroke-width="1.5" class="modern-icon" />
-            </div>
-            <div class="icon-item">
-              <Shield size="48" stroke-width="1.5" class="modern-icon" />
-            </div>
+          <div class="brand-mark">
+            <span class="brand-glow"></span>
+            <img src="/brand-logo-transparent.png" alt="Ztar Tech" class="hero-logo" />
           </div>
         </div>
       </div>
@@ -113,21 +85,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { Monitor, Zap, Shield, Check, ShoppingCart, MessageCircle } from 'lucide-vue-next'
-import { useCartStore } from '@/stores/cartStore'
-import { useUiStore } from '@/stores/ui'
-import { googleSheetsAPI } from '@/services/googleSheetsAPI'
+import { Check, ShoppingCart, MessageCircle } from 'lucide-vue-next'
 
 const router = useRouter()
-const cartStore = useCartStore()
-const uiStore = useUiStore()
-const products = ref([])
-const currentProduct = ref(null)
-const productInterval = ref(null)
-const loadingProducts = ref(true)
-
 
 const goToProducts = () => {
   router.push('/products')
@@ -140,70 +101,14 @@ const openWhatsApp = () => {
   )
   window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank')
 }
-
-const loadProducts = async () => {
-  try {
-    loadingProducts.value = true
-    products.value = await googleSheetsAPI.getProducts({ preferRemote: true })
-    if (products.value.length > 0) {
-      selectRandomProduct()
-    }
-  } catch (error) {
-    console.error('Error loading products:', error)
-  } finally {
-    loadingProducts.value = false
-  }
-}
-
-const selectRandomProduct = () => {
-  if (products.value.length === 0) return
-  const randomIndex = Math.floor(Math.random() * products.value.length)
-  currentProduct.value = products.value[randomIndex]
-}
-
-const addProductToCart = () => {
-  if (currentProduct.value) {
-    // Agregar al carrito
-    cartStore.addItem({
-      id: currentProduct.value.id,
-      nombre: currentProduct.value.nombre,
-      precio: currentProduct.value.precio,
-      imagen_url: currentProduct.value.imagen_url,
-      categoria: currentProduct.value.categoria,
-      descripcion: currentProduct.value.descripcion,
-      stock: currentProduct.value.stock
-    })
-    
-    uiStore.success(`Producto añadido al carrito: ${currentProduct.value.nombre}`)
-    
-    // Redireccionar a productos
-    router.push('/products')
-  }
-}
-
-onMounted(() => {
-  // Cargar productos
-  loadProducts()
-  
-  // Cambiar producto cada 10 segundos
-  productInterval.value = setInterval(() => {
-    selectRandomProduct()
-  }, 10000)
-})
-
-onUnmounted(() => {
-  // Limpiar intervalo cuando se desmonta el componente
-  if (productInterval.value) {
-    clearInterval(productInterval.value)
-  }
-})
 </script>
 
 <style scoped>
 .hero-section {
   background:
-    linear-gradient(rgba(11, 28, 47, 0.62), rgba(17, 47, 77, 0.62)),
-    url('/img/hsbg.jpeg') center/cover no-repeat;
+    radial-gradient(circle at 78% 32%, rgba(77, 184, 255, 0.32), transparent 28%),
+    radial-gradient(circle at 18% 18%, rgba(89, 208, 255, 0.2), transparent 24%),
+    linear-gradient(135deg, #081f3a 0%, #103864 46%, #061427 100%);
   color: #ffffff;
   padding: 60px 20px;
   position: relative;
@@ -442,7 +347,9 @@ onUnmounted(() => {
   width: 100%;
   max-width: 400px;
   aspect-ratio: 1;
-  background: rgba(77, 184, 255, 0.08);
+  background:
+    radial-gradient(circle at top left, rgba(89, 208, 255, 0.22), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.14), rgba(77, 184, 255, 0.08));
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -454,207 +361,61 @@ onUnmounted(() => {
   overflow: hidden;
 }
 
-/* Estado de carga */
-.loading-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  width: 100%;
-  height: 100%;
-  color: var(--color-accent);
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(77, 184, 255, 0.2);
-  border-top-color: var(--color-accent);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.loading-state p {
-  font-size: 14px;
-  color: var(--color-accent);
-}
-
-/* Producto destacado */
-.featured-product {
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
+.brand-mark {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.3s ease;
-}
-
-.featured-product:hover {
-  transform: scale(1.05);
-}
-
-.product-display {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.product-image-featured {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.featured-product:hover .product-image-featured {
-  transform: scale(1.1);
-}
-
-.product-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  border-radius: 12px;
-}
-
-.featured-product:hover .product-overlay {
-  opacity: 1;
-}
-
-.product-details {
-  text-align: center;
-  color: white;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.product-category {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--color-accent);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.product-name-featured {
-  font-size: 18px;
-  font-weight: 700;
-  color: white;
-  margin: 0;
-  line-height: 1.3;
-}
-
-.product-price {
-  font-size: 24px;
-  font-weight: 700;
-  color: var(--color-accent);
-  margin: 0;
-}
-
-.add-to-cart-btn {
-  padding: 12px 24px;
-  background: var(--color-accent);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(77, 184, 255, 0.3);
-}
-
-.add-to-cart-btn:hover {
-  background: #2f6fb4;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(77, 184, 255, 0.4);
-}
-
-.add-to-cart-btn:active {
-  transform: translateY(0);
-}
-
-.featured-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background: #ff6b6b;
-  color: white;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(255, 107, 107, 0);
-  }
-}
-
-.icon-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  width: 80%;
-  height: 80%;
-}
-
-.icon-item {
-  font-size: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  background: rgba(77, 184, 255, 0.1);
-  border: 1px solid rgba(77, 184, 255, 0.2);
-  transition: all 0.3s ease;
+  width: min(72%, 280px);
   aspect-ratio: 1;
-  color: var(--color-accent);
+  display: grid;
+  place-items: center;
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.24), transparent 35%),
+    linear-gradient(155deg, rgba(255, 255, 255, 0.18), rgba(77, 184, 255, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.24),
+    0 28px 54px rgba(3, 13, 28, 0.26);
 }
 
-.icon-item:hover {
-  transform: scale(1.1);
-  background: rgba(77, 184, 255, 0.15);
-  border-color: rgba(77, 184, 255, 0.4);
+.brand-glow {
+  position: absolute;
+  inset: 16%;
+  border-radius: inherit;
+  background: rgba(89, 208, 255, 0.18);
+  filter: blur(28px);
 }
 
-.modern-icon {
-  width: 48px;
-  height: 48px;
-  color: currentColor;
-}
-
-.visual-placeholder svg {
+.hero-logo {
+  position: relative;
+  z-index: 1;
   width: 70%;
   height: 70%;
-  color: var(--color-accent);
+  object-fit: contain;
+  filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.26));
+}
+
+/* Marca visual */
+.brand-mark::after {
+  content: '';
+  position: absolute;
+  inset: auto 18% 12%;
+  height: 18px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(5, 14, 28, 0.34) 0%, rgba(5, 14, 28, 0.08) 66%, transparent 82%);
+  filter: blur(10px);
+}
+
+.brand-mark,
+.hero-logo {
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.visual-placeholder:hover .brand-mark {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.visual-placeholder:hover .hero-logo {
+  filter: drop-shadow(0 24px 32px rgba(0, 0, 0, 0.3));
 }
 
 /* Decoración de onda */

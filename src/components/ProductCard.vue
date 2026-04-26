@@ -17,7 +17,11 @@
             <Heart :fill="isFavorite ? 'currentColor' : 'none'" size="18" />
           </button>
 
-          <img :src="product.imagen_url" :alt="product.nombre" class="product-image" />
+          <ProductImage
+            :src="product.imagen_url"
+            :alt="product.nombre"
+            class="product-image-wrap"
+          />
         </div>
 
         <div class="product-info">
@@ -89,6 +93,7 @@ import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowUpRight, Ban, Heart, ShieldCheck, ShoppingCart, Truck } from 'lucide-vue-next'
 import { useFavoritesStore } from '@/stores/favorites'
+import ProductImage from './ProductImage.vue'
 
 const props = defineProps({
   product: {
@@ -270,19 +275,34 @@ export default {
   transform: translate(-8px, 10px) scale(1.05);
 }
 
-.product-image {
+.product-image-wrap {
   position: relative;
   z-index: 1;
-  width: 100%;
-  max-width: 248px;
-  max-height: 228px;
-  object-fit: contain;
+  width: min(68%, 210px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 32% 24%, rgba(255, 255, 255, 0.86), transparent 38%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(77, 184, 255, 0.16));
+  border: 1px solid rgba(77, 184, 255, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 20px 34px rgba(12, 28, 52, 0.12);
   filter: drop-shadow(0 20px 26px rgba(15, 29, 50, 0.16));
-  transition: transform 0.35s ease, filter 0.35s ease;
+  transition: transform 0.35s ease, filter 0.35s ease, box-shadow 0.35s ease;
 }
 
-.card-shell:hover .product-image {
+.product-image-wrap :deep(.remote-image) {
+  padding: 8px;
+}
+
+.card-shell:hover .product-image-wrap {
   transform: scale(1.05);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 24px 40px rgba(12, 28, 52, 0.16);
   filter: drop-shadow(0 24px 30px rgba(15, 29, 50, 0.2));
 }
 
@@ -579,9 +599,9 @@ export default {
     height: 10px;
   }
 
-  .product-image {
-    max-width: 132px;
-    max-height: 124px;
+  .product-image-wrap {
+    width: min(70%, 118px);
+    border-radius: 20px;
   }
 
   .category-badge {

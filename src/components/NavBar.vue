@@ -104,13 +104,14 @@ import { useCartStore } from '../stores/cartStore'
 import { useFavoritesStore } from '../stores/favorites'
 import { useUserStore } from '../stores/user'
 import { ShoppingCart, Heart, User, LayoutDashboard, Settings, LogOut } from 'lucide-vue-next'
+import { BRAND_LOGO_URL } from '@/config/assets'
 
 const router = useRouter()
 const route = useRoute()
 const cartStore = useCartStore()
 const favoritesStore = useFavoritesStore()
 const userStore = useUserStore()
-const logoImage = '/brand-logo-transparent.png'
+const logoImage = BRAND_LOGO_URL
 
 const isMobile = ref(false)
 const mobileMenuOpen = ref(false)
@@ -177,8 +178,8 @@ async function logout() {
 
 .navbar {
   background:
-    linear-gradient(rgba(9, 24, 42, 0.68), rgba(9, 24, 42, 0.68)),
-    url('/img/navbarbg.jpg') center/cover no-repeat;
+    radial-gradient(circle at 16% 0%, rgba(77, 184, 255, 0.18), transparent 30%),
+    linear-gradient(135deg, rgba(9, 24, 42, 0.96), rgba(10, 35, 62, 0.96));
   padding: 6px 0;
   box-shadow: 0 14px 32px rgba(6, 16, 32, 0.55);
   position: sticky;

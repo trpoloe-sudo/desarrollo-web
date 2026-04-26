@@ -16,7 +16,9 @@
 </template>
 
 <script setup>
-const logoImage = '/brand-logo-transparent.png'
+import { BRAND_LOGO_URL } from '@/config/assets'
+
+const logoImage = BRAND_LOGO_URL
 </script>
 
 <style scoped>

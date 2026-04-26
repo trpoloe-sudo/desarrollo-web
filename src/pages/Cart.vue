@@ -14,7 +14,7 @@
         <div class="cart-items">
           <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
             <div class="item-image">
-              <img :src="item.imagen_url" :alt="item.nombre" />
+              <ProductImage :src="item.imagen_url" :alt="item.nombre" class="item-product-image" />
             </div>
             <div class="item-details">
               <h3>{{ item.nombre }}</h3>
@@ -111,6 +111,7 @@ import { useCartStore } from '../stores/cartStore'
 import { useUserStore } from '../stores/user'
 import { useUiStore } from '@/stores/ui'
 import { ShoppingCart } from 'lucide-vue-next'
+import ProductImage from '@/components/ProductImage.vue'
 
 const router = useRouter()
 const cartStore = useCartStore()
@@ -285,13 +286,16 @@ h1 {
   height: 100px;
   border-radius: 8px;
   overflow: hidden;
-  background-color: var(--color-bg-light);
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 28% 20%, rgba(255, 255, 255, 0.9), transparent 38%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.78), rgba(77, 184, 255, 0.16));
+  border: 1px solid rgba(77, 184, 255, 0.16);
 }
 
-.item-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.item-product-image :deep(.remote-image) {
+  padding: 8px;
 }
 
 .item-details h3 {

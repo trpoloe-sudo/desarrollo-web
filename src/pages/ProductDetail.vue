@@ -140,6 +140,7 @@ import { googleSheetsAPI } from '../services/googleSheetsAPI'
 import { useCartStore } from '../stores/cartStore'
 import { useUiStore } from '@/stores/ui'
 import { pixelTracking } from '../services/pixelTracking'
+import { BRAND_LOGO_URL, getAbsoluteAssetUrl, getProductImageUrl } from '@/config/assets'
 import { buildCanonicalUrl, clearStructuredData, setSeoMeta, setStructuredData } from '@/services/seo'
 
 const route = useRoute()
@@ -241,6 +242,11 @@ const customerReviews = [
   }
 ]
 
+const getResolvedProductImageUrl = (selectedProduct) => {
+  const productImage = getProductImageUrl(selectedProduct)
+  return getAbsoluteAssetUrl(productImage || BRAND_LOGO_URL)
+}
+
 const handleAddToCart = (data) => {
   if (data?.quantity) {
     pixelTracking.trackAddToCart(data.product, data.quantity)
@@ -264,11 +270,12 @@ watch(
     }
 
     pixelTracking.trackViewProduct(nextProduct)
+    const productImageUrl = getResolvedProductImageUrl(nextProduct)
     setSeoMeta({
       title: nextProduct.nombre,
       description: String(nextProduct.descripcion || nextProduct.especificaciones || 'Detalle técnico del producto.').slice(0, 160),
       canonical: buildCanonicalUrl(`/product/${nextProduct.id}`),
-      image: nextProduct.imagen_url,
+      image: productImageUrl,
       type: 'product'
     })
     setStructuredData('product', {
@@ -276,17 +283,27 @@ watch(
       '@type': 'Product',
       name: nextProduct.nombre,
       description: nextProduct.descripcion || nextProduct.especificaciones || 'Producto disponible en Ztar Tech',
-      image: nextProduct.imagen_url ? [nextProduct.imagen_url] : [],
+      url: buildCanonicalUrl(`/product/${nextProduct.id}`),
+      image: [productImageUrl],
+      brand: {
+        '@type': 'Brand',
+        name: 'Ztar Tech'
+      },
       category: nextProduct.categoria,
       sku: String(nextProduct.id),
       offers: {
         '@type': 'Offer',
         priceCurrency: 'PEN',
         price: Number(nextProduct.precio || 0).toFixed(2),
+        itemCondition: 'https://schema.org/NewCondition',
         availability: Number(nextProduct.stock || 0) > 0
           ? 'https://schema.org/InStock'
           : 'https://schema.org/OutOfStock',
-        url: buildCanonicalUrl(`/product/${nextProduct.id}`)
+        url: buildCanonicalUrl(`/product/${nextProduct.id}`),
+        seller: {
+          '@type': 'Organization',
+          name: 'Ztar Tech'
+        }
       }
     })
 
@@ -316,7 +333,7 @@ onBeforeUnmount(() => {
   position: relative;
   min-height: 100vh;
   overflow: hidden;
-  padding: 22px 18px 70px;
+  padding: 14px 12px 52px;
   background:
     radial-gradient(circle at top left, rgba(77, 184, 255, 0.18), transparent 22%),
     radial-gradient(circle at top right, rgba(18, 57, 105, 0.12), transparent 24%),
@@ -350,17 +367,17 @@ onBeforeUnmount(() => {
 .page-shell {
   position: relative;
   z-index: 1;
-  max-width: 1240px;
+  max-width: 1248px;
   margin: 0 auto;
 }
 
 .breadcrumb {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 18px;
-  padding: 14px 18px;
-  border-radius: 22px;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(77, 184, 255, 0.12);
   box-shadow: 0 18px 36px rgba(12, 28, 52, 0.08);
@@ -417,14 +434,14 @@ onBeforeUnmount(() => {
 
 .content {
   display: grid;
-  gap: 18px;
+  gap: 12px;
 }
 
 .intro-band,
 .reviews-lounge,
 .related-products-section {
-  padding: 24px;
-  border-radius: 28px;
+  padding: 14px 16px;
+  border-radius: 18px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(245, 249, 255, 0.96) 100%);
   border: 1px solid rgba(77, 184, 255, 0.14);
@@ -435,65 +452,79 @@ onBeforeUnmount(() => {
 
 .intro-band {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: 20px;
-  align-items: end;
+  grid-template-columns: minmax(0, 1fr) minmax(420px, 0.84fr);
+  gap: 14px;
+  align-items: center;
 }
 
 .intro-kicker,
 .section-kicker {
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: #1d68a2;
-  font-size: 0.78rem;
+  font-size: 0.7rem;
   font-weight: 900;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0;
 }
 
 .intro-copy h2,
 .section-heading h2 {
   margin: 0;
   color: #0f2a4f;
-  font-size: clamp(1.6rem, 2vw, 2.25rem);
-  line-height: 1.15;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.05rem, 1.4vw, 1.35rem);
+  line-height: 1.12;
+  letter-spacing: 0;
 }
 
 .intro-copy p,
 .section-heading p {
-  margin: 12px 0 0;
+  margin: 6px 0 0;
   color: #5a728d;
-  line-height: 1.7;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+.intro-copy p {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .intro-metrics {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 8px;
 }
 
 .metric-card {
   display: grid;
-  gap: 6px;
-  padding: 16px;
-  border-radius: 22px;
+  grid-template-columns: auto 1fr;
+  gap: 3px 8px;
+  align-items: center;
+  padding: 9px 10px;
+  border-radius: 14px;
   background: linear-gradient(180deg, rgba(20, 53, 102, 0.04) 0%, rgba(77, 184, 255, 0.09) 100%);
   border: 1px solid rgba(77, 184, 255, 0.12);
 }
 
 .metric-icon {
+  grid-row: span 2;
   color: var(--color-accent);
 }
 
 .metric-card strong {
   color: #143566;
-  font-size: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.2;
 }
 
 .metric-card span {
   color: #617792;
-  font-size: 0.84rem;
+  font-size: 0.72rem;
+  line-height: 1.2;
 }
 
 .section-heading {
@@ -555,7 +586,7 @@ onBeforeUnmount(() => {
   color: #143566;
   font-size: 4rem;
   line-height: 0.95;
-  letter-spacing: -0.08em;
+  letter-spacing: 0;
 }
 
 .score-block p {
@@ -680,14 +711,14 @@ onBeforeUnmount(() => {
 
 @media (max-width: 768px) {
   .product-detail-page {
-    padding: 14px 12px 42px;
+    padding: 10px 10px 38px;
   }
 
   .intro-band,
   .reviews-lounge,
   .related-products-section {
     padding: 18px;
-    border-radius: 24px;
+    border-radius: 18px;
   }
 
   .section-heading {
@@ -696,7 +727,7 @@ onBeforeUnmount(() => {
   }
 
   .intro-metrics {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .related-products-grid {
@@ -708,8 +739,8 @@ onBeforeUnmount(() => {
 @media (max-width: 520px) {
   .breadcrumb {
     gap: 8px;
-    padding: 12px 14px;
-    font-size: 0.9rem;
+    padding: 9px 12px;
+    font-size: 0.82rem;
   }
 
   .breadcrumb-current {
@@ -721,7 +752,11 @@ onBeforeUnmount(() => {
   .related-products-section,
   .status-panel {
     padding: 16px;
-    border-radius: 22px;
+    border-radius: 16px;
+  }
+
+  .intro-band {
+    display: none;
   }
 
   .score-value {

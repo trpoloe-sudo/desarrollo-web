@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { PRODUCT_IMAGE_FALLBACK_URL } from '@/config/assets'
 
-const DEFAULT_PRODUCT_IMAGE = '/brand-logo-transparent.png'
+const DEFAULT_PRODUCT_IMAGE = PRODUCT_IMAGE_FALLBACK_URL
 
 const apiBaseURL = import.meta.env.DEV
   ? '/api'
@@ -183,6 +184,6 @@ function getDefaultSettings() {
     descripcion: 'Distribuidor de computadoras y partes de calidad',
     email: 'contacto@techdistributor.com',
     telefono: '+34 900 123 456',
-    logo: '/brand-logo-transparent.png'
+    logo: PRODUCT_IMAGE_FALLBACK_URL
   }
 }

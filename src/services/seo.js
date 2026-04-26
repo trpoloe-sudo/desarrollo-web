@@ -1,10 +1,27 @@
 const DEFAULT_TITLE = 'Ztar Tech'
 const TITLE_SUFFIX = ' | Ztar Tech'
+const DEFAULT_SITE_URL = 'https://ztartech.webcindario.com'
+const DEFAULT_IMAGE = '/brand-logo-transparent.png'
 const DEFAULT_DESCRIPTION =
   'Servicio técnico, reparación y venta de computadoras en Perú. Diagnóstico claro, atención rápida y soporte real.'
 
 const ROUTER_MODE = String(import.meta.env.VITE_ROUTER_MODE || 'hash').trim().toLowerCase()
 const IS_HASH_ROUTER = ROUTER_MODE !== 'history'
+const ABSOLUTE_URL_PATTERN = /^https?:\/\//i
+
+const resolveAbsoluteUrl = (value, siteUrl) => {
+  const cleanValue = String(value || '').trim()
+
+  if (!cleanValue) {
+    return ''
+  }
+
+  if (ABSOLUTE_URL_PATTERN.test(cleanValue)) {
+    return cleanValue
+  }
+
+  return `${siteUrl}${cleanValue.startsWith('/') ? cleanValue : `/${cleanValue}`}`
+}
 
 const getSiteUrl = () => {
   const configuredUrl = String(import.meta.env.VITE_SITE_URL || '').trim()
@@ -17,7 +34,7 @@ const getSiteUrl = () => {
     return String(window.location.origin).replace(/\/$/, '')
   }
 
-  return 'http://localhost:5173'
+  return DEFAULT_SITE_URL
 }
 
 const ensureHeadElement = (selector, factory) => {
@@ -66,7 +83,7 @@ export function setSeoMeta({
     : `${title}${TITLE_SUFFIX}`
   const siteUrl = getSiteUrl()
   const resolvedCanonical = String(canonical || siteUrl).replace(/\/$/, '') || siteUrl
-  const resolvedImage = image || `${siteUrl}/img/ztartech-og.jpg`
+  const resolvedImage = resolveAbsoluteUrl(image || DEFAULT_IMAGE, siteUrl)
 
   document.title = normalizedTitle
 
@@ -76,8 +93,11 @@ export function setSeoMeta({
   upsertMeta('property', 'og:description', description)
   upsertMeta('property', 'og:type', type)
   upsertMeta('property', 'og:url', resolvedCanonical)
+  upsertMeta('property', 'og:site_name', DEFAULT_TITLE)
+  upsertMeta('property', 'og:locale', 'es_PE')
   upsertMeta('property', 'og:image', resolvedImage)
   upsertMeta('name', 'twitter:card', 'summary_large_image')
+  upsertMeta('name', 'twitter:domain', siteUrl.replace(/^https?:\/\//, ''))
   upsertMeta('name', 'twitter:title', normalizedTitle)
   upsertMeta('name', 'twitter:description', description)
   upsertMeta('name', 'twitter:image', resolvedImage)

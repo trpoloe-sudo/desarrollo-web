@@ -276,6 +276,7 @@ import { useUiStore } from '@/stores/ui'
 import { googleSheetsAPI } from '@/services/googleSheetsAPI'
 import { contactApi } from '@/services/contactApi'
 import { ClipboardList, Package, ShieldCheck, Users } from 'lucide-vue-next'
+import { PRODUCT_IMAGE_FALLBACK_URL } from '@/config/assets'
 import {
   ORDER_STATUS_OPTIONS,
   getOrderStatusDescription,
@@ -360,7 +361,7 @@ async function saveProduct() {
     precio: Number(productForm.value.precio),
     stock: Number(productForm.value.stock || 0),
     especificaciones: productForm.value.especificaciones.trim(),
-    imagen_url: productForm.value.imagen_url.trim() || 'https://via.placeholder.com/300x300?text=Producto'
+    imagen_url: productForm.value.imagen_url.trim() || PRODUCT_IMAGE_FALLBACK_URL
   }
 
   const nextProducts = editingProduct.value

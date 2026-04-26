@@ -6,4 +6,4 @@ Disallow: /auth
 Disallow: /checkout
 Disallow: /cart
 
-Sitemap: http://localhost:5173/sitemap.xml
+Sitemap: https://ztartech.webcindario.com/sitemap.xml

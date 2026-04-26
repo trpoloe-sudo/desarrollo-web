@@ -4,7 +4,7 @@ import path from 'path'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
-  const siteUrl = String(env.VITE_SITE_URL || 'http://localhost:5173').replace(/\/$/, '')
+  const siteUrl = String(env.VITE_SITE_URL || 'https://ztartech.webcindario.com').replace(/\/$/, '')
   const hubspotPortalId = String(env.VITE_HUBSPOT_PORTAL_ID || '').trim()
   const hubspotScript = hubspotPortalId
     ? `<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/${hubspotPortalId}.js"></script>`

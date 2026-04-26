@@ -20,28 +20,20 @@
             </div>
 
             <div class="image-stage">
-              <img :src="selectedImage" :alt="product.nombre" class="main-image" />
+              <ProductImage
+                :src="product.imagen_url"
+                :alt="product.nombre"
+                loading="eager"
+                class="product-image-display"
+              />
             </div>
 
             <div class="gallery-footer">
-              <span class="gallery-note">Imagen referencial</span>
+              <span class="gallery-note">Vista referencial</span>
               <span :class="['gallery-note', 'gallery-note--accent', `gallery-note--${availabilityMeta.tone}`]">
                 {{ availabilityMeta.caption }}
               </span>
             </div>
-          </div>
-
-          <div v-if="galleryImages.length > 1" class="thumb-row">
-            <button
-              v-for="(image, index) in galleryImages"
-              :key="`${image}-${index}`"
-              type="button"
-              :class="['thumb-btn', { active: image === selectedImage }]"
-              :aria-label="`Vista ${index + 1}`"
-              @click="selectedImage = image"
-            >
-              <img :src="image" :alt="`Vista ${index + 1} de ${product.nombre}`" />
-            </button>
           </div>
         </div>
 
@@ -83,7 +75,7 @@
 
           <div class="description-card">
             <h2>Resumen del producto</h2>
-            <ExpandableText :text="product.descripcion" :maxLines="4" />
+            <ExpandableText :text="product.descripcion" :maxLines="3" />
           </div>
 
           <div v-if="featureHighlights.length > 0" class="highlight-grid">
@@ -99,6 +91,24 @@
         </div>
 
         <div class="purchase-card">
+          <div class="buy-header">
+            <div class="meta-chip-row">
+              <span class="meta-chip">{{ categoryLabel }}</span>
+              <span class="meta-chip meta-chip--soft">Codigo {{ productCode }}</span>
+            </div>
+            <div class="rating-pill">
+              <Star class="rating-icon" size="16" />
+              <span>4.9</span>
+              <small>125 reseñas</small>
+            </div>
+          </div>
+
+          <h1 class="product-title product-title--purchase">{{ product.nombre }}</h1>
+
+          <p class="support-copy support-copy--compact">
+            Venta, asesoria y seguimiento para validar compatibilidad, stock y despacho antes de comprar.
+          </p>
+
           <div class="purchase-top">
             <div class="price-stack">
               <span class="price-kicker">Precio final</span>
@@ -195,6 +205,7 @@ import { useFavoritesStore } from '@/stores/favorites'
 import { useCartStore } from '@/stores/cartStore'
 import ExpandableSpecs from './ExpandableSpecs.vue'
 import ExpandableText from './ExpandableText.vue'
+import ProductImage from './ProductImage.vue'
 
 const props = defineProps({
   product: {
@@ -207,8 +218,6 @@ const emit = defineEmits(['add-to-cart', 'toggle-favorite'])
 const quantity = ref(1)
 const favoritesStore = useFavoritesStore()
 const cartStore = useCartStore()
-const selectedImage = ref(props.product.imagen_url)
-
 const isFavorite = computed(() => favoritesStore.isFavorite(props.product.id))
 const categoryLabel = computed(() => String(props.product.categoria || 'General').trim().toUpperCase())
 const formattedPrice = computed(() => Number(props.product.precio || 0).toFixed(2))
@@ -220,13 +229,6 @@ const productCode = computed(() => {
   }
 
   return `ZT-${String(props.product.id || 'SKU').toUpperCase()}`
-})
-
-const galleryImages = computed(() => {
-  const list = Array.isArray(props.product.imagenes) ? props.product.imagenes : []
-  const main = props.product.imagen_url ? [props.product.imagen_url] : []
-  const merged = [...main, ...list].filter(Boolean)
-  return Array.from(new Set(merged))
 })
 
 const availabilityMeta = computed(() => {
@@ -309,7 +311,6 @@ const featureHighlights = computed(() => {
 watch(
   () => props.product.id,
   () => {
-    selectedImage.value = props.product.imagen_url
     quantity.value = 1
   }
 )
@@ -350,15 +351,15 @@ const toggleFavorite = () => {
 
 .details-container {
   display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
-  gap: 28px;
+  grid-template-columns: minmax(360px, 0.9fr) minmax(420px, 1.1fr);
+  gap: 18px;
   align-items: start;
 }
 
 .media-column,
 .details-column {
   display: grid;
-  gap: 20px;
+  gap: 14px;
 }
 
 .gallery-card,
@@ -384,14 +385,14 @@ const toggleFavorite = () => {
 }
 
 .gallery-card {
-  padding: 18px;
+  padding: 12px;
 }
 
 .gallery-surface {
   position: relative;
-  min-height: 560px;
-  border-radius: 24px;
-  padding: 18px;
+  min-height: 430px;
+  border-radius: 20px;
+  padding: 14px;
   overflow: hidden;
   background:
     radial-gradient(circle at top left, rgba(84, 184, 251, 0.28), transparent 34%),
@@ -444,12 +445,12 @@ const toggleFavorite = () => {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-height: 34px;
-  padding: 8px 12px;
+  min-height: 30px;
+  padding: 6px 10px;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0;
 }
 
 .category-pill {
@@ -459,8 +460,8 @@ const toggleFavorite = () => {
 }
 
 .favorite-fab {
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -485,36 +486,51 @@ const toggleFavorite = () => {
 .image-stage {
   position: relative;
   z-index: 1;
-  min-height: 430px;
+  min-height: 315px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 28px 18px;
+  padding: 18px 12px;
 }
 
 .image-stage::after {
   content: '';
   position: absolute;
-  inset: auto 14% 26px;
-  height: 22px;
+  inset: auto 14% 18px;
+  height: 16px;
   border-radius: 999px;
   background: radial-gradient(circle, rgba(14, 33, 58, 0.18) 0%, rgba(14, 33, 58, 0.04) 66%, transparent 82%);
   filter: blur(10px);
 }
 
-.main-image {
+.product-image-display {
   position: relative;
   z-index: 1;
-  width: 100%;
-  max-width: 520px;
-  max-height: 400px;
-  object-fit: contain;
-  filter: drop-shadow(0 26px 34px rgba(15, 29, 50, 0.18));
-  transition: transform 0.35s ease, filter 0.35s ease;
+  width: min(70%, 300px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 30% 22%, rgba(255, 255, 255, 0.9), transparent 38%),
+    linear-gradient(150deg, rgba(255, 255, 255, 0.82), rgba(77, 184, 255, 0.14));
+  border: 1px solid rgba(77, 184, 255, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.74),
+    0 20px 36px rgba(12, 28, 52, 0.12);
+  filter: drop-shadow(0 18px 24px rgba(15, 29, 50, 0.16));
+  transition: transform 0.35s ease, filter 0.35s ease, box-shadow 0.35s ease;
 }
 
-.gallery-card:hover .main-image {
+.product-image-display :deep(.remote-image) {
+  padding: 10px;
+}
+
+.gallery-card:hover .product-image-display {
   transform: scale(1.04);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.82),
+    0 32px 56px rgba(12, 28, 52, 0.18);
   filter: drop-shadow(0 30px 40px rgba(15, 29, 50, 0.22));
 }
 
@@ -542,54 +558,18 @@ const toggleFavorite = () => {
   color: #cf4638;
 }
 
-.thumb-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 16px;
-}
-
-.thumb-btn {
-  width: 76px;
-  height: 76px;
-  padding: 6px;
-  border-radius: 18px;
-  border: 1px solid rgba(77, 184, 255, 0.2);
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 12px 24px rgba(12, 28, 52, 0.08);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.thumb-btn img {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  object-fit: cover;
-}
-
-.thumb-btn:hover {
-  transform: translateY(-2px);
-  border-color: rgba(77, 184, 255, 0.4);
-  box-shadow: 0 16px 28px rgba(12, 28, 52, 0.1);
-}
-
-.thumb-btn.active {
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 4px rgba(77, 184, 255, 0.16);
-}
-
 .benefits-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  gap: 10px;
 }
 
 .benefit-card {
   display: flex;
-  gap: 12px;
+  gap: 9px;
   align-items: flex-start;
-  padding: 18px 16px;
-  border-radius: 22px;
+  padding: 12px;
+  border-radius: 16px;
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(77, 184, 255, 0.12);
   box-shadow: 0 16px 30px rgba(12, 28, 52, 0.08);
@@ -604,37 +584,55 @@ const toggleFavorite = () => {
   margin: 0;
   color: #17365f;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 0.84rem;
 }
 
 .benefit-copy {
-  margin: 6px 0 0;
+  margin: 3px 0 0;
   color: #68809a;
-  font-size: 0.84rem;
-  line-height: 1.55;
+  font-size: 0.75rem;
+  line-height: 1.35;
 }
 
 .details-column {
   align-content: start;
 }
 
+.details-column .purchase-card {
+  order: 1;
+}
+
+.details-column .headline-card {
+  order: 2;
+}
+
+.details-column .spec-card {
+  order: 3;
+}
+
 .headline-card,
 .purchase-card,
 .spec-card {
-  padding: 24px;
+  padding: 18px;
 }
 
-.headline-top {
+.headline-top,
+.headline-card > .product-title,
+.headline-card > .support-copy {
+  display: none;
+}
+
+.buy-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
 }
 
 .meta-chip-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
 }
 
 .meta-chip {
@@ -649,9 +647,9 @@ const toggleFavorite = () => {
 .rating-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  min-height: 38px;
-  padding: 8px 12px;
+  gap: 6px;
+  min-height: 34px;
+  padding: 7px 10px;
   border-radius: 999px;
   background: rgba(77, 184, 255, 0.14);
   color: #1a6faa;
@@ -661,7 +659,7 @@ const toggleFavorite = () => {
 
 .rating-pill small {
   color: #4c7ca3;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 700;
 }
 
@@ -670,51 +668,58 @@ const toggleFavorite = () => {
 }
 
 .product-title {
-  margin: 18px 0 10px;
+  margin: 12px 0 8px;
   color: #0f2a4f;
-  font-size: clamp(2rem, 3vw, 3.2rem);
-  line-height: 1.12;
+  font-size: clamp(1.65rem, 2.25vw, 2.45rem);
+  line-height: 1.04;
   font-weight: 900;
-  letter-spacing: -0.05em;
+  letter-spacing: 0;
 }
 
 .support-copy {
   margin: 0;
   color: #59718d;
-  font-size: 1rem;
-  line-height: 1.7;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.support-copy--compact {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .description-card {
-  margin-top: 22px;
-  padding: 18px 18px 14px;
-  border-radius: 22px;
+  padding: 14px;
+  border-radius: 16px;
   background: linear-gradient(180deg, rgba(20, 53, 102, 0.04) 0%, rgba(77, 184, 255, 0.08) 100%);
   border: 1px solid rgba(77, 184, 255, 0.12);
 }
 
 .description-card h2 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: #17365f;
-  font-size: 0.96rem;
+  font-size: 0.82rem;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
 .highlight-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 20px;
+  gap: 10px;
+  margin-top: 12px;
 }
 
 .highlight-card {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   align-items: flex-start;
-  padding: 14px 16px;
-  border-radius: 20px;
+  padding: 10px 12px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(77, 184, 255, 0.12);
 }
@@ -727,34 +732,36 @@ const toggleFavorite = () => {
 
 .highlight-card span {
   color: #445a74;
-  font-size: 0.92rem;
-  line-height: 1.55;
+  font-size: 0.82rem;
+  line-height: 1.35;
 }
 
 .purchase-card {
   background:
     radial-gradient(circle at top right, rgba(77, 184, 255, 0.16), transparent 28%),
     linear-gradient(180deg, rgba(18, 57, 105, 0.04) 0%, rgba(77, 184, 255, 0.12) 100%);
+  border-color: rgba(77, 184, 255, 0.28);
 }
 
 .purchase-top {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 18px;
+  gap: 14px;
+  margin-top: 14px;
 }
 
 .price-stack {
   display: grid;
-  gap: 6px;
+  gap: 4px;
 }
 
 .price-kicker {
   color: #56708e;
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
 }
 
 .price-line {
@@ -766,42 +773,42 @@ const toggleFavorite = () => {
 }
 
 .currency {
-  font-size: 1.15rem;
+  font-size: 1rem;
   font-weight: 900;
 }
 
 .amount {
-  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-size: clamp(2.25rem, 4.2vw, 3.25rem);
   line-height: 0.96;
   font-weight: 900;
-  letter-spacing: -0.06em;
+  letter-spacing: 0;
 }
 
 .price-note {
   margin: 0;
   color: #58718e;
-  font-size: 0.92rem;
-  line-height: 1.55;
+  font-size: 0.8rem;
+  line-height: 1.35;
 }
 
 .availability-box {
   display: grid;
-  gap: 6px;
-  min-width: 170px;
-  padding: 14px 16px;
-  border-radius: 18px;
+  gap: 4px;
+  min-width: 138px;
+  padding: 10px 12px;
+  border-radius: 14px;
   text-align: right;
 }
 
 .availability-label {
-  font-size: 0.76rem;
+  font-size: 0.68rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
 }
 
 .availability-box strong {
-  font-size: 1rem;
+  font-size: 0.92rem;
   line-height: 1.3;
 }
 
@@ -823,8 +830,8 @@ const toggleFavorite = () => {
 .service-strip {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
+  gap: 8px;
+  margin-top: 12px;
 }
 
 .service-pill {
@@ -835,47 +842,47 @@ const toggleFavorite = () => {
 
 .purchase-actions {
   display: grid;
-  grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.22fr);
-  gap: 12px;
-  margin-top: 20px;
+  grid-template-columns: minmax(118px, 0.62fr) minmax(190px, 1.38fr);
+  gap: 10px;
+  margin-top: 12px;
 }
 
 .quantity-card {
   display: grid;
-  gap: 10px;
-  padding: 14px;
-  border-radius: 20px;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 14px;
   background: rgba(255, 255, 255, 0.88);
   border: 1px solid rgba(77, 184, 255, 0.12);
 }
 
 .quantity-label {
   color: #5b728d;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
+  letter-spacing: 0;
 }
 
 .quantity-selector {
   display: grid;
-  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
   align-items: center;
-  border-radius: 14px;
+  border-radius: 10px;
   overflow: hidden;
   border: 1px solid rgba(77, 184, 255, 0.18);
 }
 
 .quantity-selector button,
 .quantity-selector input {
-  height: 46px;
+  height: 38px;
   border: none;
   background: white;
 }
 
 .quantity-selector button {
   color: #215189;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 900;
   transition: background 0.2s ease;
 }
@@ -893,7 +900,7 @@ const toggleFavorite = () => {
   width: 100%;
   text-align: center;
   color: #143566;
-  font-size: 1rem;
+  font-size: 0.92rem;
   font-weight: 800;
 }
 
@@ -903,14 +910,14 @@ const toggleFavorite = () => {
 
 .add-to-cart-btn,
 .favorite-action {
-  min-height: 58px;
-  padding: 0 18px;
-  border-radius: 18px;
+  min-height: 50px;
+  padding: 0 16px;
+  border-radius: 14px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 900;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
 }
@@ -952,22 +959,22 @@ const toggleFavorite = () => {
 }
 
 .spec-card :deep(.specs-header) {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .spec-card :deep(.specs-header h3) {
   color: #17365f;
-  font-size: 0.96rem;
+  font-size: 0.84rem;
   font-weight: 800;
-  letter-spacing: 0.03em;
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
 .description-card :deep(.text-content),
 .spec-card :deep(.specs-text) {
   color: #5a728e;
-  font-size: 0.96rem;
-  line-height: 1.75;
+  font-size: 0.86rem;
+  line-height: 1.5;
 }
 
 .description-card :deep(.text-content.collapsed::after),
@@ -977,8 +984,8 @@ const toggleFavorite = () => {
 
 .description-card :deep(.expand-btn),
 .spec-card :deep(.expand-btn) {
-  margin-top: 10px;
-  font-size: 0.82rem;
+  margin-top: 8px;
+  font-size: 0.76rem;
   font-weight: 800;
 }
 
@@ -988,7 +995,7 @@ const toggleFavorite = () => {
   }
 
   .gallery-surface {
-    min-height: 500px;
+    min-height: 400px;
   }
 }
 
@@ -997,16 +1004,16 @@ const toggleFavorite = () => {
   .headline-card,
   .purchase-card,
   .spec-card {
-    border-radius: 24px;
+    border-radius: 20px;
   }
 
   .gallery-surface {
-    min-height: 420px;
-    border-radius: 22px;
+    min-height: 360px;
+    border-radius: 18px;
   }
 
   .image-stage {
-    min-height: 320px;
+    min-height: 270px;
   }
 
   .benefits-grid,
@@ -1016,7 +1023,7 @@ const toggleFavorite = () => {
   }
 
   .purchase-top,
-  .headline-top {
+  .buy-header {
     flex-direction: column;
     align-items: flex-start;
   }
@@ -1032,35 +1039,30 @@ const toggleFavorite = () => {
   .headline-card,
   .purchase-card,
   .spec-card {
-    padding: 16px;
+    padding: 12px;
   }
 
   .gallery-surface {
-    min-height: 340px;
-    padding: 14px;
+    min-height: 280px;
+    padding: 12px;
   }
 
   .image-stage {
-    min-height: 250px;
-    padding: 18px 10px;
+    min-height: 210px;
+    padding: 12px 8px;
   }
 
-  .main-image {
-    max-height: 240px;
-  }
-
-  .thumb-btn {
-    width: 64px;
-    height: 64px;
-    border-radius: 16px;
+  .product-image-display {
+    width: min(76%, 210px);
+    border-radius: 22px;
   }
 
   .product-title {
-    font-size: 1.85rem;
+    font-size: 1.5rem;
   }
 
   .amount {
-    font-size: 2.4rem;
+    font-size: 2.1rem;
   }
 }
 </style>
